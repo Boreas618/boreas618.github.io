@@ -194,11 +194,13 @@ There are three semantics to model this possible exection sequence[^3]:
 * Brinch Hansen Semantics
 * Hoare Semantics
 
-<img src="https://dengzuoheng.github.io/images/monitor_mesa.jpg" alt="Mesa" style="zoom:50%;" />
+<img src="https://dengzuoheng.github.io/images/monitor_mesa.jpg" alt="Mesa" style="zoom:50%; display: block; margin: auto;" />
 
-<img src="https://dengzuoheng.github.io/images/monitor_bh.jpg" alt="Brinch Hansen" style="zoom:50%;" />
+<img src="https://dengzuoheng.github.io/images/monitor_bh.jpg" alt="Brinch Hansen" style="zoom:50%; display: block; margin: auto;" />
 
-<img src="https://cseweb.ucsd.edu/classes/sp16/cse120-a/applications/ln/monitor_hoare.jpg" alt="img" style="zoom:50%;" />
+<img src="https://cseweb.ucsd.edu/classes/sp16/cse120-a/applications/ln/monitor_hoare.jpg" alt="img" style="zoom:50%; display: block; margin: auto;" />
+
+
 
 Compared to Mesa Semantics, in the context of Brinch Hansen Semantics, thread B signals on the buffer only after it has left the monitor.
 
@@ -230,11 +232,11 @@ In the context of Hoare Semantics, thread A is immediately brought back to the m
 > ```
 
 
-**References**
+# References
 
-[^1]: Andrew, S. T., & Herbert, B. (2015). *Modern operating systems*. Pearson Education.
+**1.** Andrew, S. T., & Herbert, B. (2015). *Modern operating systems*. Pearson Education.
 
-[^2]: Arpaci-Dusseau, R. H., & Arpaci-Dusseau, A. C. (2018). *Operating systems: Three easy pieces*. Arpaci-Dusseau Books, LLC.
+**2.** Arpaci-Dusseau, R. H., & Arpaci-Dusseau, A. C. (2018). *Operating systems: Three easy pieces*. Arpaci-Dusseau Books, LLC.
 
-[^3]: Gregory Kesden, [Monitors and Condition Variables](https://cseweb.ucsd.edu/classes/sp16/cse120-a/applications/ln/lecture9.html)
+**3.** Gregory Kesden, [Monitors and Condition Variables](https://cseweb.ucsd.edu/classes/sp16/cse120-a/applications/ln/lecture9.html)
 
