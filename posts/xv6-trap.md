@@ -2,8 +2,6 @@
 
 In this post, we will introduce how xv6 implement traps.
 
-## xv6
-
 In [5], the designers of xv6 share the same understanding of **trap** as the RISC-V specification[4]. In this context, **trap** refers to the transfer of control to a trap handler, which can be triggered by an exception or an interrupt.
 
 Consider calling the `freemem` system call to calculate the number of free pages.
