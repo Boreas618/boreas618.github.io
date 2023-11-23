@@ -8,7 +8,8 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Me', link: '/' },
-      { text: 'Posts', link: '/posts/monitor' }
+      { text: 'Posts', link: '/posts/monitor' },
+      { text: 'Paper Reading', link: '/posts/monitor' },
     ],
     sidebar: {
       '/': {
@@ -18,6 +19,14 @@ export default defineConfig({
         collapsed: true,
       },
       '/posts/': {
+        text: 'System',
+        items: [
+          { text: 'Monitor, Condition Variables and Three Semantics', link: '/posts/monitor' },
+          { text: 'Exception and Interrupt Handling in xv6', link: '/posts/xv6-trap' },
+          { text: 'Function Prologues', link: '/posts/function-prologues' },
+        ]
+      },
+      '/papers/': {
         text: 'System',
         items: [
           { text: 'Monitor, Condition Variables and Three Semantics', link: '/posts/monitor' },
