@@ -22,6 +22,7 @@ export default defineConfig({
         items: [
           { text: 'Monitor, Condition Variables and Three Semantics', link: '/posts/monitor' },
           { text: 'Exception and Interrupt Handling in xv6', link: '/posts/xv6-trap' },
+          { text: 'Function Prologues', link: '/posts/function-prologues' },
         ]
       }
     },
