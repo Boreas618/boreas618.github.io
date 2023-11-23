@@ -5,11 +5,10 @@ export default defineConfig({
   title: "Yi Sun's Blog",
   description: "This is Yi Sun's blog.",
   themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Me', link: '/' },
       { text: 'Posts', link: '/posts/monitor' },
-      { text: 'Paper Reading', link: '/posts/monitor' },
+      { text: 'Paper Reading', link: '/papers/TreeSLS' },
     ],
     sidebar: {
       '/': {
@@ -26,17 +25,20 @@ export default defineConfig({
           { text: 'Function Prologues', link: '/posts/function-prologues' },
         ]
       },
-      '/papers/': {
-        text: 'System',
+      '/papers/': [{
+        text: 'Operating Systems',
         items: [
-          { text: 'Monitor, Condition Variables and Three Semantics', link: '/posts/monitor' },
-          { text: 'Exception and Interrupt Handling in xv6', link: '/posts/xv6-trap' },
-          { text: 'Function Prologues', link: '/posts/function-prologues' },
+          { text: 'TreeSLS', link: '/papers/TreeSLS' },
+        ]
+      }, {
+        text: 'NLP',
+        items: [
         ]
       }
+      ]
     },
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
+      { icon: 'github', link: 'https://github.com/boreas618' }
     ]
   }
 })
