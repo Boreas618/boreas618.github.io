@@ -100,8 +100,12 @@ Above are the four phases of making and executing system calls in xv6. Handling 
 
 # References
 
-1. w568w, (2023). *OS-23Fall-FDU Repository* https://github.com/idlebo/OS-23Fall-FDU/blob/lab3/doc/trap.explained.md
-2. Intel, (2023). *Intel® 64 and IA-32 Architectures Software Developer Manuals* https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html
-3. Arm, (2023). *AArch64 Exception and Interrupt Handling* https://developer.arm.com/documentation/100933/0100/AArch64-Exception-and-Interrupt-Handling
-4. RISC-V, (2023). *RISC-V Specifications* https://riscv.org/technical/specifications/
-5. Cox, R., Kaashoek, M. F., & Morris, R. (2011). *Xv6, a simple Unix-like teaching operating system* http://pdos.csail.mit.edu/6.828/2012/xv6.html
+**1** OS-23Fall-FDU Repository https://github.com/idlebo/OS-23Fall-FDU/blob/lab3/doc/trap.explained.md
+
+**2** Intel® 64 and IA-32 Architectures Software Developer Manuals https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html
+
+**3** AArch64 Exception and Interrupt Handling https://developer.arm.com/documentation/100933/0100/AArch64-Exception-and-Interrupt-Handling
+
+**4** RISC-V Specifications https://riscv.org/technical/specifications/
+
+**5** Xv6, a simple Unix-like teaching operating system http://pdos.csail.mit.edu/6.828/2012/xv6.html

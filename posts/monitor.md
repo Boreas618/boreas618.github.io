@@ -234,9 +234,9 @@ In the context of Hoare Semantics, thread A is immediately brought back to the m
 
 # References
 
-**1.** Andrew, S. T., & Herbert, B. (2015). *Modern operating systems*. Pearson Education.
+**1** Modern operating systems.
 
-**2.** Arpaci-Dusseau, R. H., & Arpaci-Dusseau, A. C. (2018). *Operating systems: Three easy pieces*. Arpaci-Dusseau Books, LLC.
+**2** Operating systems: Three easy pieces.
 
-**3.** Gregory Kesden, [Monitors and Condition Variables](https://cseweb.ucsd.edu/classes/sp16/cse120-a/applications/ln/lecture9.html)
+**3** Monitors and Condition Variables https://cseweb.ucsd.edu/classes/sp16/cse120-a/applications/ln/lecture9.html
 
