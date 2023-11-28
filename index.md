@@ -1,8 +1,8 @@
 ---
 layout: doc
-sidebar: false
+sidebar: true
 aside: false
-outline: false
+outline: true
 ---
 
 # Yi Sun
