@@ -10,7 +10,7 @@
 
 1. Performance 
 
-   **Mechanism**: Checkpointing ([Lab 6 of OS(H) @ Fudan University](https://github.com/Boreas618/OS-Honor-23Fall/tree/lab6))
+   **Mechanism for Data Persistance**: Checkpointing ([Lab 6 of OS(H) @ Fudan University](https://github.com/Boreas618/OS-Honor-23Fall/tree/lab6))
 
    **Reality**: There is a huge difference between memory and disks in terms of speed, volatility, and access granularity.
 
@@ -18,9 +18,9 @@
 
 2. External synchrony issue
 
-   **Handling the API of SLS for external synchrony is non-trivial**. (e.g. `cache_sync` in [Lab 6 of OS(H) @ Fudan University](https://github.com/Boreas618/OS-Honor-23Fall/tree/lab6))
+   **Handling the API of SLS for external synchrony is non-trivial**.
 
-**Opportunities: The emergence of fast, byte-addressable non-volatile memory (NVM)**: Storage-like durability and DRAM-like **byte-addressability (Core)** and access performance. This makes it possible to perform fast and direct manipulation of persistent data (i.e., without the need for checkpointing).
+**Opportunities: The emergence of fast, byte-addressable non-volatile memory (NVM)**: Storage-like durability and DRAM-like **byte-addressability (Core feature, which indicates that we can use NVM as (part of) main memory)** and access performance. This makes it possible to perform fast and direct manipulation of persistent data (i.e., without the need for checkpointing).
 
 **Is NVM perfect?**: CPU and device registers can still be lost upon power failures. Therefore, checkpointing is still necessary.
 
@@ -30,11 +30,8 @@
 
 **Challenges**:
 
-* **The management of  the relation between runtime memory and storage**: An SLS on NVM can leverage the single-level device (i.e., NVM) as both runtime memory and storage.
-
-* **Transparent external synchrony**.
-
-  > **Question**: Can NVM be used as a disk, as in traditional computer systems? If so, what is the "external" towards NVM?
+* **The management of  the relation between runtime memory and storage**: An SLS on NVM can leverage NVM as both runtime memory and storage.
+* **Transparent external synchrony**. For example, in a database server, we need to first update the database and then send the response to the client.
 
 # Implementation
 
@@ -42,8 +39,6 @@ Two design issues:
 
 * How to efficiently capture the whole-system state? **Exploiting the capability tree.**
 * How to efficiently checkpoint the whole-system state? **Exploiting the checkpoint manager.**
-
-# Capability Tree
 
 > **Capability Tree**
 >
@@ -59,7 +54,7 @@ Two design issues:
 
 **Why capability tree?**
 
-* Captures all states of the system (**Explanation**: group all resources of the system in a tree).
+* It captures all states of the system (**Explanation**: group all resources of the system in a tree).
 
 * Checkpointing a tree structure is simpler and more straightforward than building SLS on monolithic kernels
 
@@ -69,16 +64,16 @@ Two design issues:
   >
   > **Micro kernels**: just the runtime data of applications.
 
-  **Thoughts**: The File Descriptor (FD) tables, dentry-cache, and inode-cache are integrated within the kernel's address space, sharing space with all other components like schedulers, physical memory allocator, etc. However, checkpointing the kernel's entire state is expensive. To enable cost-effective and fine-grained checkpointing, it is essential to understand "FD tables, dentry-cache, and inode-cache and relations between those structures", which is still very cubersome. In contrast, when dealing with a standalone filesystem component, checkpointing can be straightforwardly achieved by capturing its runtime data, without the need to delve into its internal structure.
+  **My Thoughts**: The File Descriptor (FD) tables, dentry-cache, and inode-cache are integrated within the kernel's address space, sharing space with all other components like schedulers, physical memory allocator, etc. However, checkpointing the kernel's entire state is expensive. To enable cost-effective and fine-grained checkpointing, it is essential to understand FD tables, dentry-cache, and inode-cache and relations between those structures, which is still very cubersome. In contrast, when dealing with a standalone filesystem component, checkpointing can be straightforwardly achieved by capturing its runtime data, without the need to delve into its internal structure.
 
-* Incremental checkpointing. Intact?  no need to checkpoint.
+* Incremental checkpointing. Intact?  then no need to checkpoint.
 
-**Question**: I think the philosophy here is that **all resources** are **packed** neatly here. Therefore, the gap between different subsystems is here is clear. Maybe it's not because the tree structure is good. It's because the micro kernels architecture makes sense.
+**My Thoughts**: I think the philosophy here is that **all resources** are **packed** neatly here. In other words, the micro kernel system holds great modularity. Therefore, the gap between different subsystems is here is clear. Maybe it's not because the tree structure is good. It's because the micro kernels architecture makes sense.
 
 **How each kind of object is checkpointed to the backup capability tree?**
 
 * Small-sized and frequently updated objects (e.g., Thread) are directly copied 
-* Large-sized and slowly changing objects (i.e., memory pages) are asynchronously copied (?) during runtime. 
+* Large-sized and slowly changing objects (e.g., memory pages) are asynchronously copied (e.g., copy-on-write) during runtime. 
 * Objects that can be rebuilt (e.g., page tables) are not included in the checkpoint, which trades restore time for faster checkpointing.
 
 > **Implementation Detail**: capability object root (ORoot) 
@@ -87,18 +82,18 @@ Two design issues:
 
 **Checkpointing VM Space and Page Tables**: the VM space consists of a list of virtual memory regions. We backup the virtual memory regions. The page tables are stored in DRAM and are dropped in case of failures. On recovery, we leverage the virtual memory regions to reconstruct the page table.
 
-**Checkpointing Physical Memory Objects**: TreeSLS duplicates the radix tree to the backup capability tree to checkpoint a PMO. The pages are marked read-only initially. Once the page is modified, the page fault handler **duplicates the page** (on NVM) and updates the pointer in the backup radix tree. Therefore, we only keep one checkpoint of the modified on NVM, which saves the memory.
+**Checkpointing Physical Memory Objects (Important)**: TreeSLS duplicates the radix tree to the backup capability tree to checkpoint a PMO. The pages (on NVM, which are used as runtime memory. Pages on DRAM have some other mechanisms) are marked read-only initially. Once the page is modified, the page fault handler **duplicates the page** (on NVM) and updates the pointer in the backup radix tree. Therefore, we only keep one checkpoint of the modified page on NVM, which saves the memory.
 
 **Methods to Copy Pages**:
 
 * **Stop-and-copy**: copy all the modified pages to the backup in the stop-the-world checkpointing.
 * **Copy-on-write**: during the checkpointing time, not to copy the page to backup. Only mark the page to be read-only; When the page is gonna to be modified, the page fault handler copies the page to backup.
 
-**Mechanism: Hybrid Copy**
+**Mechanism: Hybrid Copy (Most Value Idea)**
 
 TreeSLS checkpoints these hot pages on DRAM with **stop-and-copy** and the rest pages on NVM with **copy-on-write**.
 
-> My thought is that if we only use copy-on-write, which means that the pages on the DRAM are set to read-only and postpone the copy back to the next page fault, this suggests that if a failure happens between the previous checkpointing and the next page fault handler, the data on DRAM are lost. However, this could be avoided if we use stop-and-copy. On the other hand, the copy-on-write method does make sense on NVM.
+**My Thoughts**: I believe the initial idea here is to employ **copy-on-write** in both scenarios. However, relying solely on copy-on-write, which entails setting DRAM pages to read-only and delaying the copy back until the next page fault, implies a risk. If a failure occurs between the previous checkpoint and the actual page fault handler, the data on DRAM might be lost. Nonetheless, this risk can be mitigated by using stop-and-copy. Also, the cost for handling page faults is relatively too high. Essentially, **stop-and-copy** acts as an optimization to **copy-on-write** in the context of DRAM. Conversely, the copy-on-write approach is quite effective for NVM. Since NVM is non-volatile, it doesn't face data loss issues. Thus, employing **copy-on-write** in NVM circumvents the significant overhead associated with **stop-and-copy** for all pages.
 
 **Mechanism: Versioning using Radix tree**
 
@@ -109,3 +104,10 @@ Then, some hot runtime pages on NVM shall be referenced frequently and we need t
 In order to back up the DRAM one when performing **stop-and-copy** (as we have mentioned in hybrid copy), both of the pages on NVM can be used to store the content of the DRAM one.
 
 In case the DRAM page needs to be evicted from DRAM given it's less frequently accessed (in this case, the runtime page and the backup page have the same content), it will replace the place of the runtime page on NVM and set its version number to the latest number. By the way, it will also set the version number of the backup page to 0, which will foster later **copy-on-write** from the runtime page with the latest version number and the backup page with version number 0.
+
+# Evaluation
+
+- Does TreeSLS function well in various scenarios?
+- How much time does a checkpoint take?
+- How do checkpoints in TreeSLS affect the performance of running applications?
+- How do real applications perform on TreeSLS?
