@@ -15,7 +15,7 @@ export default defineConfig({
         text: 'Me',
         items: [
           { text: 'Biograhy', link: '/ },
-          { text: 'Something Fun', link: '/ }
+          { text: 'Something Fun', link: '/ },
         ],
       },
       '/posts/': {
