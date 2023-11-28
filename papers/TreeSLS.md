@@ -87,5 +87,25 @@ Two design issues:
 
 **Checkpointing VM Space and Page Tables**: the VM space consists of a list of virtual memory regions. We backup the virtual memory regions. The page tables are stored in DRAM and are dropped in case of failures. On recovery, we leverage the virtual memory regions to reconstruct the page table.
 
-**Checkpointing Physical Memory objects**: to checkpoint a PMO, TreeSLS duplicates the radix tree to the backup capability tree. The pages are marked read-only initially. Once the page is modified, the page fault handler duplicates the page and updates the pointer in the backup radix tree. Note that we only store pointers in the radix tree as the runtime pages on NVM can be used after power failures. (**Question**: what about the pages in DRAM?)
+**Checkpointing Physical Memory Objects**: TreeSLS duplicates the radix tree to the backup capability tree to checkpoint a PMO. The pages are marked read-only initially. Once the page is modified, the page fault handler **duplicates the page** (on NVM) and updates the pointer in the backup radix tree. Therefore, we only keep one checkpoint of the modified on NVM, which saves the memory.
 
+**Methods to Copy Pages**:
+
+* **Stop-and-copy**: copy all the modified pages to the backup in the stop-the-world checkpointing.
+* **Copy-on-write**: during the checkpointing time, not to copy the page to backup. Only mark the page to be read-only; When the page is gonna to be modified, the page fault handler copies the page to backup.
+
+**Mechanism: Hybrid Copy**
+
+TreeSLS checkpoints these hot pages on DRAM with **stop-and-copy** and the rest pages on NVM with **copy-on-write**.
+
+> My thought is that if we only use copy-on-write, which means that the pages on the DRAM are set to read-only and postpone the copy back to the next page fault, this suggests that if a failure happens between the previous checkpointing and the next page fault handler, the data on DRAM are lost. However, this could be avoided if we use stop-and-copy. On the other hand, the copy-on-write method does make sense on NVM.
+
+**Mechanism: Versioning using Radix tree**
+
+As we have mentioned earlier, the backup radix tree has pointers to the original runtime page if the page is not changed. If we need to back up the runtime page, we duplicate it and modify the radix tree to point to the backup copy of the runtime page. Therefore, we get one source **runtime page** and one **backup page** in NVM.
+
+Then, some hot runtime pages on NVM shall be referenced frequently and we need to move them to DRAM. Thus, we get three "copies" of this page: the DRAM one, the runtime one on NVM, and the backup one on NVM (Note that having backup page is the necessary condition for having three copies).
+
+In order to back up the DRAM one when performing **stop-and-copy** (as we have mentioned in hybrid copy), both of the pages on NVM can be used to store the content of the DRAM one.
+
+In case the DRAM page needs to be evicted from DRAM given it's less frequently accessed (in this case, the runtime page and the backup page have the same content), it will replace the place of the runtime page on NVM and set its version number to the latest number. By the way, it will also set the version number of the backup page to 0, which will foster later **copy-on-write** from the runtime page with the latest version number and the backup page with version number 0.
