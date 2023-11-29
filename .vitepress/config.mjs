@@ -15,7 +15,6 @@ export default defineConfig({
         text: 'Me',
         items: [
           { text: 'Biograhy', link: '/' },
-          { text: 'Something Fun', link: '/' },
         ],
       },
       '/posts/': {
@@ -30,6 +29,7 @@ export default defineConfig({
         text: 'Operating Systems',
         items: [
           { text: 'TreeSLS', link: '/papers/TreeSLS' },
+          { text: 'Transactional Memory', link: '/papers/transactional-memory' },
         ]
       }, {
         text: 'NLP',
