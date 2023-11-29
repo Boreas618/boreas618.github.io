@@ -46,7 +46,7 @@ Two design issues:
 >
 > Capability-based systems usually group all types of capabilities into a capability derivation tree. Processes can access a certain subset of the tree.
 >
-> <img src="https://p.ipic.vip/4g3kv1.png" alt="Screenshot 2023-11-27 at 1.51.21 AM" style="zoom: 33%;" />
+> <center><img src="https://p.ipic.vip/4g3kv1.png" alt="Screenshot 2023-11-27 at 1.51.21 AM" style="zoom: 33%;" /></center>
 >
 > Check out the post on **capacity-based systems** here: https://www2.seas.gwu.edu/~parmer/posts/2016-10-31-capability-based-systems.html
 >
