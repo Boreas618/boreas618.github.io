@@ -30,6 +30,7 @@ export default defineConfig({
         items: [
           { text: 'TreeSLS', link: '/papers/TreeSLS' },
           { text: 'Transactional Memory', link: '/papers/transactional-memory' },
+          { text: 'Kubernetes Scheduling', link: '/papers/kuber-scheduling' },
         ]
       }, {
         text: 'NLP',
