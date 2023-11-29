@@ -1,7 +1,7 @@
 ---
 layout: doc
 sidebar: true
-aside: false
+aside: true
 outline: true
 ---
 
