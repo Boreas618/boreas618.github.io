@@ -27,7 +27,7 @@
 
 * It's cubersome to handle errors inside the critical section in locking (The errors should be caught and handled properly. Also, the global state should be restored).
 
-<img src="https://p.ipic.vip/gus48b.png" alt="Screenshot 2023-11-29 at 3.38.14 PM" style="zoom: 33%;" />
+<center><img src="https://p.ipic.vip/gus48b.png" alt="Screenshot 2023-11-29 at 3.38.14 PM" style="zoom: 25%;" /></center>
 
 **Concepts of transactional memory**:
 
