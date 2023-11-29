@@ -13,7 +13,7 @@
 }
 ```
 
-# Background
+## Background
 
 **Drawbacks of the current lock-based synchronization**: 
 
@@ -81,11 +81,11 @@ Tracking read set and write set for each transaction.
 * Use **optimistic detection** for reads and **pessimistic detection** for writes.
 * Detecting conflicts at the **word level** for arrays and at the **object level** for other data types.
 
-# Implementation
+## Implementation
 
 Two directions: software and hardware.
 
-## Software Transactional Memory
+### Software Transactional Memory
 
 An STM implementation uses read and write barriers (that is, inserts instrumentation) for all shared memory reads and writes inside transactional code blocks.
 
@@ -121,7 +121,7 @@ On an abort, the STM library rolls back all the updates performed by the transac
 
 **Drawbacks**: 40-50 percent overhead & Manage the relationship between transactional and non-transactional code.
 
-## Hardware Transactional Memory
+### Hardware Transactional Memory
 
 Rely on the **cache hierarchy** and the **cache coherence** protocol to implement versioning and conflict detection.
 
