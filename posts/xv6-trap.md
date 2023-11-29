@@ -34,7 +34,7 @@ freemem:
 
 Xv6 trap handling proceeds in four stages: (1) hardware actions taken by the RISC-V CPU, (2) an assembly “vector” that prepares the way for kernel C code, (3) a C trap handler that decides what to do with the trap, and (4) the system call or device-driver service routine [5].
 
-### Phase 1: hardware actions taken by the RISC-V CPU
+## Phase 1: hardware actions taken by the RISC-V CPU
 
 We have executed the `ecall` instruction and the hardware begins to take control, subsequently transferring the control flow to the trap handler. The sequence of hardware actions includes procedures that manipulate registers in order to prepare for the trap handler. Therefore, we will first introduce some registers that will be manipulated in the hardware actions phase and subsequent phases.
 
@@ -66,7 +66,7 @@ In the xv6 book [5], traps can be classified into two classes: traps from user s
 
 **For traps from user space**, the routine of setting `stvec` to `uservec` occurs during the creation of new processes. Specifically, `stvec` is set to `trampoline_uservec` in the `usertrapret` function, which is called in `forkret`. `forkret` serves as the entry point for a new process. In summary, `stvec` is set to the user trap handler when a user process starts to run. **For traps from kernel space**, it is less subtle and clear in the source code.
 
-### Phase 2: an assembly “vector” that prepares the way for kernel C code
+## Phase 2: an assembly “vector” that prepares the way for kernel C code
 
 Do you still remember the four phases mentioned above? Now that the actions performed by the hardware are complete, we have jumped to the address specified in `stvec`. This address is referred to as **an assembly "vector" that prepares the way for kernel C code**.
 
@@ -76,11 +76,11 @@ Do you still remember the four phases mentioned above? Now that the actions perf
 
 The assembly code for `uservec` is clear enough with comments. Each process has a virtual memory area called `TRAPFRAME` where contexts from user space are saved. After the registers have been saved, the kernel stack pointer, page table, and hart id are fetched from `TRAPFRAME`, and the control is transferred to `usertrap` now.
 
-### Phase 3: a C trap handler that decides what to do with the trap
+## Phase 3: a C trap handler that decides what to do with the trap
 
 The C trap handler determines the cause of this trap by reading `scause`. The return address should be set to the next instruction if the trap is a system call. After the trap handler has determined that the trap is a system call, control is transferred to `syscall`, which will call the predefined system call function according to the system call number specified in `a7`.
 
-### Phase 4: the system call or device-driver service routine
+## Phase 4: the system call or device-driver service routine
 
 This is where the system call code is executed. To find the corresponding system call code, the system call number is used to index into a function pointer array and retrieve the appropriate function pointer. The system call functions are defined in `sysproc.c`.
 
@@ -98,7 +98,7 @@ if(copyout(p->pagetable, addr, (char *)&sum, sizeof(sum)) < 0)
 
 Above are the four phases of making and executing system calls in xv6. Handling user space interrupts and exceptions are similar in terms of the four phases. Returning from a trap is all about recovering the user contexts and is similar to saving contexts. The control is transferred from `usertrapret` to `userret`, and finally, to the next instructions of the instruction that causes the system call.
 
-# References
+## References
 
 **1** OS-23Fall-FDU Repository https://github.com/idlebo/OS-23Fall-FDU/blob/lab3/doc/trap.explained.md
 

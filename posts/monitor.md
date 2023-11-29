@@ -232,7 +232,7 @@ In the context of Hoare Semantics, thread A is immediately brought back to the m
 > ```
 
 
-# References
+## References
 
 **1** Modern operating systems.
 
