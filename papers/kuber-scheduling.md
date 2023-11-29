@@ -1,6 +1,4 @@
-# Kubernetes Scheduling
-
-This is an introduction to Kubernetes scheduling.
+<center><img src="https://p.ipic.vip/nj7wf6.png" style="zoom:100%;" /></center>
 
 ## Background of Containers Administration
 
