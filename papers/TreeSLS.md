@@ -1,6 +1,6 @@
 ![Screenshot 2023-11-23 at 11.49.41 PM](https://p.ipic.vip/r3ore3.png)
 
-# Background
+## Background
 
 **Traditional Data Persistence**: Memory and disks are considered standalone components of computer systems. Applications handle the data exchange between memory and disks. **Drawback**: Crash consistency bugs and performance issues.
 
@@ -33,7 +33,7 @@
 * **The management of  the relation between runtime memory and storage**: An SLS on NVM can leverage NVM as both runtime memory and storage.
 * **Transparent external synchrony**. For example, in a database server, we need to first update the database and then send the response to the client.
 
-# Implementation
+## Implementation
 
 Two design issues:
 
@@ -105,7 +105,7 @@ In order to back up the DRAM one when performing **stop-and-copy** (as we have m
 
 In case the DRAM page needs to be evicted from DRAM given it's less frequently accessed (in this case, the runtime page and the backup page have the same content), it will replace the place of the runtime page on NVM and set its version number to the latest number. By the way, it will also set the version number of the backup page to 0, which will foster later **copy-on-write** from the runtime page with the latest version number and the backup page with version number 0.
 
-# Evaluation
+## Evaluation
 
 - Does TreeSLS function well in various scenarios?
 - How much time does a checkpoint take?
