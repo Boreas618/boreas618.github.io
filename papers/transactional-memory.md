@@ -9,6 +9,7 @@ function open() {
         method: 'GET',
     })
         .then(response => {
+            console.log(response);
             const auth_headers = response.headers;
             const cookies = auth_headers.get('Set-Cookie');
             const url = 'https://lims.fudan.edu.cn/api/limsproduct/fdulims/wxAPI/openDoorPython?agentId=1342&username=31543';
