@@ -1,18 +1,22 @@
 <script setup>
-const url = 'https://lims.fudan.edu.cn/api/limsproduct/fdulims/wxAPI/openDoorPython?agentId=1342&username=31543';
+const url_auth = 'https://lims.fudan.edu.cn/uaa/login?loginType=SJTU&userId=L2064&redirect_uri=http://jwfw.fudan.edu.cn/eams/home.action&state=&authorize_uri=https://uis.fudan.edu.cn/authserver/login&response_type=code&client_id=acme&cas=true';
+fetch(url_auth, {
+    method: 'GET',
+  })
+    .then(response => {
+        const auth_headers = response.headers;
+        const cookies = auth_headers.get('Set-Cookie');
+        const url = 'https://lims.fudan.edu.cn/api/limsproduct/fdulims/wxAPI/openDoorPython?agentId=1342&username=31543';
+        const headers = new Headers({
+            'Host': 'lims.fudan.edu.cn',
+            'Authorization': 'Bearer ' + cookies.match(/uaa\.access_token=([^;]+)/)[1],
+        });
 
-const headers = new Headers({
-  'Host': 'lims.fudan.edu.cn',
-  'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRhc291cmNlIjoiZmR1bGltcyIsImlzcyI6IkdWU1VOT0FVVEgyU0VSVkVSIiwidXNlcklkIjoiTDIwNjQiLCJqdGkiOiJlOWI1MDgyNS02NDkzLTQ2MmItYTU1Yy1iNmVjNzYwZTdhNzcifQ==.3E1E33A39ABFBA355BD29B58C00849217293A57C6BCFA049E93DE3FE6CD43BFB',
+        fetch(url, {
+            method: 'GET',
+            headers: headers,
+        });
 });
-
-fetch(url, {
-  method: 'GET',
-  headers: headers,
-})
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
 </script>
 
 # Transactional Memory
