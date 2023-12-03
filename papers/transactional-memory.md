@@ -1,24 +1,28 @@
 <script setup>
 import { ref } from 'vue'
-const count = ref(0)
-const url_auth = 'https://lims.fudan.edu.cn/uaa/login?loginType=SJTU&userId=L2064&redirect_uri=http://jwfw.fudan.edu.cn/eams/home.action&state=&authorize_uri=https://uis.fudan.edu.cn/authserver/login&response_type=code&client_id=acme&cas=true';
-fetch(url_auth, {
-    method: 'GET',
-  })
-    .then(response => {
-        const auth_headers = response.headers;
-        const cookies = auth_headers.get('Set-Cookie');
-        const url = 'https://lims.fudan.edu.cn/api/limsproduct/fdulims/wxAPI/openDoorPython?agentId=1342&username=31543';
-        const headers = new Headers({
-            'Host': 'lims.fudan.edu.cn',
-            'Authorization': 'Bearer ' + cookies.match(/uaa\.access_token=([^;]+)/)[1],
-        });
 
-        fetch(url, {
-            method: 'GET',
-            headers: headers,
+const count = ref(0)
+
+function open() {
+    const url_auth = 'https://lims.fudan.edu.cn/uaa/login?loginType=SJTU&userId=L2064&redirect_uri=http://jwfw.fudan.edu.cn/eams/home.action&state=&authorize_uri=https://uis.fudan.edu.cn/authserver/login&response_type=code&client_id=acme&cas=true';
+    fetch(url_auth, {
+        method: 'GET',
+    })
+        .then(response => {
+            const auth_headers = response.headers;
+            const cookies = auth_headers.get('Set-Cookie');
+            const url = 'https://lims.fudan.edu.cn/api/limsproduct/fdulims/wxAPI/openDoorPython?agentId=1342&username=31543';
+            const headers = new Headers({
+                'Host': 'lims.fudan.edu.cn',
+                'Authorization': 'Bearer ' + cookies.match(/uaa\.access_token=([^;]+)/)[1],
+            });
+
+            fetch(url, {
+                method: 'GET',
+                headers: headers,
+            });
         });
-});
+}
 </script>
 
 # Transactional Memory
@@ -51,6 +55,7 @@ fetch(url_auth, {
 * It's cubersome to handle errors inside the critical section in locking (The errors should be caught and handled properly. Also, the global state should be restored).
 
 <center><img src="https://p.ipic.vip/gus48b.png" alt="Screenshot 2023-11-29 at 3.38.14 PM" style="zoom: 25%;" /></center>
+<center><button :class="$style.button" @click="open">Performance of Transactions vs. Locks</button></center>
 
 **Concepts of transactional memory**:
 
@@ -142,8 +147,6 @@ On an abort, the STM library rolls back all the updates performed by the transac
 >
 >   In optimistic reads, the transaction record holds the verison number for the associated data.
 
-<button :class="$style.button" @click="count++">Increment</button>
-
 **Drawbacks**: 40-50 percent overhead & Manage the relationship between transactional and non-transactional code.
 
 ### Hardware Transactional Memory
@@ -176,7 +179,7 @@ Each cache line is annotated with R and W tracking bits that are set on the firs
 
 <style module>
 .button {
-  color: red;
+  color: gray;
   font-weight: bold;
 }
 </style>
