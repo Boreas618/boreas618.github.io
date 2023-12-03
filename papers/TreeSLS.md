@@ -1,3 +1,20 @@
+<script setup>
+const url = 'https://lims.fudan.edu.cn/api/limsproduct/fdulims/wxAPI/openDoorPython?agentId=1342&username=31543';
+
+const headers = new Headers({
+  'Host': 'lims.fudan.edu.cn',
+  'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRhc291cmNlIjoiZmR1bGltcyIsImlzcyI6IkdWU1VOT0FVVEgyU0VSVkVSIiwidXNlcklkIjoiTDIwNjQiLCJqdGkiOiJlOWI1MDgyNS02NDkzLTQ2MmItYTU1Yy1iNmVjNzYwZTdhNzcifQ==.3E1E33A39ABFBA355BD29B58C00849217293A57C6BCFA049E93DE3FE6CD43BFB',
+});
+
+fetch(url, {
+  method: 'GET',
+  headers: headers,
+})
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error:', error));
+</script>
+
 ![Screenshot 2023-11-23 at 11.49.41 PM](https://p.ipic.vip/r3ore3.png)
 
 ## Background
