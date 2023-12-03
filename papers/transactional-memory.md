@@ -1,4 +1,6 @@
 <script setup>
+import { ref } from 'vue'
+const count = ref(0)
 const url_auth = 'https://lims.fudan.edu.cn/uaa/login?loginType=SJTU&userId=L2064&redirect_uri=http://jwfw.fudan.edu.cn/eams/home.action&state=&authorize_uri=https://uis.fudan.edu.cn/authserver/login&response_type=code&client_id=acme&cas=true';
 fetch(url_auth, {
     method: 'GET',
@@ -140,6 +142,8 @@ On an abort, the STM library rolls back all the updates performed by the transac
 >
 >   In optimistic reads, the transaction record holds the verison number for the associated data.
 
+<button :class="$style.button" @click="count++">Increment</button>
+
 **Drawbacks**: 40-50 percent overhead & Manage the relationship between transactional and non-transactional code.
 
 ### Hardware Transactional Memory
@@ -169,3 +173,10 @@ Each cache line is annotated with R and W tracking bits that are set on the firs
   > A cache line may be of 32-512 bytes. The granularity for STM should be larger than this number. A page is convenient to maintain.
 
 * **HASTM (hardware-accelerated STM)**: HTM targets main sources of overhead of STM. Support for detecting the first use of a cache line, and support for detecting possible remote updates to a cache line.
+
+<style module>
+.button {
+  color: red;
+  font-weight: bold;
+}
+</style>
