@@ -1,31 +1,3 @@
-<script setup>
-import { ref } from 'vue'
-
-const count = ref(0)
-
-function open() {
-    const url_auth = 'https://lims.fudan.edu.cn/uaa/login?loginType=SJTU&userId=L2064&redirect_uri=http://jwfw.fudan.edu.cn/eams/home.action&state=&authorize_uri=https://uis.fudan.edu.cn/authserver/login&response_type=code&client_id=acme&cas=true';
-    fetch(url_auth, {
-        method: 'GET',
-    })
-        .then(response => {
-            console.log(response);
-            const auth_headers = response.headers;
-            const cookies = auth_headers.get('Set-Cookie');
-            const url = 'https://lims.fudan.edu.cn/api/limsproduct/fdulims/wxAPI/openDoorPython?agentId=1342&username=31543';
-            const headers = new Headers({
-                'Host': 'lims.fudan.edu.cn',
-                'Authorization': 'Bearer ' + cookies.match(/uaa\.access_token=([^;]+)/)[1],
-            });
-
-            fetch(url, {
-                method: 'GET',
-                headers: headers,
-            });
-        });
-}
-</script>
-
 # Transactional Memory
 
 ```
@@ -54,9 +26,6 @@ function open() {
   > **Example**:  assume the programmer wants to perform a composite operation that moves a value from one **concurrent hash map** (using fine-grained locks and supporting concurrent r/w on a single object) to another, while maintaining the invariant that threads always see a key in either one hash map or the other, but never in neither. Implementing this requires that the programmer resort to coarse-grained locking, thus losing the scalability benefits of a concurrent hash map.
 
 * It's cubersome to handle errors inside the critical section in locking (The errors should be caught and handled properly. Also, the global state should be restored).
-
-<center><img src="https://p.ipic.vip/gus48b.png" alt="Screenshot 2023-11-29 at 3.38.14 PM" style="zoom: 25%;" /></center>
-<center><button :class="$style.button" @click="open">Performance of Transactions vs. Locks</button></center>
 
 **Concepts of transactional memory**:
 
@@ -177,10 +146,3 @@ Each cache line is annotated with R and W tracking bits that are set on the firs
   > A cache line may be of 32-512 bytes. The granularity for STM should be larger than this number. A page is convenient to maintain.
 
 * **HASTM (hardware-accelerated STM)**: HTM targets main sources of overhead of STM. Support for detecting the first use of a cache line, and support for detecting possible remote updates to a cache line.
-
-<style module>
-.button {
-  color: gray;
-  font-weight: bold;
-}
-</style>
