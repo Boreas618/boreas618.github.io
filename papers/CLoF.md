@@ -8,6 +8,28 @@
 
 Efficient locking mechanism for such systems (many core & NUMA) is important for the scalability and performance of multi-threaded applications.
 
+**Challenges**: Nature of NUMA architecture.
+
+> Example: a wide spectrum of memory-access latencies depending on the local of data on memory. What if an object is on the main memory of another NUMA node?
+
+**Requirements for locks on multi-level NUMA systems**:
+
+* **Multi-level**: locks should support not only NUMA nodes, but also packages, cache levels, and cache coloring/tagging policies.
+* **Heterogeneity**: contention characteristics of each level of multi-level is different.
+* **Architecture-optimized**:  different architectures allow for different optimizations - differnt algorithms for different architectures.
+* **Correctness**: weak memory models (WMMs) on Armv8 - aggressive reorderings of memory accesses to improve performance - carefully use memory barriers to enforce the necessary order, which is error-prone.
+
+**Idea of CLoF**: Given a set of simple, NUMA-oblivious spinlocks verified on WMMs, CLoF generates hundreds of heterogeneous, multi-level NUMA-aware spinlocks (i.e., CLoF locks) for a target platform.
+
+**Contributions**: 
+
+* A technique to capture the multiple levels of the memory hierarchy.
+* Two techniques to derive the lock generator: syntactic recursive generator and context abstraction.
+* A correctness argument for CLoF.
+* An approach to select the best generated lock.
+
+## Existing Works
+
 ### NUMA-oblivious Spinlocks
 
 * **Ticketlock**: a spinlock consisting of two fields: `ticket` and `grant`. To acquire the lock, a thread atomically increments the `ticket` and waits for `grant` to equal its ticket value.
@@ -34,23 +56,10 @@ In NUMA-aware locks, instead of releasing the lock in a strict FIFO order, the l
 
 > On an x86 platform with hyperthreading, the authors of HMCS lock suggest a hierarchy of system level, NUMA-node level, and core level (i.e., hyperthread pairs). To enter the critical section, the thread needs to acquire the ownership of the locks on its path from the leaf till the root (system level), e.g., core, NUMA node, and system. To exploit locality, the lock is passed to the waiting thread, which shares most levels (e.g., in the same core or in the same NUMA node), as long as the threshold at that level is not reached.
 
-**Challenges**: Nature of NUMA architecture.
+### Heterogeneous NUMA-aware Locks
 
-> Example: a wide spectrum of memory-access latencies depending on the local of data on memory. What if an object is on the main memory of another NUMA node?
+**HMCS lock**: each level contains a set of MCS locks.
 
-**Requirements for locks on multi-level NUMA systems**:
+**Lock Cohorting**: a technique that allows combining different NUMA-oblivious locks in a 2-level hierarchy.
 
-* **Multi-level**: locks should support not only NUMA nodes, but also packages, cache levels, and cache coloring/tagging policies.
-* **Heterogeneity**: contention characteristics of each level of multi-level is different.
-* **Architecture-optimized**:  different architectures allow for different optimizations - differnt algorithms for different architectures.
-* **Correctness**: weak memory models (WMMs) on Armv8 - aggressive reorderings of memory accesses to improve performance - carefully use memory barriers to enforce the necessary order, which is error-prone.
-
-**Idea of CLoF**: Given a set of simple, NUMA-oblivious spinlocks verified on WMMs, CLoF generates hundreds of heterogeneous, multi-level NUMA-aware spinlocks (i.e., CLoF locks) for a target platform.
-
-**Contributions**: 
-
-* A technique to capture the multiple levels of the memory hierarchy.
-* Two techniques to derive the lock generator: syntactic recursive generator and context abstraction.
-* A correctness argument for CLoF.
-* An approach to select the best generated lock.
-
+Locks created with a hierarchy of different locks are **level-heterogeneous**, whereas locks created with a hierarchy of identical locks are **level-homogeneous**. Therefore, **HMCS** lock is level-homogeneous.
