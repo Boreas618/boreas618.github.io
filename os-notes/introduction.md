@@ -1,37 +1,5 @@
 # Introduction
 
-> 1. Booting
-
-[Case Study: Pintos Booting](./case-study-pintos-booting.md)
-
-> 2. Process and Thread
-
-[Process and Thread](./process-and-thread.md)
-
-[Programming: Process and Thread](./programming-process-and-thread.md)
-
-[Programming: Signal](./programming-signal.md)
-
-[Case Study: Linux Task Model](./linux-task.md)
-
-> 3. Processor Scheduling
-
-[Scheduling](./scheduling.md)
-
-[Case Study: Linux Scheduling](./linux-scheduling.md)
-
-> 4. Synchronization and Mutual Exclusion
-
-[Synchronization and Mutual Exclusion](./synchronization-and-mutual-exclusion.md)
-
-[Case Study: Linux Futex](./linux-futex.md)
-
-> 5. Memory Management
-
-[Cache](./cache.md)
-
-[Memory Management: Mechanisms](./memory-management-mechanisms.md)
-
 ## Features
 
 * **Concurrency**
