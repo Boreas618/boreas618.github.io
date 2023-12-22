@@ -8,7 +8,6 @@ export default defineConfig({
     nav: [
       { text: 'Me', link: '/' },
       { text: 'Posts', link: '/posts/monitor' },
-      { text: 'Paper Reading', link: '/papers/TreeSLS' },
     ],
     sidebar: {
       '/': {
@@ -17,17 +16,19 @@ export default defineConfig({
           { text: 'Biograhy', link: '/' },
         ],
       },
-      '/posts/': {
+      '/os-notes/': {
+        text: 'OS Notes',
+        items: [
+          {text: 'Introduction', link: '/os-notes/introduction'},
+          {text: 'Process and Thread', link: '/os-notes/process-and-thread'},
+        ],
+      },
+      '/posts/': [{
         text: 'Operating Systems',
         items: [
           { text: 'Monitor, Condition Variables and Three Semantics', link: '/posts/monitor' },
           { text: 'Exception and Interrupt Handling in xv6', link: '/posts/xv6-trap' },
           { text: 'Function Prologues', link: '/posts/function-prologues' },
-        ]
-      },
-      '/papers/': [{
-        text: 'Operating Systems',
-        items: [
           { text: 'TreeSLS', link: '/papers/TreeSLS' },
           { text: 'Transactional Memory', link: '/papers/transactional-memory' },
           { text: 'Kubernetes Scheduling', link: '/papers/kuber-scheduling' },

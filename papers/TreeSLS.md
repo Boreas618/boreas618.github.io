@@ -1,37 +1,48 @@
 ![Screenshot 2023-11-23 at 11.49.41 PM](https://p.ipic.vip/r3ore3.png)
 
+报告中包含了我的理解与想法。对于一些重要的内容，为了方便读者理解，我采用中文表述。
+
 ## Background
 
-**Traditional Data Persistence**: Memory and disks are considered standalone components of computer systems. Applications handle the data exchange between memory and disks. **Drawback**: Crash consistency bugs and performance issues.
+**Traditional Data Persistence**: Memory and disks are considered standalone components of computer systems. Applications should handle the data exchange between memory and disks (nowadays we got mechanisms like page replacement to perform this task transparently). **Drawback**: Crash consistency bugs and performance issues.
 
 **Single-Level Store**: Memory and disks are considered as a whole **from the perspective of applications**. The operating system takes the responsibility for data persistence, which is transparent to applications through **checkpointing**. 
 
-**Drawback of SLS**: 
+**Drawbacks of Single-Level Store (SLS)**: 
 
 1. Performance 
 
-   **Mechanism for Data Persistance**: Checkpointing ([Lab 6 of OS(H) @ Fudan University](https://github.com/Boreas618/OS-Honor-23Fall/tree/lab6))
+   **Mechanism for Data Persistance in SLS**: Checkpointing ([Lab 6 of OS(H) @ Fudan University](https://github.com/Boreas618/OS-Honor-23Fall/tree/lab6))
 
    **Reality**: There is a huge difference between memory and disks in terms of speed, volatility, and access granularity.
 
-   **Consequence**: Low performance and risk of data loss (The low speed implies that we cannot checkpoint frequently - can only be taken at minute-level intervals).
+   **Consequence**: Low performance and risk of data loss (The low speed implies that we cannot checkpoint frequently - checkpoints can only be taken at minute-level intervals).
 
 2. External synchrony issue
 
    **Handling the API of SLS for external synchrony is non-trivial**.
 
-**Opportunities: The emergence of fast, byte-addressable non-volatile memory (NVM)**: Storage-like durability and DRAM-like **byte-addressability (Core feature, which indicates that we can use NVM as (part of) main memory)** and access performance. This makes it possible to perform fast and direct manipulation of persistent data (i.e., without the need for checkpointing).
+**Opportunities: The emergence of fast, byte-addressable non-volatile memory (NVM)**: Storage-like durability and DRAM-like **byte-addressability** (core feature, which indicates that we can use NVM as (part of) the main memory). This makes it possible to perform fast and direct manipulation of persistent data.
 
-**Is NVM perfect?**: CPU and device registers can still be lost upon power failures. Therefore, checkpointing is still necessary.
+**Is NVM perfect?**: CPU and device registers can still be lost upon power failures. Therefore, checkpointing the whole system is still necessary.
 
 **Research question**:
 
-<center><h3>Data Persistence (Checkpointing) in SLS on NVM</h3></center>
+<center><h3>Data Persistence (Checkpointing) of the whole system in SLS on NVM</h3></center>
 
 **Challenges**:
 
-* **The management of  the relation between runtime memory and storage**: An SLS on NVM can leverage NVM as both runtime memory and storage.
+* **The management of  the relation between runtime memory and storage**: An SLS on NVM can leverage NVM as both runtime memory and storage. 在传统的存储结构中，硬盘就是硬盘，主存就是主存，而NVM既可以作为硬盘，也可以作为主存（因为其可以以字节为单位访问，而传统硬盘一般以块为单位访问。）
 * **Transparent external synchrony**. For example, in a database server, we need to first update the database and then send the response to the client.
+
+## Target System
+
+A computer system runs a microkernel operating system.
+
+Both DRAM and NVM can be used as memory. These components are transparent to user programs, as they can both be accessed in byte units. However, from the operating system's perspective, the system operates on the principle of:
+
+* Having a Single-Level Store (SLS), which means that memory and disk storage are interchangeable.
+* Some parts of the SLS (DRAM part) are faster than others (NVM part). Therefore, placing frequently accessed pages in DRAM can reduce access overhead.
 
 ## Implementation
 
@@ -56,7 +67,7 @@ Two design issues:
 
 * It captures all states of the system (**Explanation**: group all resources of the system in a tree).
 
-* Checkpointing a tree structure is simpler and more straightforward than building SLS on monolithic kernels
+* Checkpointing a tree structure is simpler and more straightforward than building SLS on monolithic kernels.
 
   > **Example:** checkpointing fs on monolithic kernels and microkernels.
   >
@@ -66,9 +77,11 @@ Two design issues:
 
   **My Thoughts**: The File Descriptor (FD) tables, dentry-cache, and inode-cache are integrated within the kernel's address space, sharing space with all other components like schedulers, physical memory allocator, etc. However, checkpointing the kernel's entire state is expensive. To enable cost-effective and fine-grained checkpointing, it is essential to understand FD tables, dentry-cache, and inode-cache and relations between those structures, which is still very cubersome. In contrast, when dealing with a standalone filesystem component, checkpointing can be straightforwardly achieved by capturing its runtime data, without the need to delve into its internal structure.
 
-* Incremental checkpointing. Intact?  then no need to checkpoint.
+  Capability Tree一般实现在微内核操作系统中，由于微内核的模块化特征，我们可以用树结构组织系统资源，并且依靠树结构来进行数据持久化。为什么是树结构？我认为这还是基于进程树的概念，同时将各种其他资源，如文件、网络连接等，也作为树的节点挂载到进程树上，实现对whole system的资源管理。
 
-**My Thoughts**: I think the philosophy here is that **all resources** are **packed** neatly here. In other words, the micro kernel system holds great modularity. Therefore, the gap between different subsystems is here is clear. Maybe it's not because the tree structure is good. It's because the micro kernels architecture makes sense.
+* Incremental checkpointing. If the resource is intact since last checkpointing, then there is no need to checkpoint.
+
+**My Thoughts**: I think the philosophy here is that **all resources** are **packed** neatly here. In other words, the micro kernel system holds great modularity. Therefore, the gap between different subsystems is here is clear. It's because the micro kernels architecture makes sense.
 
 **How each kind of object is checkpointed to the backup capability tree?**
 
@@ -80,18 +93,20 @@ Two design issues:
 >
 > For every **unique** object, TreeSLS mantains a ORoot structure to avoid redunant checkpointing. This is because an object can be shared by multiple cap groups. I guess that the ORoots hold pointers to the tree nodes and the tree nodes hold pointers to ORoots.
 
-**Checkpointing VM Space and Page Tables**: the VM space consists of a list of virtual memory regions. We backup the virtual memory regions. The page tables are stored in DRAM and are dropped in case of failures. On recovery, we leverage the virtual memory regions to reconstruct the page table.
+**Checkpointing VM (Virtual Memory) Space and Page Tables**: the VM space consists of a list of virtual memory regions. We backup the virtual memory regions. The page tables are stored in DRAM and are dropped in case of failures. On recovery, we leverage the virtual memory regions to reconstruct the page table.
 
-**Checkpointing Physical Memory Objects (Important)**: TreeSLS duplicates the radix tree to the backup capability tree to checkpoint a PMO. The pages (on NVM, which are used as runtime memory. Pages on DRAM have some other mechanisms) are marked read-only initially. Once the page is modified, the page fault handler **duplicates the page** (on NVM) and updates the pointer in the backup radix tree. Therefore, we only keep one checkpoint of the modified page on NVM, which saves the memory.
+**Checkpointing Physical Memory Objects (Important)**: TreeSLS duplicates the radix tree to the backup capability tree to checkpoint a PMO (Physical Memory Object). The pages on NVM, which are used as runtime memory are marked as read-only initially. Once the page is modified, the page fault handler **duplicates the page** (on NVM) and updates the pointer in the backup radix tree. Therefore, we only keep one checkpoint of the modified page on NVM, which saves the memory.
 
 **Methods to Copy Pages**:
 
 * **Stop-and-copy**: copy all the modified pages to the backup in the stop-the-world checkpointing.
 * **Copy-on-write**: during the checkpointing time, not to copy the page to backup. Only mark the page to be read-only; When the page is gonna to be modified, the page fault handler copies the page to backup.
 
-**Mechanism: Hybrid Copy (Most Value Idea)**
+**Mechanism: Hybrid Copy (我认为是Most Value Idea)**
 
 TreeSLS checkpoints these hot pages on DRAM with **stop-and-copy** and the rest pages on NVM with **copy-on-write**.
+
+我们在Target System里提到了，某些频繁被访问的页会被置于DRAM中，而某些不常被访问的页会被置于NVM中 —— 尽管在SLS中，DRAM和NVM在角色上没什么区别，但DRAM终归要比NVM快。因此，当我们需要checkpoint whole system时，对于DRAM中的页和NVM中的页，采用不同复制方法将这些页复制到非易失的NVM中保存。至于为什么要采用不同的方法，下面是我的理解（原文语焉不详，我发邮件询问了作者，没有收到回复）
 
 **My Thoughts**: I believe the initial idea here is to employ **copy-on-write** in both scenarios. However, relying solely on copy-on-write, which entails setting DRAM pages to read-only and delaying the copy back until the next page fault, implies a risk. If a failure occurs between the previous checkpoint and the actual page fault handler, the data on DRAM might be lost. Nonetheless, this risk can be mitigated by using stop-and-copy. Also, the cost for handling page faults is relatively too high. Essentially, **stop-and-copy** acts as an optimization to **copy-on-write** in the context of DRAM. Conversely, the copy-on-write approach is quite effective for NVM. Since NVM is non-volatile, it doesn't face data loss issues. Thus, employing **copy-on-write** in NVM circumvents the significant overhead associated with **stop-and-copy** for all pages.
 
