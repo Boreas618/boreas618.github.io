@@ -8,6 +8,7 @@ export default defineConfig({
     nav: [
       { text: 'Me', link: '/' },
       { text: 'Posts', link: '/posts/monitor' },
+      { text: 'OS Notes', link: '/os-notes/introduction' },
     ],
     sidebar: {
       '/': {
