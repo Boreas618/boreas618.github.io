@@ -9,11 +9,9 @@ outline: true
 
 **Email**: 21307130094 AT m DOT fudan DOT edu DOT cn
 
-**WeChat**: Boreas618
-
-**Main Interests**: Operating Systems, Natural Language Processing, Deep Learning, Visual Analysis
+**Main Interests**: Operating Systems, Natural Language Processing, Deep Learning, Visualization & XAI
 
 ## Education
 
 * **2021.9 - Present** Fudan University, Shanghai, China, B.S. in Computer Science
-* **2023.2 - 2023.6** The University of Melbourne, Melbourne, Australia, Exchange Student
+* **2023.2 - 2023.6** The University of Melbourne, Melbourne, Australia, Exchange Student (Gap year)
