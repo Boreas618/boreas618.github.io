@@ -9,7 +9,7 @@ outline: true
 
 **Email**: 21307130094 AT m DOT fudan DOT edu DOT cn
 
-**Main Interests**: Operating Systems, Natural Language Processing, Deep Learning, Visualization & XAI
+**Main Interests**: Operating Systems, Natural Language Processing, Visualization & XAI
 
 ## Education
 
