@@ -1,7 +1,5 @@
 ![Screenshot 2023-11-23 at 11.49.41 PM](https://p.ipic.vip/r3ore3.png)
 
-报告中包含了我的理解与想法。对于一些重要的内容，为了方便读者理解，我采用中文表述。
-
 ## Background
 
 **Traditional Data Persistence**: Memory and disks are considered standalone components of computer systems. Applications should handle the data exchange between memory and disks (nowadays we got mechanisms like page replacement to perform this task transparently). **Drawback**: Crash consistency bugs and performance issues.

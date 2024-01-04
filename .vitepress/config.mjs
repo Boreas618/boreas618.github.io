@@ -14,7 +14,7 @@ export default defineConfig({
       '/': {
         text: 'Me',
         items: [
-          { text: 'Biograhy', link: '/' },
+          { text: 'Biography', link: '/' },
         ],
       },
       '/os-notes/': {
@@ -24,7 +24,6 @@ export default defineConfig({
           {text: 'Case: Pintos Booting', link: '/os-notes/case-study-pintos-booting'},
           {text: 'Process and Thread', link: '/os-notes/process-and-thread'},
           {text: 'Programming: Process and Thread', link: '/os-notes/programming-process-and-thread'},
-          //{text: 'Interrupt', link: '/os-notes/interrupt'},
           {text: 'Programming: Signal', link: '/os-notes/programming-signal'},
           {text: 'Case: Linux Task', link: '/os-notes/linux-task'},
           {text: 'Scheduling', link: '/os-notes/scheduling'},
@@ -48,10 +47,10 @@ export default defineConfig({
           { text: 'Monitor, Condition Variables and Three Semantics', link: '/posts/monitor' },
           { text: 'Exception and Interrupt Handling in xv6', link: '/posts/xv6-trap' },
           { text: 'Function Prologues', link: '/posts/function-prologues' },
-          { text: 'TreeSLS', link: '/papers/TreeSLS' },
-          { text: 'Transactional Memory', link: '/papers/transactional-memory' },
-          { text: 'Kubernetes Scheduling', link: '/papers/kuber-scheduling' },
-          { text: 'CLoF', link: '/papers/CLoF' },
+          { text: 'TreeSLS', link: '/posts/TreeSLS' },
+          { text: 'Transactional Memory', link: '/posts/transactional-memory' },
+          { text: 'Kubernetes Scheduling', link: '/posts/kuber-scheduling' },
+          { text: 'CLoF', link: '/posts/CLoF' },
         ]
       }, {
         text: 'NLP',

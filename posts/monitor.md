@@ -1,6 +1,6 @@
 # Monitors, Condition Variables and Three Semantics
 
-Semaphores and locks are powerful synchronization primitives that can help prevent race conditions to some extent. However, the use of these primitives is subtle and complex. Even slight mistakes can lead to serious concurrency issues[^1]. For example, consider the following code:
+Semaphores and locks are powerful synchronization primitives that can help prevent race conditions to some extent. However, the use of these primitives is subtle and complex. Even slight mistakes can lead to serious concurrency issues [1]. For example, consider the following code:
 
 ```c
 sem_t empty;
@@ -40,7 +40,7 @@ This is how we address the producer/consumer problem using semaphores. Let's say
 
 ## Monitors
 
-To address the limited fault tolerance of locks and semaphores, Brinch Hansen (1973) and Hoare (1974) introduced a higher-level synchronization primitive known as a **monitor**[^1]. A monitor is a feature implemented by programming languages (compilers) that can reduce the likelihood of errors in concurrent programs. To avoid making the concept too abstract, we first present a Java implementation of a monitor that aims to solve the producer/consumer problem.
+To address the limited fault tolerance of locks and semaphores, Brinch Hansen (1973) and Hoare (1974) introduced a higher-level synchronization primitive known as a **monitor** [1]. A monitor is a feature implemented by programming languages (compilers) that can reduce the likelihood of errors in concurrent programs. To avoid making the concept too abstract, we first present a Java implementation of a monitor that aims to solve the producer/consumer problem.
 
 ```java
 class Monitor {
@@ -93,7 +93,7 @@ Instead of spinning, threads can simply go to sleep in the context of condition 
 
 Condition variables are equipped with two operations: `wait` and `signal`. They are similar to `P` and `V` in semaphores. The potential difference is that when the condition is not met, `wait` will put the current process to sleep. (I'm not entirely sure whether the semaphore is meant to spin or sleep. I have seen both versions.)
 
-In this blog, we present a demo code that utilizes condition variables[^2]. Similar ideas can be adapted for implementing monitors.
+In this blog, we present a demo code that utilizes condition variables [2]. Similar ideas can be adapted for implementing monitors.
 
 ```c
 int done = 0;
@@ -188,7 +188,7 @@ Consider the following scenario:
 
 > A is `wait`ing for the buffer. B now `signal`s the buffer. Now, what's to run next? A or B?
 
-There are three semantics to model this possible exection sequence[^3]:
+There are three semantics to model this possible exection sequence [3]:
 
 * Mesa Semantics
 * Brinch Hansen Semantics
@@ -199,7 +199,6 @@ There are three semantics to model this possible exection sequence[^3]:
 <img src="https://dengzuoheng.github.io/images/monitor_bh.jpg" alt="Brinch Hansen" style="zoom:50%; display: block; margin: auto;" />
 
 <img src="https://cseweb.ucsd.edu/classes/sp16/cse120-a/applications/ln/monitor_hoare.jpg" alt="img" style="zoom:50%; display: block; margin: auto;" />
-
 
 
 Compared to Mesa Semantics, in the context of Brinch Hansen Semantics, thread B signals on the buffer only after it has left the monitor.
