@@ -43,10 +43,11 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Install dependencies
-        run: yarn install
+        run: |
+          yarn install
+          yarn add markdown-it-mathjax3
       - name: Build with VitePress
         run: |
-          yarn add markdown-it-mathjax3
           yarn docs:build
           touch ./.vitepress/dist/.nojekyll
       - name: Upload artifact
