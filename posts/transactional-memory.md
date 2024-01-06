@@ -143,8 +143,8 @@ Each cache line is annotated with R and W tracking bits that are set on the firs
   >
   > To avoid the need for two versions of the code, the software mode of a hybrid STM system can be provided through the operating system with conflict detection at the granularity of memory pages.
   >
-  > **My Thoughts**
-  >
+  > :::tip Thoughts
   > A cache line may be of 32-512 bytes. The granularity for STM should be larger than this number. A page is convenient to maintain.
+  > :::
 
 * **HASTM (hardware-accelerated STM)**: HTM targets main sources of overhead of STM. Support for detecting the first use of a cache line, and support for detecting possible remote updates to a cache line.

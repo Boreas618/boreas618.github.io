@@ -2,7 +2,9 @@
 
 Transformer is a model architecture eschewing recurrence and instead relying entirely on an attention mechanism to draw global dependencies between input and output.
 
+<center>
 <img src="https://ar5iv.labs.arxiv.org/html/1706.03762/assets/Figures/ModalNet-21.png" alt="Refer to caption" style="zoom: 25%;" />
+</center>
 
 **Hyperparams (Base)**:
 
@@ -42,14 +44,20 @@ $$
 
 **Multi-Head Attention**: linearly project the queries, keys and values $h$ times with different, learned linear projections to $d_k$, $d_k$ and $d_v$ dimensions, respectively. The  $d_v$-dimensional output values are concatenated and once again projected into final values.
 
-> **Question**: Are there any design alternatives to concatenation?
+::: warning Question
+Are there any design alternatives to concatenation?
+:::
 
 Multi-head attention allows the model to jointly attend to information from different representation subspaces at different positions. With a single attention head, averaging inhibits this.
 
-> **Question**: Are there any discussion about the impacts of the intersection of the subspaces (i.e. $\text{dim}(S_1) + \text{dim}(S_2) < \text{dim}(S_1+S_2)$) on the performance? 
+::: warning Question
+Are there any discussion about the impacts of the intersection of the subspaces (i.e. $\text{dim}(S_1) + \text{dim}(S_2) < \text{dim}(S_1+S_2)$) on the performance? 
+:::
 
 $$
-\text{MultiHead(Q, K, V)} = \text{Concat}(\text{head}_1, \text{head}_2, \ldots, \text{head}_n)W^O \\
+\text{MultiHead(Q, K, V)} = \text{Concat}(\text{head}_1, \text{head}_2, \ldots, \text{head}_n)W^O
+$$
+$$
 \text{head}_i = \text{Attention}(QW_i^Q, KW_i^K, VW_i^V)
 $$
 
@@ -70,7 +78,9 @@ In the embedding layers, multiply those weights by $\sqrt{d_{\text{model}}}$ .
 
 Add "positional encodings" to the input embeddings at the bottoms of the encoder and decoder stacks.
 
-> **Question**: What about add positional encodings half way along the encoder/decoder stack?
+::: warning Question
+What about add positional encodings half way along the encoder/decoder stack?
+:::
 
 The positional encodings have the same dimension $d_{\text{model}}$ as the embeddings, so that the two can be summed.
 
@@ -78,7 +88,9 @@ The positional encodings have the same dimension $d_{\text{model}}$ as the embed
 
 There are many choices of positional encodings, learned and fixed.
 $$
-PE(\text{pos}, 2i) = \sin(pos / 10000^{2i/d_{\text{model}}}) \\
+PE(\text{pos}, 2i) = \sin(pos / 10000^{2i/d_{\text{model}}})
+$$
+$$
 PE(\text{pos}, 2i+1) = \cos(pos / 10000^{2i/d_{\text{model}}})
 $$
 where $\text{pos}$ is the position and $i$ is the dimension. 

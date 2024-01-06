@@ -73,13 +73,17 @@ Two design issues:
   >
   > **Micro kernels**: just the runtime data of applications.
 
-  **My Thoughts**: The File Descriptor (FD) tables, dentry-cache, and inode-cache are integrated within the kernel's address space, sharing space with all other components like schedulers, physical memory allocator, etc. However, checkpointing the kernel's entire state is expensive. To enable cost-effective and fine-grained checkpointing, it is essential to understand FD tables, dentry-cache, and inode-cache and relations between those structures, which is still very cubersome. In contrast, when dealing with a standalone filesystem component, checkpointing can be straightforwardly achieved by capturing its runtime data, without the need to delve into its internal structure.
+  :::tip Thoughts
+  The File Descriptor (FD) tables, dentry-cache, and inode-cache are integrated within the kernel's address space, sharing space with all other components like schedulers, physical memory allocator, etc. However, checkpointing the kernel's entire state is expensive. To enable cost-effective and fine-grained checkpointing, it is essential to understand FD tables, dentry-cache, and inode-cache and relations between those structures, which is still very cubersome. In contrast, when dealing with a standalone filesystem component, checkpointing can be straightforwardly achieved by capturing its runtime data, without the need to delve into its internal structure.
+  :::
 
   Capability Tree一般实现在微内核操作系统中，由于微内核的模块化特征，我们可以用树结构组织系统资源，并且依靠树结构来进行数据持久化。为什么是树结构？我认为这还是基于进程树的概念，同时将各种其他资源，如文件、网络连接等，也作为树的节点挂载到进程树上，实现对whole system的资源管理。
 
 * Incremental checkpointing. If the resource is intact since last checkpointing, then there is no need to checkpoint.
 
-**My Thoughts**: I think the philosophy here is that **all resources** are **packed** neatly here. In other words, the micro kernel system holds great modularity. Therefore, the gap between different subsystems is here is clear. It's because the micro kernels architecture makes sense.
+:::tip Thoughts
+I think the philosophy here is that **all resources** are **packed** neatly here. In other words, the micro kernel system holds great modularity. Therefore, the gap between different subsystems is here is clear. It's because the micro kernels architecture makes sense.
+:::
 
 **How each kind of object is checkpointed to the backup capability tree?**
 
@@ -106,7 +110,9 @@ TreeSLS checkpoints these hot pages on DRAM with **stop-and-copy** and the rest 
 
 我们在Target System里提到了，某些频繁被访问的页会被置于DRAM中，而某些不常被访问的页会被置于NVM中 —— 尽管在SLS中，DRAM和NVM在角色上没什么区别，但DRAM终归要比NVM快。因此，当我们需要checkpoint whole system时，对于DRAM中的页和NVM中的页，采用不同复制方法将这些页复制到非易失的NVM中保存。至于为什么要采用不同的方法，下面是我的理解（原文语焉不详，我发邮件询问了作者，没有收到回复）
 
-**My Thoughts**: I believe the initial idea here is to employ **copy-on-write** in both scenarios. However, relying solely on copy-on-write, which entails setting DRAM pages to read-only and delaying the copy back until the next page fault, implies a risk. If a failure occurs between the previous checkpoint and the actual page fault handler, the data on DRAM might be lost. Nonetheless, this risk can be mitigated by using stop-and-copy. Also, the cost for handling page faults is relatively too high. Essentially, **stop-and-copy** acts as an optimization to **copy-on-write** in the context of DRAM. Conversely, the copy-on-write approach is quite effective for NVM. Since NVM is non-volatile, it doesn't face data loss issues. Thus, employing **copy-on-write** in NVM circumvents the significant overhead associated with **stop-and-copy** for all pages.
+:::tip Thoughts
+I believe the initial idea here is to employ **copy-on-write** in both scenarios. However, relying solely on copy-on-write, which entails setting DRAM pages to read-only and delaying the copy back until the next page fault, implies a risk. If a failure occurs between the previous checkpoint and the actual page fault handler, the data on DRAM might be lost. Nonetheless, this risk can be mitigated by using stop-and-copy. Also, the cost for handling page faults is relatively too high. Essentially, **stop-and-copy** acts as an optimization to **copy-on-write** in the context of DRAM. Conversely, the copy-on-write approach is quite effective for NVM. Since NVM is non-volatile, it doesn't face data loss issues. Thus, employing **copy-on-write** in NVM circumvents the significant overhead associated with **stop-and-copy** for all pages.
+:::
 
 **Mechanism: Versioning using Radix tree**
 
