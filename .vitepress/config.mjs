@@ -4,6 +4,9 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "Yi Sun's Blog",
   description: "This is Yi Sun's blog.",
+  markdown: {
+    math: true
+  },
   themeConfig: {
     nav: [
       { text: 'Me', link: '/' },
