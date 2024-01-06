@@ -55,6 +55,7 @@ export default defineConfig({
       }, {
         text: 'NLP',
         items: [
+          { text: 'Attention is All You Need', link: '/posts/attention-is-all-you-need' },
         ]
       }
       ]
