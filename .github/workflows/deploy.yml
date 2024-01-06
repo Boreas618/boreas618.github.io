@@ -46,6 +46,7 @@ jobs:
         run: yarn install
       - name: Build with VitePress
         run: |
+          yarn add markdown-it-mathjax3
           yarn docs:build
           touch ./.vitepress/dist/.nojekyll
       - name: Upload artifact
