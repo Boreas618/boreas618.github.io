@@ -1,10 +1,12 @@
-# I/O Concepts
+# I/O
 
-<img src="https://p.ipic.vip/hpz4fp.png" alt="Screenshot 2023-07-01 at 1.36.41 AM" style="zoom: 67%;" />
+<img src="https://harttle.land/assets/img/blog/intel-io.png" alt="Computer Organization and Design 笔记 - Storage and Other I/O Topics |  Harttle Land" style="zoom:75%;" />
 
-* I/O devices you recognize are supported by I/O Controllers
+* I/O devices you recognize are supported by **I/O controller**s.
 
-* Processors accesses them by reading and writing IO registers as if they were memory. Write commands and arguments, read status and results
+* Processors accesses them by reading and writing IO registers as if they were memory. Write commands and arguments, read status and results.
+
+Peripheral devices such as graphics cards, mice, keyboards, and disks communicate with the CPU and main memory using various bus systems, often facilitated by bridge components.
 
 
 ## Buses
@@ -134,7 +136,71 @@ Two types of devices
 - **Block-oriented devices** stores information in blocks that are usually of fixed size, and transfers are made a block at a time.
 - **Stream-oriented devices** transfer data in and out as a stream of bytes, with no block structure. Used for terminals, printers, communication ports, mouse, and most other devices that are not secondary storage.
 
-------
+### Single Buffer
 
+When a user process issues an I/O request, the OS assigns a buffer in the system portion (kernel space)  of main memory to the operation.
 
+For block-oriented input, the input transfers are made to the system buffer. On transfer completion, the process moves the block into user space.
 
+Define $T$ as the time from I/O device to buffer, $M$ as the time from buffer to user space, and $C$ as the user process data processing time.
+
+**Without Buffering**: Execution per block is $T + C$.
+
+**With Single Buffering**: Execution per block is $\max(T, C) + M$.
+
+<img src="https://p.ipic.vip/zq429z.png" alt="Screenshot 2023-12-23 at 6.17.45 AM" style="zoom: 33%;" />
+
+### Double Buffer
+
+An improvement over single buffering is to use two system buffers instead of one. A process can transfer data to (or from) one buffer while the operating system empties (or fills) the other buffer
+
+**With Double Buffering **: Execution per block is $\max(C, T)$. If $C\leq T$, it is possible to keep the block- oriented device going at full speed. If $C>T$, double buffering ensures that the process will not have to wait on I/O.
+
+> **Practice (COMP130110Final@FDU)**
+>
+> Suppose a file contains 10 disk blocks. Now a user process need read the entire file into memory for analysis. Suppose one I/O buffer has the same size as one disk block. It will take OS 100ms to read one disk block into buffer, and 50ms to transfer the data block from buffer to user process. The user process needs 50ms to finish analyzing one data block. What is total time needed for reading and analyzing the entire file if single buffer is used? What’s the total time if double buffer is used? Why?
+> $$
+> t_{\text{single}} = n \times(\max(C, T)+M) + C
+> $$
+>
+> $$
+> t_{\text{double}} = n\times\max({C, T}) + M + C
+> $$
+
+### Circular Buffer
+
+More than two buffers are used
+
+<img src="https://p.ipic.vip/psodw8.png" alt="Screenshot 2023-12-23 at 8.39.52 PM" style="zoom: 33%;" />
+
+-----
+
+**Difference Between Buffer and Cache**:  They are frequently combined; however, there is a difference in intent.
+
+- The success of cache exists mainly in that the same datum will be read from cache multiple times, or that written data will soon be read.
+- Buffering is to smooth out peaks in I/O demand.
+
+## Spooling
+
+The term “spool” is an acronym of “**S**imultaneous **P**eripheral **O**peration **O**n-**l**ine”.
+
+The print spooling is the most common spooling application. Printers are relatively slow peripherals. In comparison, disk devices are orders of magnitude faster. Without spooling print data, the speed of program operation is constrained by the slowest device (printers) – this program is “print bounded”. The key to spooling is asynchronous processing, where the process is not constrained by the speed of slow devices (particularly printers).
+
+----
+
+A spooler contains two parts:
+
+* An operating system extension to trap data destined for a printer and buffers it.
+
+- A simple program that independently writes trapped data to the printer.
+
+----
+
+With spooling
+
+- A spooling mechanism traps the I/O request, captures the output data, and releases the application to continue processing.
+- Afterwards, it writes the captured data to the printer, independent of the original application.
+
+----
+
+Spooling can be managed by a system daemon processor an in-kernel thread. To print a file, a process first generates the entire file to be printed and puts it in the spooling directory. Only the daemon process has the permission to use the printer’s special file to print the files in the directory.

@@ -23,27 +23,7 @@ Four requirements for occurrence of Deadlock:
 * **No Sharing of resources** (totally independent threads): Not very realistic
 
 * **Don’t allow waiting** 
-
-  > **How the phone company avoids deadlock?**
->
-  > * Call Mom in Toledo, works way through phone network, but if blocked get busy signal. 
->
-  > Technique used in Ethernet/some multiprocessor nets
->
-  > * Everyone speaks at once. On collision, back off and retry
->
-  > Inefficient, since have to keep retrying
->
-  > * Consider: driving to San Francisco; when hit traffic jam, suddenly you’re transported back home and told to retry!
-
 * **Make all threads request everything they’ll need at the beginning**
-
-  Problem: Predicting future is hard, tend to over-estimate resources
-
-  Example:
-
-  * If need 2 chopsticks, request both at same time
-  * Don’t leave home until we know no one is using any intersection between here and where you want to go; only one car on the Bay Bridge at a time
 
 * **Force all threads to request resources in a particular order preventing any cyclic use of resources**
 
@@ -65,9 +45,11 @@ Given Matrices:
 
 -------
 
-The core of this algorithm is to determine whether, given the current situation of requests, we can find a sequence of allocations to make.
-
 **Mark**s mean granting the requests. We perform marks on the request matrix.
+
+The core of this algorithm is to determine whether, **given the current situation of requests**, we can find a sequence of allocations to make. If there's no requests, the system is not deadlocked even if it is in unsafe state.
+
+----
 
 There are several candidate strategies for determining when to detect deadlocks.：
 
@@ -121,7 +103,7 @@ We can make sure that the system is always in a safe state to avoid deadlock. Fo
 
 ### Banker's Algorithm
 
-When a process makes a request for a set of resources, assume that the request is granted. Update the system state accordingly. Then determine whether the result is a safe state. Ifsafe, grant the request;otherwise, block the process until it is safe to grant the request.
+When a process makes a request for a set of resources, assume that the request is granted. Update the system state accordingly. Then determine whether the result is a safe state. If safe, grant the request; otherwise, block the process until it is safe to grant the request.
 
 ----
 

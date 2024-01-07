@@ -10,7 +10,7 @@ Two types of files:
 
 A **structured sequential file** is a named sequence of logical records, indexed by the nonnegative integers.
 
-## File Organization
+## Logical Organization
 
 * **Pile Files**: Data are collected in the order they arrive. Records may have different fields, or similar
 
@@ -22,6 +22,10 @@ A **structured sequential file** is a named sequence of logical records, indexed
 
   Improve performance by keeping a log file or transaction file which accumulates single operations.
 
+* **Indexed File**: Uses multiple indexes for different fields. One index for each field that may be the subject of a search. Records are accessed only through their indexes. Variable-length records can be employed.
+
+  Indexed files are used mostly in applications where timeliness of information is critical and where data are rarely processed exhaustively.
+
 * **Indexed Sequential File**: Records are organized in sequence based on a key field.
 
   An index to the file to support random access: the index is searched to find **highest key value** that is equal or less than the desired key value.
@@ -29,10 +33,6 @@ A **structured sequential file** is a named sequence of logical records, indexed
   An **overflow file** to store the additions temporarily.
 
   <img src="https://p.ipic.vip/a755dn.png" alt="Screenshot 2023-12-11 at 1.57.38 AM" style="zoom:50%;" />
-
-* **Indexed File**: Uses multiple indexes for different fields. One index for each field that may be the subject of a search. Records are accessed only through their indexes. Variable-length records can be employed.
-
-  Indexed files are used mostly in applications where timeliness of information is critical and where data are rarely processed exhaustively.
 
 * **Direct or Hashed File**: A key field is required in each record .
 
@@ -122,7 +122,7 @@ Given the size of block, there are three methods of blocking:
 - **Variable-length spanned blocking**: Variable-length records are used, and are packed into blocks with no unused space. Some records must span two blocks, with the continuation indicated by a pointer to the successor block.
 - **Variable-length unspanned blocking**: Variable-length records are used, but spanning is not employed. There is wasted space in most blocks because the remainder of a block is not enough to hold the next record.
 
-## Secondary Storage Management
+## Physical Organization
 
 On secondary storage, a file consists of a collection of blocks.
 
@@ -138,7 +138,7 @@ With contiguous allocation, a single contiguous set of blocks is allocated to a 
 
 Only a single entry in the file allocation table. Starting block and length of the file. This is a preallocation strategy, using variable-size portions. 
 
-Accessing a file that has been allocated contiguously is easy for both sequential access and direct access.
+Accessing a file that has been allocated contiguously is easy for both **sequential access** and **direct access**.
 
 Contiguous allocation is feasible and in fact widely used in one situation: On CD-ROM.
 
@@ -150,11 +150,11 @@ With chained allocation, allocation is on an individual block basis.
 
 No external fragmentation, and no size declaration problem.
 
-**Disadvantage 1**: It can be used effectively only for sequential-access files. To find the i-th block of a file, we must start at the beginning of the file, and follow the pointers until we get to the ith block.
+**Disadvantage 1**: It can be used effectively only for **sequential-access** files. To find the i-th block of a file, we must start at the beginning of the file, and follow the pointers until we get to the ith block.
 
 **Disadvantage 2**: Consolidation is required to improve the performance of sequential access. The blocks of a file is scattered all over the disk. If several blocks of a file is to be brought in,it is required to access different parts of the disk (multiple disk seeks).
 
-**Disadvantage 3**:The pointers require some disk space.
+**Disadvantage 3**: The pointers require some disk space.
 
 **Disadvantage4**: Reliability.
 
@@ -183,12 +183,6 @@ Indexed allocation does suffer from wasted space. The pointer overhead of the in
 <img src="https://p.ipic.vip/x8eh0n.png" alt="Screenshot 2023-12-16 at 5.43.10 AM" style="zoom: 33%;" />
 
 ## Free Space Management
-
-* Bit tables (Bitmap, or Bit Vector)
-* LinkedList
-* FreeBlockList
-* Grouping
-* Chained free portions
 
 ### Bitmap
 
@@ -263,11 +257,47 @@ Four types of files are distinguished:
 
 - **Special**: Used to access peripheral devices. Each I/O device is associated with a special file.
 
-- **Named**: Name pipes, discussed in Section 6.7
+- **Named**: Name pipes.
 
-<img src="https://p.ipic.vip/fc7ut2.png" alt="Screenshot 2023-12-16 at 6.19.15 AM" style="zoom:50%;" />
+----
 
 The length of a block is 1 Kbyte in UNIX system, and each block can hold a total of 256 block addresses.
 
-<img src="https://p.ipic.vip/3skzkj.png" alt="Screenshot 2023-12-16 at 6.20.27 AM" style="zoom:50%;" />
+<img src="https://p.ipic.vip/fc7ut2.png" alt="Screenshot 2023-12-16 at 6.19.15 AM" style="zoom: 33%;" />
+
+<img src="https://p.ipic.vip/3skzkj.png" alt="Screenshot 2023-12-16 at 6.20.27 AM" style="zoom: 33%;" />
+
+---
+
+**Why not simply use only triple indirection to locate all file blocks? **
+
+Triple indirection is much slower, as it may result in multiple seeks to get to the desired block. Seeks take a long time. Triple indirection also consumes more index blocks for tiny files.
+
+## RAID
+
+### RAID 1: Disk Mirroring/Shadowing
+
+<img src="https://p.ipic.vip/5kvvfn.png" alt="image-20230713165521685" style="zoom:50%;" />
+
+Each disk is fully duplicated onto its *shadow*
+
+* For high I/O rate (Reads may be optimized: Can have two independent reads to same data), high availability environments
+
+* **Most expensive solution**: 100% capacity overhead
+
+### RAID 5+: High I/O Rate Parity
+
+<img src="https://p.ipic.vip/qth5bi.png" alt="image-20230713165705733" style="zoom:50%;" />
+
+Data are stripped across multiple disks
+
+* Successive blocks stored on successive (non-parity) disks
+
+* **Increased bandwidth** over single disk
+
+Parity block (in green) constructed by XORing data bocks in stripe
+$$
+P0=D0\oplus D1\oplus D2 \oplus D3
+$$
+Can destroy any one disk and still reconstruct data.
 

@@ -112,7 +112,23 @@ int kill(pid_t pid, int sig);
 
 If the pid is equal to 0, then `kill` sends signal to every process in the process group of the calling process, including the calling prcess itself. If pid is negative, then `kill` sends signal to every process in process group `|pid|`
 
-<img src="https://p.ipic.vip/3gvr0s.jpg" alt="Untitled" style="zoom:50%;" />
+```c
+int main()
+{
+    pid_t pid;
+
+    /* Child sleeps until SIGKILL signal received, then dies */
+    if ((pid = Fork()) == 0) {
+        Pause(); /* Wait for a signal to arrive */
+        printf("control should never reach here!\n");
+        exit(0);
+    }
+
+    /* Parent sends a SIGKILL signal to a child */
+    Kill(pid, SIGKILL);
+    exit(0);
+}
+```
 
 ### **Sending Signals with the `alarm` Function**
 
@@ -123,18 +139,20 @@ A process can send SIGALRM signals to itself by calling the `alarm` function.
 
 unsigned int alarm(unsigend int secs);
 
-//Returns: remaining seconds of previous alarm, or 0 if no previous alarm
+// Returns: remaining seconds of previous alarm, or 0 if no previous alarm
 ```
 
-In any event, the call to `alarm` cancels any pending alarms and returns the number of seconds remaining until any pending alarm was due to be delivered(had not this call to `alarm` canceled it), or 0 if there were no pending alarms.
+In any event, the call to `alarm` cancels any pending alarms and returns the number of seconds remaining until any pending alarm was due to be delivered (had not this call to `alarm` canceled it), or 0 if there were no pending alarms.
 
 ## Receiving Signals
 
 When the kernel switches a process p from kernel mode to user mode, it checks the set of unblocked pending signals (`pending&~blocked`) for p.
 
-If the set is empty, then the kernel passes control to the next instruction in the logical control flow of p.
+* If the set is empty, then the kernel passes control to the next instruction in the logical control flow of p.
 
-If the set is nonempty, then the kernel chooses some signal k in the set (typically the smallest k) and forces p to receive signal k.
+* If the set is nonempty, then the kernel chooses some signal k in the set (typically the smallest k) and forces p to receive signal k.
+
+----
 
 The receipt of the signal triggers some action by the process. Once the process completes the action, then control passes back to the next instruction in the logical control flow of p. Each signal type has a predefined default action, which is one of the following:
 
@@ -142,6 +160,8 @@ The receipt of the signal triggers some action by the process. Once the process 
 * The process terminates and dumps core
 * The process stops until restarted by a `SIGCONT` signal
 * The process ignores the signal
+
+----
 
 A process can modify the default action associated with a signal by using the `signal` function. The only exceptions are `SIGSTOP` and `SIGKILL`, whose default actions cannot be changed.
 
@@ -163,7 +183,28 @@ The `signal` functioncan change the action associated with a signal `signum` in 
 
 When a process catches a signal of type _k_, the handler installed for signal _k_ is invoked with a single integer argument set to _k_. **This argument allows the same handler function to catch different types of signals.**
 
-<img src="https://p.ipic.vip/1a4uxg.jpg" alt="Untitled" style="zoom:50%;" />
+```c
+#include <signal.h>
+
+typedef void (*sighandler)(int);
+
+void sigint_handler(int sig) /* SIGINT handler */
+{
+    printf("Caught SIGINT!\n");
+    exit(0);
+}
+
+int main()
+{
+    /* Install the SIGINT handler */
+    if (signal(SIGINT, sigint_handler) == SIG_ERR)
+        unix_error("signal error");
+
+    pause(); /* Wait for the receipt of a signal */
+
+    return 0;
+}
+```
 
 ## Blocking and Unblocking Signals
 

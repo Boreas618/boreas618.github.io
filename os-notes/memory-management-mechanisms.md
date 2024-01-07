@@ -4,8 +4,6 @@ Background concepts:
 
 * Address Binding
 
-* Logical Address vs. Physical Address
-
   > **Compile-time and load-time address binding**: logical and physical addresses are identical
   >
   > **Execution-time address binding**: different logical and physical address
@@ -46,71 +44,45 @@ When a process arrives and needs memory, the system searches the set for a hole 
 
 <img src="https://p.ipic.vip/ocs8d1.png" alt="Screenshot 2023-05-25 at 11.20.11 PM" style="zoom:50%;" />
 
-x86 Example: `mov [es:bx], ax`.
+There are definitely **external fragmentation**s. If a program branches into or tries to load data from one of these gaps, the hardware will generate an exception, trapping into the operating system kernel. On UNIX systems, this is called a **segmentation fault**.
 
-<img src="https://p.ipic.vip/emei15.png" alt="Screenshot 2023-06-29 at 2.15.19 AM" style="zoom:50%;" />
-
-There are 4 segments for a single process. We define the format the virtual address:
-
-* The top 2 bits are segment ID
-* The lower bits are offset
-
-<img src="https://p.ipic.vip/9bf5pp.png" alt="image-20230629133908094" style="zoom:50%;" />
-
-In this process:
-
-* `0x240` is seg 0 + offset 0x240
-* `0x4050` is seg 1 + offset 0x50
-
-With this formulation, there are definitely holes in the **virtual memory space**. The holes are referred to as **external fragmentation**s. If a program branches into or tries to load data from one of these gaps, the hardware will generate an exception, trapping into the operating system kernel. On UNIX systems, this is called a **segmentation fault**.
-
-**External fragmentation**: the operating system may reach a point where there is enough free space for a new segment, but the free space is not contiguous.
+> **External fragmentation**: the operating system may reach a point where there is enough free space for a new segment, but the free space is not contiguous.
 
 If there is not enough space in memory, we need to perform an extreme form of context switch: swapping. In order to make room for next process, some or all of the previous process is moved to disk. This greatly increases the cost of context-switching.
 
-> For dynamically allocated memory like heap, we don't know how much memory space will be consumed, therefore we don't know how much memory we need to zero.
->
-> We address this issue by **zero-on-reference**. With zero-on-reference, the operating system allocates a memory region for the heap, but only zeroes the first few kilobytes. Instead, it sets the bound register in the segment table to limit the program to just the zeroed part of memory. If the program expands its heap, it will take an **exception**, and the operating system kernel can zero out additional memory before resuming execution.
-
-> UNIX `fork` and **copy-on-write**
->
-> When creating a new child, the segment table of the parent is copied and all of the segments shared between the parent and child process are marked “read-only”. If either side modifies data in a segment, an exception is raised and a full memory copy of that segment is made at that time.
-
 ## Paged Memory
 
-With paging, physical memory is allocated in fixed-sized chunks called **page frames**. Address translation is similar to how it works with segmentation.
-
-The page is fix-sized so the page table only need to provide the upper bits of the page frame address. 
-
-<img src="https://p.ipic.vip/ocyhdh.png" alt="Screenshot 2023-05-26 at 2.02.31 AM" style="zoom:50%;" />
-
-The range of the offset should be the size the frame. The bigger the frame size, the smaller the size of the page table.
-
-Paging addresses the issue of free-space allocation. The operating system represents the memory in a bit map. Finding a free frame is just a matter of finding an empty bit.
-
-**Support Inter Process Communication**: set the page table entry for each process sharing a page to point to the same physical page frame.
-
-When performing context switch, the page table pointer and limit need to be changed.
+<img src="https://p.ipic.vip/ocyhdh.png" alt="Screenshot 2023-05-26 at 2.02.31 AM" style="zoom: 33%;" />
 
 **Features**:
 
-* Copy-on-write
+* **Copy-on-write**
 
-* Zero-on-reference
+* **Zero-on-reference**
 
-* Load the pages and execute the program at the same time
+* **Load the pages and execute the program at the same time**
 
-  Once the first few pages are in memory, the operating system can start execution of the program in user-mode, while the kernel continues to transfer the rest of the program’s code in the background. As the program starts up, if it happens to jump to a location that has not been loaded yet, the hardware will cause an exception, and the kernel can stall the program until that page is available.
-
-* Data breakpoints
+* **Data breakpoints**
 
 **Downside**:
 
-The tradeoff between the size of the page and the size of the page table.
+* The tradeoff between the size of the page and the size of the page table.
 
-The layout of the stacks and heaps of the multi-thread programs.
+* The layout of the stacks and heaps of the multi-thread programs.
 
-**NOTICE**: All page frames should be recorded in the page table. Even if we only use two pages, such as the lowest virtual address and the highest virtual address, all virtual addresses and their corresponding physical addresses should be recorded. This is because we use the page number to index into the page table. If we need to add a new mapping in the case where only the required pages are recorded, we will not be able to index into the correct location. Later, we will see that this requirement explains why a multi-level page table is better than a single-level page table.
+> **NOTICE**: All page frames should be recorded in the page table. Even if we only use two pages, such as the lowest virtual address and the highest virtual address, all virtual addresses and their corresponding physical addresses should be recorded. This is because we use the page number to index into the page table. If we need to add a new mapping in the case where only the required pages are recorded, we will not be able to index into the correct location. Later, we will see that this requirement explains why a multi-level page table is better than a single-level page table.
+
+### Inverted Page Tables
+
+Inverted page table has been used on the Power PC and on IBM’s AS/400. Each entry keeps track of which (process, virtual page) is located in the page frame. There's only one page table in the system.
+
+When a memory reference occurs, the inverted page table is searched to match `<pid, page#>`. If a match is found at entry i, then the physical address `<i, offset>` is generated. If no match is found, then an illegal address access has been attempted.
+
+<img src="https://i.stack.imgur.com/z61lh.png" alt="operating systems - Difference between inverted page table and a standard  one? - Computer Science Stack Exchange" style="zoom:50%;" />
+
+> **Practice** (COMP130110@FDU, 2017)
+>
+> A computer with pages in 8KB, a 256MB main memory, and 4GB virtual address space uses an inverted page table to implement its virtual memory. How many entries will the inverted page table contain?  **32K**
 
 ## Multi-Level Transalation
 
@@ -151,6 +123,8 @@ The  protected mode 80386 has a per-process **Local Descriptor Table** (LDT), eq
 
 There's also a **Global Descriptor Table** (GDT). The GDT describes system segments, including the operating system itself.
 
+----
+
 There are 6 segment registers: **SS, CS, DS, ES, FS, GS**. Inside a segment register: 
 
 <img src="https://p.ipic.vip/xh6gcz.png" alt="Screenshot 2023-06-29 at 4.41.46 PM" style="zoom:50%;" />
@@ -185,7 +159,9 @@ This is the format of a 64-bit descriptor:
 
 **16-bit Mode Legacy Applications**: In the older 16-bit mode of x86 processors, segmentation was used to provide protection and separation between different components of a program. There could be separate segments for code, data, and stack. The Requestor Privilege Level (RPL) of the code segment would determine the Current Privilege Level (CPL), which is a mechanism used for protection. In this mode, the system could support up to 64K segments.
 
-**Modern x86-64**: In the 32-bit mode of x86 processors, although the full functionality of segments is still available, it is typically not used in the same way as in 16-bit mode. Instead, segments are set up to cover the entire address space - they are "flattened". 
+---
+
+**Modern x86-64**: In the 32-bit mode of x86 processors, although the full functionality of segments is still available, it is typically not used in the same way as in 16-bit mode. Instead, segments are set up to cover the entire address space: they are "flattened". 
 
 However, one exception to this is the use of the GS (or FS) segment as a pointer to "Thread Local Storage" (TLS). TLS is a mechanism that allows each thread to have its own copy of data. A thread can access its TLS by using an instruction like `mov eax, gs(0x0)`, which moves the value at the start of the GS segment into the `%eax` register.
 
@@ -229,7 +205,7 @@ For x86-64:
 
 <img src="https://p.ipic.vip/cjfly8.png" alt="Screenshot 2023-06-29 at 5.11.06 PM" style="zoom:50%;" />
 
-As an optimization, x86-64 has the option to **eliminate one or two levels of the page table**. Each physical page frame on the x86 is 4 KB. Each page of fourth level page table maps 2 MB of data, and each page of the third level page table maps 1 GB of data. If the operating system places data such that the entire 2 MB covered by the fourth level page table is allocated contiguously in physical memory, then the page table entry one layer up can be marked to point directly to this region instead of to a page table. Likewise, a page of third level page table can be omitted if the operating system allocates the process a 1 GB chunk of physical memory.
+As an optimization, x86-64 has the option to **eliminate one or two levels of the page table**. Each physical page frame on the x86 is 4 KB. Each page of fourth level page table maps 2 MB of data, and each page of the third level page table maps 1 GB of data. If the operating system places data such that the entire 2 MB covered by the fourth level page table is allocated contiguously in physical memory, then the page table entry one layer up can be marked to point directly to this region instead of to a page table.
 
 ## Managing Virtual Memory
 

@@ -60,6 +60,12 @@ Data is copied between level $k$ and $k+1$ in **block-sized** units. Lower-level
 
 When a miss occurs, the cache at level $k$ fetches the block containing the data from the cache at level $k+1$. If the cache of  level $k$ is full, an existing block may be replaced (known as replacing or evicting).
 
+> **Practice** (COMP130110Final@FDU, 2017)
+>
+> Consider a memory system with a cache access time of `10ns` and a memory access time of `200ns`. If the effective access time is 10% greater than the cache access time, what is the hit ratio H? 
+>
+> Effect Access Time: Te = H x Tc + (1 - H) (**Tm + Tc**), where Tc = 10ns, Te = 1/1 x Tc, and Tm = 200ns.
+
 ### Different Cache Misses
 
 * **Compulsory/Cold misses**: An empty cache (cold cache).

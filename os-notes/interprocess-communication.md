@@ -40,13 +40,9 @@ Messages are sent to a shared data structure consisting of queues. Such queues a
 
 Sender and receiver may or may not be blocking.
 
-* **Blocking send, blocking receive**: Both sender and receiver are blocked until message is
+* **Blocking send, blocking receive**: Both sender and receiver are blocked until message is delivered. Called a rendezvous.
 
-  delivered. Called a rendezvous.
-
-* **Nonblocking send, blocking receive**: Sender continues processing such as sending messages as
-
-  quickly as possible; Receiver is blocked until the requested message arrives.
+* **Nonblocking send, blocking receive**: Sender continues processing such as sending messages as quickly as possible; Receiver is blocked until the requested message arrives.
 
 * **Nonblocking send, nonblocking receive**: Neither party is required to wait.
 

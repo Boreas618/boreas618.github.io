@@ -158,6 +158,20 @@ void *consumer(void *arg) {
 }
 ```
 
+> **NOTICE (COMP130110Final@FDU)**
+>
+> It's OK to switch the two lines:
+> ```c
+> sem_post(&mutex);
+> sem_post(&full);
+> ```
+>
+> It will result in deadlocks if we switch the two lines:
+> ```c
+> sem_wait(&full);
+> sem_wait(&mutex);
+> ```
+
 > **Solving by [Condition Variables](https://boreas618.github.io/posts/monitor.html)**
 >
 > ```c
@@ -278,7 +292,7 @@ void *writer(void *arg) {
 }
 ```
 
-This solves the issue that writers may starve. However, in this case, readers may also starve. Anyway, it's a good idea compared to the initial solution.
+This solves the issue that writers may starve. However, in this case, readers may also starve. Nevertheless, it's still a better idea compared to the initial solution.
 
 ### Implementation of Semaphores
 
@@ -302,7 +316,7 @@ Lock prevents someone from doing something. Threads should wait if a region is l
 
 **Hardware** is responsible for implementing this correctly. It is effective on both uniprocessors and multiprocessors.
 
-**Implementing Locks with test&set** We can implement a lock without needing to enter kernel mode (disabling interrupts) using test&set.
+**Implementing Locks with test&set**: We can implement a lock without needing to enter kernel mode (disabling interrupts) using test&set.
 
 ```c
 #include <stdatomic.h>
@@ -324,8 +338,9 @@ Even though this is busy waiting, we don't need to enter kernel mode and it work
 * Waiting thread may take cycles away from thread holding lock (no one wins). 
 * **Priority Inversion**: If busy-waiting thread has higher priority than thread holding lock. It simply waits instead of preempting.
 * Waiting thread may wait for an arbitrary long time.
-
 * **Cache coherency overhead**: In a multiprocessor system, the flag variable is likely to be stored in the cache of each processor. If one processor changes the flag, all other caches must invalidate their copies of the flag (**Even if the origin value is 1 and we write 1 to the variable**). This constant invalidation and refreshing of cache entries leads to a significant overhead, further hampering the system's performance.
+
+-----
 
 **An Improvement for the Ping-pong Issue**: test&test&set
 

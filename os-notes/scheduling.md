@@ -4,19 +4,40 @@
 
 > In the context of computing and operating systems, a "burst" typically refers to a period of continuous execution by a process or thread without giving up the CPU
 
+For time-sharing systems, the design objective of scheduling algorithm is to optimize (COMP130110Final@FDU).
+
 Each scheduling decision is about which job to give to the CPU for use by its (the job) next CPU burst (execution time).
 
 With timeslicing, thread may be forced to give up CPU before finishing current CPU burst (execution time).
+
+> **Practice(COMP130110Final@FDU)**
+>
+> What is the difference between multiprogramming and multiprocessing?
+>
+> * Multiprogramming can only use **concurrent** execution of processes. (Only one CPU)
+> * Multiprocessing can use **parallelism** and/or **concurrency**. (More than one CPU)
 
 ## Scheduling Policy
 
 There are three types of scheduling:
 
 - **Long-term scheduling**: Determines whether a job can enter the operating system and controls the degree of multiprogramming.
-- **Medium-term scheduling**: Swaps processes between suspended and active states to regulate resource utilization.
+- **Medium-term scheduling**: Swaps processes between **suspended** and **active** states to regulate resource utilization.
 - **Short-term scheduling**: Allocates processor resources to processes (or threads) in the ready queue.
 
 <img src="https://p.ipic.vip/tpmfhr.png" alt="Screenshot 2023-10-16 at 2.05.30 PM" style="zoom:50%;" />
+
+> **Practice (COMP130110Final@FDU)**
+>
+> Among following scheduling types, which pair are mainly used to adjust the degree of multiprogramming?
+>
+> **A. Long-term scheduling, and mid-term scheduling**
+>
+> B. Long-term scheduling, and short-term scheduling
+>
+> C. Short-term scheduling, and mid-term scheduling
+>
+> D. Short-term scheduling, and disk scheduling
 
 ## Simple Algorithms
 
@@ -60,6 +81,8 @@ SJF can be preemptive and non-preemptive at the same time. The preemptive versio
 $$
 R=\frac{\text{Waiting Time}+\text{Expected Service Time}}{\text{Expected Service Time}}
 $$
+
+HRRF 
 
 **Pros**: balance short jobs and starving jobs at the same time. **Not prone to starvation.**
 

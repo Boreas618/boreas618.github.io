@@ -149,6 +149,26 @@ A thread never deletes its own state. Some other thread must do it. On exit, the
 
   This method merges benefits of user and kernel threads. The OS recognizes both thread types and can map multiple user threads to one kernel thread or keep a one-to-one ratio. It balances fast context switching of user threads with kernel thread integration, but managing this system can be complex.
 
+----
+
+**Examples of Relationships Between User-Level Thread States and Process States**
+
+<img src="https://p.ipic.vip/un22i1.png" alt="Screenshot 2023-12-26 at 2.07.40 PM" style="zoom: 33%;" />
+
+* **(a)**: normal scenarios.
+* **(b)**: The application executing in thread 2 makes a system call that blocks process B. For example, an I/O call is made.
+* **(c)**: A clock interrupt passes control to the kernel and the kernel determines that the currently running process B has exhausted its time slice.
+* **(d)**: Thread 2 has reached a point where it needs some action performed by thread 1 of process B. Thread 2 enters a Blocked state and thread 1 transitions from Ready to Running.
+
+> **Practice** (COMP130110Final@FDU, 2017)
+>
+> Assume a process P has two pure user-level threads, T1 and T2. Which one of the following statements is correct?
+>
+> * T1 and T2 may be in running state at certain moment;
+> * **If P is in Ready state, it is also possible that T1 (or T2) is still in Running state;** 
+> * If P is in Blocked state, it is impossible that T1 (or T2) is in Running state;
+> * If T1 (or T2) is in Blocked state, P must be in Blocked state. 
+
 ### Multi-thread Model
 
 **One-to-one**: In Linux and pintos, we adopt the simple one-to-one threading model. Every user thread has its kernel thread. In kernel, we use the kernel stack and in user mode we use the user stack. 
