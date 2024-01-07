@@ -85,7 +85,7 @@ How to identify a sector?
 
 ## Components of a File System
 
-<img src="https://p.ipic.vip/ow5aqg.png" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/ow5aqg.png" style="zoom:50%;" /></center>
 
 Open file description is better described as remembering the inumber of the file, not its name.
 
@@ -149,7 +149,7 @@ Read/write syscalls look up in-memory inode using the file handle
 
 File is a collection of disk blocks.
 
-<img src="https://p.ipic.vip/iuhoj0.png" alt="Screenshot 2023-07-06 at 12.08.07 AM" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/iuhoj0.png" alt="Screenshot 2023-07-06 at 12.08.07 AM" style="zoom:50%;" /></center>
 
 Assume we have a way to translate a path to a "file number".
 
@@ -247,7 +247,7 @@ Data blocks, metadata, and free space interleaved within block group
 
 Put directory and its files in common block group
 
-<img src="https://p.ipic.vip/drpe3f.png" alt="image-20230706022239753" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/drpe3f.png" alt="image-20230706022239753" style="zoom:50%;" /></center>
 
 **First-Free Allocation**: FFS uses a first-free allocation strategy, assigning data to the first available block.**Expanding Files**: If a file needs to grow, FFS first tries to find **successive** free blocks. If none are available, it chooses a new range of blocks on the disk. Finally, it can even go to another block group.
 
@@ -287,7 +287,7 @@ The actual inode strcture is similar to 4.2 BSD.
 
 Example: create a file1.dat under /dir1/ in Ext3
 
-<img src="https://p.ipic.vip/9mj5ec.png" alt="image-20230713143347825" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/9mj5ec.png" alt="image-20230713143347825" style="zoom:50%;" /></center>
 
 Ext3 is Ext2 with Journaling. There are several degrees of protection with comparable overhead.
 
@@ -360,7 +360,7 @@ Each entry in MFT contains metadata and:
 
 NTFS Small files: data stored with metadata
 
-<img src="https://p.ipic.vip/c2xs5j.png" alt="image-20230713151816777" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/c2xs5j.png" alt="image-20230713151816777" style="zoom:50%;" /></center>
 
 NTFS Medium File: Extents for File Data
 
@@ -368,11 +368,11 @@ NTFS Medium File: Extents for File Data
 
 NTFS Large File: Pointers to Other MFT Records
 
-<img src="https://p.ipic.vip/s9dl0t.png" alt="image-20230713151941931" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/s9dl0t.png" alt="image-20230713151941931" style="zoom:50%;" /></center>
 
 NTFS Huge, Fragmented File
 
-<img src="https://p.ipic.vip/9j3qt3.png" alt="image-20230713152126265" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/9j3qt3.png" alt="image-20230713152126265" style="zoom:50%;" /></center>
 
 ### NTFS Directories
 
@@ -606,7 +606,7 @@ Each disk is fully duplicated onto its “shadow”
 
 ## RAID 5+: High I/O Rate Parity
 
-<img src="https://p.ipic.vip/qth5bi.png" alt="image-20230713165705733" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/qth5bi.png" alt="image-20230713165705733" style="zoom:50%;" /></center>
 
 Data stripped across multiple disks
 
@@ -714,9 +714,9 @@ Garbage collection: once a change is applied, remove its entry from the log
 
 The log is the storage.
 
-<img src="https://p.ipic.vip/t8yjuw.png" alt="image-20230713232056026" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/t8yjuw.png" alt="image-20230713232056026" style="zoom:50%;" /></center>
 
-<img src="https://p.ipic.vip/5h47fm.png" alt="image-20230713232111927" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/5h47fm.png" alt="image-20230713232111927" style="zoom:50%;" /></center>
 
 One continuous sequence of blocks that wrap around whole disk. Inodes put into log when changed and point to new data in the log
 

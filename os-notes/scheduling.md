@@ -25,7 +25,7 @@ There are three types of scheduling:
 - **Medium-term scheduling**: Swaps processes between **suspended** and **active** states to regulate resource utilization.
 - **Short-term scheduling**: Allocates processor resources to processes (or threads) in the ready queue.
 
-<img src="https://p.ipic.vip/tpmfhr.png" alt="Screenshot 2023-10-16 at 2.05.30 PM" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/tpmfhr.png" alt="Screenshot 2023-10-16 at 2.05.30 PM" style="zoom:50%;" /></center>
 
 > **Practice (COMP130110Final@FDU)**
 >
@@ -73,7 +73,7 @@ Due to the unpredictable nature of SJF, it is more suitable for long-term schedu
 
 SJF can be preemptive and non-preemptive at the same time. The preemptive version is called **S**hortest **R**emaining **J**ob **F**irst.
 
-<img src="https://p.ipic.vip/c0p3l5.png" alt="Screenshot 2023-12-17 at 6.01.43 AM" style="zoom: 25%;" />
+<center><img src="https://p.ipic.vip/c0p3l5.png" alt="Screenshot 2023-12-17 at 6.01.43 AM" style="zoom: 25%;" /></center>
 
 ### High Response Ratio First
 
@@ -90,7 +90,7 @@ HRRF
 
 ### Multi-Level Feedback Scheduling
 
-<img src="https://p.ipic.vip/f7awx4.png" alt="Screenshot 2023-06-18 at 5.09.57 AM" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/f7awx4.png" alt="Screenshot 2023-06-18 at 5.09.57 AM" style="zoom:50%;" /></center>
 
 Job starts in highest priority queue.
 
@@ -115,7 +115,7 @@ Scheduling must be done between the queues:
 
 ### Strict Priority Scheduling
 
-<img src="https://p.ipic.vip/pscxpe.png" alt="Screenshot 2023-06-17 at 8.02.24 PM" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/pscxpe.png" alt="Screenshot 2023-06-17 at 8.02.24 PM" style="zoom:50%;" /></center>
 
 **Starvation**: Lower priority jobs don't get to run because higher priority jobs.
 
@@ -141,7 +141,7 @@ A **work-conserving** scheduler is one that does not leave the CPU idle when the
 
 The starvation could happen when arrival rate (offered load) exceeds service rate (delivered load). Queue builds up faster than it drains. Thus, FCFS, priority scheduling, SRTF and MLFS are also prone to starvation.
 
-<img src="https://p.ipic.vip/gr3d12.png" alt="Screenshot 2023-12-17 at 6.57.38 AM" style="zoom: 33%;" />
+<center><img src="https://p.ipic.vip/gr3d12.png" alt="Screenshot 2023-12-17 at 6.57.38 AM" style="zoom: 33%;" /></center>
 
 ## Proportional-Share Scheduling
 
@@ -193,7 +193,7 @@ Tasks in real time systems can be categorized as:
 
 Periodic Tasks with period $P$ (arrive every $P$ frames) and computation $C$ in each period for each task $i$. We adopt a preemptive priority-based dynamic scheduling. Each task is assigned a priority based on how close the absolute deadline is (i.e. $D_i^{t+1}=D_{i}^{t}+P_{i}$ for task $i$) The scheduler always schedules the active task with the closest absolute deadline.
 
-<img src="https://p.ipic.vip/js984z.png" alt="Screenshot 2023-06-22 at 12.05.07 PM" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/js984z.png" alt="Screenshot 2023-06-22 at 12.05.07 PM" style="zoom:50%;" /></center>
 
 EDF won't work if you have too many tasks. For $n$ tasks with computation time $C$ and deadline $D$, a feasible schedule exists if:
 $$
@@ -204,6 +204,6 @@ $$
 
 The frequency of a periodic real-time task with a cycle is $p$ . Therefore, the priority of a group of periodic real-time tasks can be calculated based on the frequency of that task.
 
-<img src="https://p.ipic.vip/d1tyjy.png" alt="Screenshot 2023-12-17 at 6.53.58 AM" style="zoom: 33%;" />
+<center><img src="https://p.ipic.vip/d1tyjy.png" alt="Screenshot 2023-12-17 at 6.53.58 AM" style="zoom: 33%;" /></center>
 
 Rate monotonic scheduling optimally schedules processes based on static priority. If a group of processes can't be scheduled using this method, they won't meet hard real-time requirements with any other scheduling strategies.

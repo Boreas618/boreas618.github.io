@@ -7,7 +7,7 @@
 * Slow performance for random access
 * Better performance for sequential access
 
-<img src="https://p.ipic.vip/yrl6bj.png" alt="Screenshot 2023-12-23 at 9.26.08 PM" style="zoom:33%;" />
+<center><img src="https://p.ipic.vip/yrl6bj.png" alt="Screenshot 2023-12-23 at 9.26.08 PM" style="zoom:33%;" /></center>
 
 ### Physical Characteristics
 
@@ -27,7 +27,7 @@ In the early days of hard drivers, the number of sectors pre track was the same 
 
 To make better use of the available space on the disk, hard drive manufacturers started using a technique called zone bit recording (ZBR). In ZBR, the hard drive surface is divided into different zones or regions, each of which contains a certain number of sectors per track. The outer zones, which are larger, contain more sectors per track than the inner zones. This means that more data can be stored on the outer tracks, matching their larger physical size.
 
-<img src="https://p.ipic.vip/dkxd1t.png" alt="Screenshot 2023-12-23 at 9.23.49 PM" style="zoom: 33%;" />
+<center><img src="https://p.ipic.vip/dkxd1t.png" alt="Screenshot 2023-12-23 at 9.23.49 PM" style="zoom: 33%;" /></center>
 
 ------
 
@@ -63,13 +63,13 @@ $$
 
 * SSTF is good at reducing seeks, but may lead to starvation.
 
-<img src="https://p.ipic.vip/222400.png" alt="image-20230703204314049" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/222400.png" alt="image-20230703204314049" style="zoom:50%;" /></center>
 
 **SCAN**: Implements an Elevator Algorithm: take the closest request in the direction of travel. It's like travelling from the outer edge (track) to the inner edge (track), serving requests on each track.
 
 No starvation, but retains flavor of SSTF
 
-<img src="https://p.ipic.vip/7j1vfu.png" alt="image-20230703204932038" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/7j1vfu.png" alt="image-20230703204932038" style="zoom:50%;" /></center>
 
 The read/write head is more likely to be near the center of the disk (middle tracks) than at either extreme end (innermost or outermost tracks). This is because the SCAN algorithm reverses direction as soon as it reaches either end of the disk. Therefore, tracks near the center get passed over more frequently than those at the extremes.
 
@@ -83,7 +83,7 @@ This is a potential disadvantage of the SCAN algorithm, because it may result in
 
 * Fairer than SCAN, not biased towards pages in middle
 
-<img src="https://p.ipic.vip/fuoqrq.png" alt="image-20230703205006700" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/fuoqrq.png" alt="image-20230703205006700" style="zoom:50%;" /></center>
 
 ----
 
@@ -131,7 +131,7 @@ Controller maintains pool of empty blocks by coalescing used pages (read, erase,
 
 We can only erase in big chunks:
 
-<img src="https://p.ipic.vip/8oqs2i.png" alt="image-20230703000834471" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/8oqs2i.png" alt="image-20230703000834471" style="zoom:50%;" /></center>
 
 Eeasure are 10 times slower than writes and writes are 10 times slower than reads.
 

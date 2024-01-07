@@ -12,7 +12,7 @@ The **process control block** stores all the information the operating system ne
 
 A typical x86-64 virtual memory layout is presented below. The `.data` segment is primarily used for storing global and static variables that are initialized. The `.bss` segment is used for uninitialized global and static variables. The `.rodata` stores constant data and string literals. The `.text` is the read-only code.
 
-<img src="https://p.ipic.vip/q52zgk.png" alt="Screenshot 2023-08-15 at 4.20.59 PM" style="zoom: 33%;" />
+<center><img src="https://p.ipic.vip/q52zgk.png" alt="Screenshot 2023-08-15 at 4.20.59 PM" style="zoom: 33%;" /></center>
 
 > In Intel processors, the privilege level of a process is stored in a **field** within the Code Segment (CS) register. This **field** is known as the Current Privilege Level (CPL).
 >
@@ -30,7 +30,7 @@ A process in five states:
 * **Blocked/ Waiting**: The execution of this process is suspended and will not be scheduled. A process stops as a result of receiving a `SIGSTOP`, `SIGTSP`, `SIGTTIN` or `SIGTTOU` signal, and remains stopped until it receives a `SIGCONT` signal, at which point it becomes running again. It can be further categorized as **uninterruptible sleep** and **interruptible sleep**.
 * **Terminated**: A process become terminated for: Receving a signal whose default action is to terminate the process; Returning from the main routine; Calling the `exit` function.
 
-<img src="https://p.ipic.vip/wfs7i8.png" style="zoom: 33%;" />
+<center><img src="https://p.ipic.vip/wfs7i8.png" style="zoom: 33%;" /></center>
 
 > **Suspended Processes**
 >
@@ -82,7 +82,7 @@ The thread control block holds two types of per-thread information:
 
 ### Thread Life Cycle
 
-<img src="https://p.ipic.vip/ut6ns7.png" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/ut6ns7.png" style="zoom:50%;" /></center>
 
 ### Thread Control
 
@@ -153,7 +153,7 @@ A thread never deletes its own state. Some other thread must do it. On exit, the
 
 **Examples of Relationships Between User-Level Thread States and Process States**
 
-<img src="https://p.ipic.vip/un22i1.png" alt="Screenshot 2023-12-26 at 2.07.40 PM" style="zoom: 33%;" />
+<center><img src="https://p.ipic.vip/un22i1.png" alt="Screenshot 2023-12-26 at 2.07.40 PM" style="zoom: 33%;" /></center>
 
 * **(a)**: normal scenarios.
 * **(b)**: The application executing in thread 2 makes a system call that blocks process B. For example, an I/O call is made.
@@ -177,4 +177,4 @@ A thread never deletes its own state. Some other thread must do it. On exit, the
 
 To address this issue, we propose **Many-to-Many** model.
 
-<img src="https://w3.cs.jmu.edu/kirkpams/OpenCSF/Books/csf/html/_images/CSF-Images.6.1.png" alt="6.2. Processes vs. Threads — Computer Systems Fundamentals" style="zoom: 33%;" />
+<center><img src="https://w3.cs.jmu.edu/kirkpams/OpenCSF/Books/csf/html/_images/CSF-Images.6.1.png" alt="6.2. Processes vs. Threads — Computer Systems Fundamentals" style="zoom: 33%;" /></center>

@@ -21,7 +21,12 @@ capitalize() {
 }
 
 # Loop through each .md file
-for file in *.md; do
+find . -name "*.md" | while read -r file; do
+    # Use sed to find and replace the img tag with centered img tag
+    # This sed command looks for <img ... /> and wraps it with <center> tags
+    # It handles additional attributes like alt and style
+    sed -i 's@<img [^>]*\/>@<center>&</center>@g' "$file"
+
     # Extract the name without the extension
     name=$(basename "$file" .md)
 
