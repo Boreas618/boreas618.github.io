@@ -63,6 +63,12 @@ export default defineConfig({
           { text: 'GPT', link: '/posts/gpt' },
           { text: 'BERT', link: '/posts/bert' },
         ]
+      },
+      {
+        text: 'CV',
+        items: [
+          { text: 'ViT', link: '/posts/vit' },
+        ]
       }
       ]
     },
