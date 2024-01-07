@@ -61,7 +61,7 @@ What is **feature-based** approach?
 Two steps in Bert framework:  **pre-training** and **fine-tuning**.
 
 ::: tip Thoughts
-Both GPT and Bert use unspervised pre-training.
+GPT and Bert are semi-supervised approaches (i.e. unsupervised pre-training and supervised fine-tuning).
 :::
 
 ----
