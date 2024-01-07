@@ -59,7 +59,7 @@ Next, `movq %rsp, %rbp` updates `%rbp` to the current stack pointer `%rsp`, effe
 
   > The stack frame of a procedure `p` consists of data pushed to stack from the moment `call p` starts executing to the moment `call another_p` is going to execute.
 
-  <img src="https://p.ipic.vip/oozad7.png" alt="Screenshot 2023-11-22 at 11.48.03 PM" style="zoom:50%;" />
+ <center><img src="https://p.ipic.vip/oozad7.png" alt="Screenshot 2023-11-22 at 11.48.03 PM" style="zoom:50%;" /></center>
 
 Then `subq $16, %rsp` is used to allocate a 16-byte stack space for the current procedure, `add_two`. 
 

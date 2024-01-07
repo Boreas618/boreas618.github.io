@@ -76,7 +76,7 @@ The thread control block holds two types of per-thread information:
 
    In some systems, the general-purpose registers for a stopped thread are stored on the top of the stack, and the TCB contains only a pointer to the stack (Many early and simplistic computer architectures and operating systems employed this method). In other systems, the TCB contains space for a copy of all processor registers (*nix).
 
-<img src="https://p.ipic.vip/at02p3.png" alt="" width="375">
+<center><img src="https://p.ipic.vip/at02p3.png" alt="" width="375"></center>
 
 2. **Per-thread Metadata**: thread ID, scheduling priority, status, et al.
 
