@@ -44,15 +44,16 @@ $$
 
 **Multi-Head Attention**: linearly project the queries, keys and values $h$ times with different, learned linear projections to $d_k$, $d_k$ and $d_v$ dimensions, respectively. The  $d_v$-dimensional output values are concatenated and once again projected into final values.
 
-::: warning Question
-Are there any design alternatives to concatenation?
-:::
+> [!NOTE]
+>
+> Are there any design alternatives to concatenation?
 
 Multi-head attention allows the model to jointly attend to information from different representation subspaces at different positions. With a single attention head, averaging inhibits this.
 
-::: warning Question
-Are there any discussion about the impacts of the intersection of the subspaces (i.e. $\text{dim}(S_1) + \text{dim}(S_2) < \text{dim}(S_1+S_2)$) on the performance? 
-:::
+> [!NOTE]
+>
+> Are there any discussion about the impacts of the intersection of the subspaces (i.e. $\text{dim}(S_1) + \text{dim}(S_2) < \text{dim}(S_1+S_2)$) on the performance? 
+
 
 $$
 \text{MultiHead(Q, K, V)} = \text{Concat}(\text{head}_1, \text{head}_2, \ldots, \text{head}_n)W^O
@@ -78,9 +79,9 @@ In the embedding layers, multiply those weights by $\sqrt{d_{\text{model}}}$ .
 
 Add "positional encodings" to the input embeddings at the bottoms of the encoder and decoder stacks.
 
-::: warning Question
-What about add positional encodings half way along the encoder/decoder stack?
-:::
+> [!NOTE]
+>
+> What about add positional encodings half way along the encoder/decoder stack?
 
 The positional encodings have the same dimension $d_{\text{model}}$ as the embeddings, so that the two can be summed.
 
