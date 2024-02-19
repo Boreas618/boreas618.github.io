@@ -24,7 +24,7 @@ export default defineConfig({
         text: 'OS Notes',
         items: [
           {text: 'Introduction', link: '/os-notes/introduction'},
-          {text: 'Case: Pintos Booting', link: '/os-notes/case-study-pintos-booting'},
+          {text: 'Case: Pintos Booting', link: '/os-notes/pintos-booting'},
           {text: 'Process and Thread', link: '/os-notes/process-and-thread'},
           {text: 'Programming: Process and Thread', link: '/os-notes/programming-process-and-thread'},
           {text: 'Programming: Signal', link: '/os-notes/programming-signal'},
@@ -34,13 +34,15 @@ export default defineConfig({
           {text: 'Synchronization and Mutual Exclusion', link: '/os-notes/synchronization-and-mutual-exclusion'},
           {text: 'Deadlock', link: '/os-notes/deadlock'},
           {text: 'Case: Linux Futex', link: '/os-notes/linux-futex'},
-          {text: 'Interprocess Communication', link: '/os-notes/interprocess-communication'},
+          {text: 'Interprocess Communication: Concepts', link: '/os-notes/interprocess-communication-concepts'},
+          {text: 'Interprocess Communication: Cases', link: '/os-notes/interprocess-communication-cases'},
+          {text: 'Interprocess Communication: Implementation', link: '/os-notes/interprocess-communication-impl'},
           {text: 'Cache', link: '/os-notes/cache'},
           {text: 'Memory Management: Mechanisms', link: '/os-notes/memory-management-mechanisms'},
           {text: 'Memory Management: Strategies', link: '/os-notes/memory-management-strategies'},
           {text: 'Storage Devices', link: '/os-notes/storage-devices'},
-          {text: 'File System Concepts', link: '/os-notes/file-system-concepts'},
-          {text: 'File Systems', link: '/os-notes/file-systems'},
+          {text: 'File System: Concepts', link: '/os-notes/file-system-concepts'},
+          {text: 'File Systems (Under Construction)', link: '/os-notes/file-systems'},
           {text: 'I/O', link: '/os-notes/io'},
         ],
       },
@@ -60,14 +62,14 @@ export default defineConfig({
         text: 'NLP',
         items: [
           { text: 'Attention is All You Need', link: '/posts/attention-is-all-you-need' },
-          { text: 'GPT', link: '/posts/gpt' },
-          { text: 'BERT', link: '/posts/bert' },
+          { text: 'Improving Language Understanding by Generative Pre-Training', link: '/posts/gpt' },
+          { text: 'Pre-training of Deep Bidirectional Transformers for Language Understanding', link: '/posts/bert' },
         ]
       },
       {
         text: 'CV',
         items: [
-          { text: 'ViT', link: '/posts/vit' },
+          { text: 'An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale', link: '/posts/vit' },
         ]
       }
       ]

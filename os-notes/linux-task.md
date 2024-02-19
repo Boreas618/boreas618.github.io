@@ -340,7 +340,7 @@ long _do_fork(unsigned long clone_flags,
 
 ### `copy_thread()`
 
-<center><img src="http://lastweek.io/notes/linux/stack_layout_fork.png" alt="stack_layout_fork" style="zoom: 25%;" /></center>
+<img src="http://lastweek.io/notes/linux/stack_layout_fork.png" alt="stack_layout_fork" style="zoom: 25%;" />
 
 This is the stack layout after `copy_thread()`. Also the rough layout when the newly created thread is enqueued into runqueue.
 

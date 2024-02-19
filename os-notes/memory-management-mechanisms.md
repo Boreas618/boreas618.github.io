@@ -24,7 +24,7 @@ Fixed partitioning is trivial. We focus on dynamic partitioning and buddy system
 
 When a process arrives and needs memory, the system searches the set for a hole that is large enough for this process. 
 
-<center><img src="https://p.ipic.vip/31bd1r.png" alt="Screenshot 2023-12-01 at 3.46.07 AM" style="zoom:50%;" /></center>
+<img src="https://p.ipic.vip/31bd1r.png" alt="Screenshot 2023-12-01 at 3.46.07 AM" style="zoom:50%;" />
 
 * **Best-fit**: Choose the block that is closest in size to the request.
 * **First-fit**: Scan the memory from the beginning and choose the first available block that is large enough.
@@ -38,11 +38,11 @@ When a process arrives and needs memory, the system searches the set for a hole 
 
 ### Buddy System
 
-<center><img src="https://p.ipic.vip/qywc83.png" alt="Screenshot 2023-12-01 at 4.00.23 AM" style="zoom: 33%;" /></center>
+<img src="https://p.ipic.vip/qywc83.png" alt="Screenshot 2023-12-01 at 4.00.23 AM" style="zoom: 33%;" />
 
 ## Segmented Memory
 
-<center><img src="https://p.ipic.vip/ocs8d1.png" alt="Screenshot 2023-05-25 at 11.20.11 PM" style="zoom:50%;" /></center>
+<img src="https://p.ipic.vip/ocs8d1.png" alt="Screenshot 2023-05-25 at 11.20.11 PM" style="zoom:50%;" />
 
 There are definitely **external fragmentation**s. If a program branches into or tries to load data from one of these gaps, the hardware will generate an exception, trapping into the operating system kernel. On UNIX systems, this is called a **segmentation fault**.
 
@@ -52,7 +52,7 @@ If there is not enough space in memory, we need to perform an extreme form of co
 
 ## Paged Memory
 
-<center><img src="https://p.ipic.vip/ocyhdh.png" alt="Screenshot 2023-05-26 at 2.02.31 AM" style="zoom: 33%;" /></center>
+<img src="https://p.ipic.vip/ocyhdh.png" alt="Screenshot 2023-05-26 at 2.02.31 AM" style="zoom: 33%;" />
 
 **Features**:
 
@@ -78,7 +78,7 @@ Inverted page table has been used on the Power PC and on IBM’s AS/400. Each en
 
 When a memory reference occurs, the inverted page table is searched to match `<pid, page#>`. If a match is found at entry i, then the physical address `<i, offset>` is generated. If no match is found, then an illegal address access has been attempted.
 
-<center><img src="https://i.stack.imgur.com/z61lh.png" alt="operating systems - Difference between inverted page table and a standard  one? - Computer Science Stack Exchange" style="zoom:50%;" /></center>
+<img src="https://i.stack.imgur.com/z61lh.png" alt="operating systems - Difference between inverted page table and a standard  one? - Computer Science Stack Exchange" style="zoom:50%;" />
 
 > **Practice** (COMP130110@FDU, 2017)
 >
@@ -88,7 +88,7 @@ When a memory reference occurs, the inverted page table is searched to match `<p
 
 ### Paged Segmentation
 
-<center><img src="https://p.ipic.vip/pbm6oj.png" alt="Screenshot 2023-05-26 at 2.33.02 AM" style="zoom:50%;" /></center>
+<img src="https://p.ipic.vip/pbm6oj.png" alt="Screenshot 2023-05-26 at 2.33.02 AM" style="zoom:50%;" />
 
 Segment tables are sometimes stored in special hardware registers, the page tables for each segment are quite a bit larger in aggregate, so they are normally stored in physical memory.
 
@@ -98,7 +98,7 @@ For example, with 32-bit virtual addresses and 4 KB pages, we might set aside th
 
 ### Multi-Level Paging
 
-<center><img src="https://p.ipic.vip/3iq3ep.png" alt="Screenshot 2023-05-26 at 2.42.31 AM" style="zoom: 33%;" /></center>
+<img src="https://p.ipic.vip/3iq3ep.png" alt="Screenshot 2023-05-26 at 2.42.31 AM" style="zoom: 33%;" />
 
 Each level of page table is designed to fit in a physical page frame. **Only the top-level page table must be filled in.**
 
@@ -117,9 +117,9 @@ The lower levels of the tree are allocated only if those portions of the virtual
 
 We can combine these two approaches by using a segmented memory where each segment is managed by a multi-level page table. In the protected mode of the 80386, memory addressing involves two distinct elements: processor registers dedicated to holding segment numbers, and the virtual addresses used within these segments. 
 
-> However, you must notice that the segment numbers are used for backward compatibility with 8086 and 80286. A flat model is more mainstream in the 80386.
+> However, it's important to note that segment numbers are retained primarily for backward compatibility with the 8086 and 80286 architectures. In the 80386, a flat memory model is more prevalent, even though segmentation is still supported. Essentially, multi-level paged segmentation is not the primary addressing model in this context.
 
-The  protected mode 80386 has a per-process **Local Descriptor Table** (LDT), equivalent to a segment table. Each entry (descriptor) points to the (multi-level) page table for that segment along with the segment length and segment access permissions. To start a process, the operating system sets up the LDT and initializes a register, the **Local Descriptor Table Register** (LDTR), that contains the address and length of the LDT.
+The  protected mode in 80386 has a per-process **Local Descriptor Table** (LDT), equivalent to a segment table. Each entry (descriptor) points to the (multi-level) page table for that segment along with the segment length and segment access permissions. To start a process, the operating system sets up the LDT and initializes a register, the **Local Descriptor Table Register** (LDTR), that contains the address and length of the LDT.
 
 There's also a **Global Descriptor Table** (GDT). The GDT describes system segments, including the operating system itself.
 
@@ -127,7 +127,7 @@ There's also a **Global Descriptor Table** (GDT). The GDT describes system segme
 
 There are 6 segment registers: **SS, CS, DS, ES, FS, GS**. Inside a segment register: 
 
-<center><img src="https://p.ipic.vip/xh6gcz.png" alt="Screenshot 2023-06-29 at 4.41.46 PM" style="zoom:50%;" /></center>
+<img src="https://p.ipic.vip/xh6gcz.png" alt="Screenshot 2023-06-29 at 4.41.46 PM" style="zoom:50%;" />
 
 * G/L: selects between GDT and LDT tables.
 * RPL: **R**equestor’s **P**rivilege **L**evel
@@ -145,7 +145,7 @@ There are 6 segment registers: **SS, CS, DS, ES, FS, GS**. Inside a segment regi
 
 This is the format of a 64-bit descriptor:
 
-<center><img src="https://p.ipic.vip/w14xox.png" alt="image-20230629164336699" style="zoom:50%;" /></center>
+<img src="https://p.ipic.vip/w14xox.png" alt="image-20230629164336699" style="zoom:50%;" />
 
 | Portion | Meaning                                                      |
 | ------- | ------------------------------------------------------------ |
@@ -177,7 +177,7 @@ A page table entry (PTE) is a pointer to next-level page table or to actual page
 
 The Intel x86 architecture PTE for the last level is like:
 
-<center><img src="https://p.ipic.vip/dtk9y1.png" alt="image-20230629155143574" style="zoom:50%;" /></center>
+<img src="https://p.ipic.vip/dtk9y1.png" alt="image-20230629155143574" style="zoom:50%;" />
 
 | Portion | Meaning                                                      | Type           |
 | ------- | ------------------------------------------------------------ | -------------- |
@@ -203,7 +203,7 @@ Both the top-level and second-level page table entries have permissions, so fine
 
 For x86-64:
 
-<center><img src="https://p.ipic.vip/cjfly8.png" alt="Screenshot 2023-06-29 at 5.11.06 PM" style="zoom:50%;" /></center>
+<img src="https://p.ipic.vip/cjfly8.png" alt="Screenshot 2023-06-29 at 5.11.06 PM" style="zoom:50%;" />
 
 As an optimization, x86-64 has the option to **eliminate one or two levels of the page table**. Each physical page frame on the x86 is 4 KB. Each page of fourth level page table maps 2 MB of data, and each page of the third level page table maps 1 GB of data. If the operating system places data such that the entire 2 MB covered by the fourth level page table is allocated contiguously in physical memory, then the page table entry one layer up can be marked to point directly to this region instead of to a page table.
 
@@ -227,13 +227,13 @@ When it comes to adding mappings to the page table, there are two different timi
 
 A **translation lookaside buffer (TLB**) is a small hardware table containing the results of recent address translations. Each entry in the TLB maps a virtual page to a physical page:
 
-<center><img src="https://p.ipic.vip/8h4boh.png" alt="Screenshot 2023-12-01 at 8.58.29 PM" style="zoom:50%;" /></center>
+<img src="https://p.ipic.vip/8h4boh.png" alt="Screenshot 2023-12-01 at 8.58.29 PM" style="zoom:50%;" />
 
 Instead of finding the relevant entry by a multi-level lookup or by hashing, the TLB hardware (typically) checks all of the entries simultaneously against the virtual page.
 
 When an entry is purged from the TLB, the modified bit is copied back into the page table entry in memory. The other values are already there, except the reference bit.
 
-<center><img src="https://p.ipic.vip/nbbpvl.png" alt="Screenshot 2023-05-29 at 10.19.51 AM" style="zoom:50%;" /></center>
+<img src="https://p.ipic.vip/nbbpvl.png" alt="Screenshot 2023-05-29 at 10.19.51 AM" style="zoom:50%;" />
 
 Multiple levels of TLB are used to keep lookups rapid, with smaller first level TLBs close to the processor and larger second level TLBs consulted if necessary.
 
@@ -246,7 +246,7 @@ Some TLBs are **set associative**. In a set associative TLB, each virtual addres
 
 Superpage can drastically reduce the number of TLB entries needed to map large, contiguous regions of memory. Each entry in the TLB has a flag, signifying whether the entry is a page or a superpage.
 
-<center><img src="https://p.ipic.vip/0p6hnk.png" alt="Screenshot 2023-05-29 at 10.35.59 AM" style="zoom: 33%;" /></center>
+<img src="https://p.ipic.vip/0p6hnk.png" alt="Screenshot 2023-05-29 at 10.35.59 AM" style="zoom: 33%;" />
 
 When looking for a match against a superpage, the TLB only considers the most significant bits of the address, ignoring the offset within the superpage. For a 2 MB superpage, the offset is the lowest 21 bits of the virtual address. For a 1 GB superpage it is the lowest 30 bits.
 

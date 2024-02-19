@@ -216,7 +216,7 @@ void *consumer(void *arg) {
 - When a barber is free, the customer that has been on the sofa the longest is served.
 - When a customer's haircut is finished, payment is accepted for one customer at a time.
 
-<center><img src="https://p.ipic.vip/91ugbs.png" alt="Screenshot 2023-10-28 at 5.07.15 PM" style="zoom:50%;" /></center>
+<img src="https://p.ipic.vip/91ugbs.png" alt="Screenshot 2023-10-28 at 5.07.15 PM" style="zoom:50%;" />
 
 ### Readers/Writers Problem
 

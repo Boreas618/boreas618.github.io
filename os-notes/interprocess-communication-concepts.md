@@ -1,4 +1,4 @@
-# Inter-process Communication
+# Inter-process Communication Concepts
 
 **Two Primitives**:
 
@@ -51,3 +51,4 @@ Sender and receiver may or may not be blocking.
 - **Zero capacity**: the sender must block until the recipient receive the message
 - **Bounded capacity**: the queue has finite length `n`; full or not-full?
 - **Unbounded capacity**: the queue length is potentially infinite.The sender never blocks.
+

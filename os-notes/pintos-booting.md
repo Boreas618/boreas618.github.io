@@ -53,19 +53,27 @@ IA32 bootloaders generally have to fit within 512 bytes in memory for a partitio
 	+------------------+  <- 0x00000000
 ```
 
-**The 640KB area marked "Low Memory" was the only random-access memory (RAM) that an early PC could use.**
-
------
+**The 640KB area marked "Low Memory" was the only random-access memory (RAM) that Intel 8086 could use.**
 
 The 384KB area from `0x000A0000` through `0x000FFFFF` was reserved by the hardware for special uses such as video display buffers and firmware held in non-volatile memory. The most important part of this reserved area is the BIOS.
 
 -------
 
-Nowadays, the PC architects still preserved the original layout for the low 1MB of physical address space in order to ensure **backward compatibility** with existing software.
+Nowadays, the PC architects still preserved the original layout for the low 1MB of physical address space in order to ensure **backward compatibility** with existing software (especially Intel 8086 with 20 address lines).
 
-Modern PCs therefore have a "hole" in physical memory from 0x000A0000 to 0x00100000, dividing RAM into "low" or "conventional memory" (the first 640KB) and "extended memory" (everything else).
+Modern PCs therefore have a "hole" in physical memory from 0x000A0000 to 0x00100000, which was used for devices in 8086, dividing RAM into "low" or "conventional memory" (the first 640KB) and "extended memory" (everything else). Instead, **space at the very top of the modern PC's 32-bit physical address space**, above all physical RAM, **is now commonly reserved by the BIOS for use by 32-bit PCI devices.**
 
-In addition, **some space at the very top of the PC's 32-bit physical address space**, above all physical RAM, **is now commonly reserved by the BIOS for use by 32-bit PCI devices.**
+----
+
+The 80386 and later CPUs define the following predefined data in CPU registers after the computer resets:
+
+```
+IP          0xfff0
+CS selector 0xf000
+CS base     0xffff0000
+```
+
+
 
 ## Bootloader
 

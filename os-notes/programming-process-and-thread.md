@@ -158,7 +158,7 @@ The `execve` function loads and runs the executable object file `filename` with 
 int execve(const char *filename, const char *argv[], const char *envp[]);
 ```
 
-<center><img src="https://p.ipic.vip/sqoabq.png" alt="Screenshot 2023-12-16 at 9.57.13 PM" style="zoom: 33%;" /></center>
+<img src="https://p.ipic.vip/sqoabq.png" alt="Screenshot 2023-12-16 at 9.57.13 PM" style="zoom: 33%;" />
 
 ```c
 #include <stdlib.h>

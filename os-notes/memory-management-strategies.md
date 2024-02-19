@@ -45,7 +45,7 @@ Beside those locked pages, we can replace the rest pages in vm system.
 
 > **For MIN and LRU**, adding memory generally decreases the miss rate. But for FIFO, this reduction isn't guaranteed, leading to Bélády’s anomaly：
 >
-> <center><img src="https://p.ipic.vip/sjopmr.png" alt="Screenshot 2023-06-30 at 3.15.53 AM" style="zoom:50%;" /></center>
+> <img src="https://p.ipic.vip/sjopmr.png" alt="Screenshot 2023-06-30 at 3.15.53 AM" style="zoom:50%;" />
 
 This method is not feasible in terms of hardware or cost. Each page could be tagged with the time of last reference.This would require a great deal of overhead. 
 
@@ -73,7 +73,7 @@ At any instance, the row whose binary value is lowest is the least recently used
 
 ### Approximating LRU: Ageing Algorithm
 
-<center><img src="https://p.ipic.vip/zqkg4t.png" alt="image-20230607101017289" style="zoom:50%;" /></center>
+<img src="https://p.ipic.vip/zqkg4t.png" alt="image-20230607101017289" style="zoom:50%;" />
 
 There's **a R bit and a counter** associated with each page. At each clock tick, the algorithm left shifts the counter of each page and  fill the R bit in the leftmost slot. In other words, the counter will record the recent 8 clock ticks' reference behavior. 
 
@@ -174,7 +174,7 @@ Possible behavior: If process $p_i$ generates a page fault, select for replaceme
 
 We want find a balance between page-fault rate and number of frames. We dynamically adjust the number of frames a process is allocated.
 
-<center><img src="https://p.ipic.vip/sxoaml.png" alt="image-20230630214738969" style="zoom:50%;" /></center>
+<img src="https://p.ipic.vip/sxoaml.png" alt="image-20230630214738969" style="zoom:50%;" />
 
 ## Working-Set Model
 

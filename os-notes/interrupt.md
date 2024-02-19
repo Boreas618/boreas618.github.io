@@ -70,6 +70,6 @@ Each system call has a unique integer number that corresponds to an offset in a 
 > * The **interrupt vector table** deals with unexpected conditions in the kernel's operation and helps it recover or handle such situations gracefully.
 > *  The **system call jump table** serves as an index to quickly and efficiently route system call requests from user space programs to the appropriate kernel functions.
 
-<center><img src="https://p.ipic.vip/trbk4b.png" alt="Screenshot 2023-07-13 at 11.57.46 PM" style="zoom:50%;" /></center>
+<img src="https://p.ipic.vip/trbk4b.png" alt="Screenshot 2023-07-13 at 11.57.46 PM" style="zoom:50%;" />
 
 All arguments to Linux system calls are passed through general purpose registers rather than the stack. By convention, `%rax` contains the syscall number, with up to six arguments in `%rdi`, `%rsi`, `%rdx`,  `%r10`, `%r8` and `%r9`. On return from the system, registers `%r11`and `%rcx`are destroyed, and `%rax` contains the return value. A negative return value between -4095 and -1 indicates an error corresponding to negative `errno`.

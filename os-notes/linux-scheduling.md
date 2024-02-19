@@ -55,7 +55,7 @@ Tuning the scheduler can lead to performance improvements for specific workloads
 
 ## Linux O(1) Scheduler
 
-<center><img src="https://p.ipic.vip/prt58w.png" alt="Screenshot 2023-06-18 at 5.17.55 AM" style="zoom:50%;" /></center>
+<img src="https://p.ipic.vip/prt58w.png" alt="Screenshot 2023-06-18 at 5.17.55 AM" style="zoom:50%;" />
 
 **Priority Queues and Time Slices**： In the Linux O(1) scheduler, tasks are organized based on their priority, which is categorized into 140 distinct levels:
 

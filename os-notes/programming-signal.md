@@ -288,7 +288,7 @@ Guidelines:
 
   The ONLY safe way to generate output from a signal handler is to use the `write` function. Calling `printf` or `sprintf` is unsafe.
 
-  <center><img src="https://p.ipic.vip/th5z4d.png" alt="Untitled" style="zoom:50%;" /></center>
+  <img src="https://p.ipic.vip/th5z4d.png" alt="Untitled" style="zoom:50%;" />
 
 * **Save and restore `errno`.**
 

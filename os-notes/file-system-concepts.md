@@ -32,11 +32,11 @@ A **structured sequential file** is a named sequence of logical records, indexed
 
   An **overflow file** to store the additions temporarily.
 
-  <center><img src="https://p.ipic.vip/a755dn.png" alt="Screenshot 2023-12-11 at 1.57.38 AM" style="zoom:50%;" /></center>
+  <img src="https://p.ipic.vip/a755dn.png" alt="Screenshot 2023-12-11 at 1.57.38 AM" style="zoom:50%;" />
 
 * **Direct or Hashed File**: A key field is required in each record .
 
-  <center><img src="https://p.ipic.vip/bhhlcn.png" alt="Screenshot 2023-12-11 at 2.02.38 AM" style="zoom:33%;" /></center>
+  <img src="https://p.ipic.vip/bhhlcn.png" alt="Screenshot 2023-12-11 at 2.02.38 AM" style="zoom:33%;" />
 
 ## File Access
 
@@ -47,7 +47,7 @@ A **structured sequential file** is a named sequence of logical records, indexed
 
 Disks are split into one or more **partition**s. Partitions are also known as **minidisk**s in the IBM world or **volume**s in the PC and Macintosh arenas. Each partition contains information about files within it. This information is kept in entries in a **device directory** or volume table of contents.
 
-<center><img src="https://p.ipic.vip/z9j38f.png" alt="Screenshot 2023-12-11 at 2.28.35 AM" style="zoom:33%;" /></center>
+<img src="https://p.ipic.vip/z9j38f.png" alt="Screenshot 2023-12-11 at 2.28.35 AM" style="zoom:33%;" />
 
 **MBR (Master Boot Record)**: The sector 0 of the disk; used to boot the computer.
 
@@ -142,7 +142,7 @@ Accessing a file that has been allocated contiguously is easy for both **sequent
 
 Contiguous allocation is feasible and in fact widely used in one situation: On CD-ROM.
 
-<center><img src="https://p.ipic.vip/wuegcm.png" alt="Screenshot 2023-12-16 at 5.15.29 AM" style="zoom:50%;" /></center>
+<img src="https://p.ipic.vip/wuegcm.png" alt="Screenshot 2023-12-16 at 5.15.29 AM" style="zoom:50%;" />
 
 ### Chained Allocation
 
@@ -158,7 +158,7 @@ No external fragmentation, and no size declaration problem.
 
 **Disadvantage4**: Reliability.
 
-<center><img src="https://p.ipic.vip/tbkfaq.png" alt="Screenshot 2023-12-16 at 5.20.47 AM" style="zoom:50%;" /></center>
+<img src="https://p.ipic.vip/tbkfaq.png" alt="Screenshot 2023-12-16 at 5.20.47 AM" style="zoom:50%;" />
 
 > **FAT: File Allocation Table**
 >
@@ -180,7 +180,7 @@ File allocation table contains a separate one-level index for each file. The ind
 
 Indexed allocation does suffer from wasted space. The pointer overhead of the index block is generally greater than the pointer overhead of chained allocation. An entire index block must be allocated even if the file only occupies one or two block.
 
-<center><img src="https://p.ipic.vip/x8eh0n.png" alt="Screenshot 2023-12-16 at 5.43.10 AM" style="zoom: 33%;" /></center>
+<img src="https://p.ipic.vip/x8eh0n.png" alt="Screenshot 2023-12-16 at 5.43.10 AM" style="zoom: 33%;" />
 
 ## Free Space Management
 
@@ -233,7 +233,7 @@ If the file system is consistent, each block will have a 1 either in the first t
 
 **Duplicate data block**: The same data block is present in two or more files. **Solution**: allocate a free block, copy the contents of the data block into it, and insert the copy into one of the files.
 
-<center><img src="https://p.ipic.vip/hl8o2f.png" alt="Screenshot 2023-12-16 at 6.10.52 AM" style="zoom:50%;" /></center>
+<img src="https://p.ipic.vip/hl8o2f.png" alt="Screenshot 2023-12-16 at 6.10.52 AM" style="zoom:50%;" />
 
 ### File Consistency
 
@@ -263,9 +263,9 @@ Four types of files are distinguished:
 
 The length of a block is 1 Kbyte in UNIX system, and each block can hold a total of 256 block addresses.
 
-<center><img src="https://p.ipic.vip/fc7ut2.png" alt="Screenshot 2023-12-16 at 6.19.15 AM" style="zoom: 33%;" /></center>
+<img src="https://p.ipic.vip/fc7ut2.png" alt="Screenshot 2023-12-16 at 6.19.15 AM" style="zoom: 33%;" />
 
-<center><img src="https://p.ipic.vip/3skzkj.png" alt="Screenshot 2023-12-16 at 6.20.27 AM" style="zoom: 33%;" /></center>
+<img src="https://p.ipic.vip/3skzkj.png" alt="Screenshot 2023-12-16 at 6.20.27 AM" style="zoom: 33%;" />
 
 ---
 
@@ -277,7 +277,7 @@ Triple indirection is much slower, as it may result in multiple seeks to get to 
 
 ### RAID 1: Disk Mirroring/Shadowing
 
-<center><img src="https://p.ipic.vip/5kvvfn.png" alt="image-20230713165521685" style="zoom:50%;" /></center>
+<img src="https://p.ipic.vip/5kvvfn.png" alt="image-20230713165521685" style="zoom:50%;" />
 
 Each disk is fully duplicated onto its *shadow*
 
@@ -287,7 +287,7 @@ Each disk is fully duplicated onto its *shadow*
 
 ### RAID 5+: High I/O Rate Parity
 
-<center><img src="https://p.ipic.vip/qth5bi.png" alt="image-20230713165705733" style="zoom:50%;" /></center>
+<img src="https://p.ipic.vip/qth5bi.png" alt="image-20230713165705733" style="zoom:50%;" />
 
 Data are stripped across multiple disks
 

@@ -1,6 +1,6 @@
 # I/O
 
-<center><img src="https://harttle.land/assets/img/blog/intel-io.png" alt="Computer Organization and Design 笔记 - Storage and Other I/O Topics |  Harttle Land" style="zoom:75%;" /></center>
+<img src="https://harttle.land/assets/img/blog/intel-io.png" alt="Computer Organization and Design 笔记 - Storage and Other I/O Topics |  Harttle Land" style="zoom:75%;" />
 
 * I/O devices you recognize are supported by **I/O controller**s.
 
@@ -24,7 +24,7 @@ PCI started life out as a bus. But a parallel bus has many limitations:
 
 PCI Express "Bus" is no longer a parallel bus. It's really a **collection of fast serial channels** or “lanes”. Devices can use as many as they need to achieve a desired bandwidth. Slow devices don’t have to share with fast ones.
 
-<center><img src="https://p.ipic.vip/8qlycv.png" alt="Screenshot 2023-07-01 at 1.48.34 AM" style="zoom:50%;" /></center>
+<img src="https://p.ipic.vip/8qlycv.png" alt="Screenshot 2023-07-01 at 1.48.34 AM" style="zoom:50%;" />
 
 CPU interacts with a *Controller* which contains a set of *registers* that can be read and written. The controller may contain memory for request queues, etc.
 
@@ -54,7 +54,7 @@ Processor accesses registers in two ways:
 
   **Direct Memory Access**: Give controller access to memory bus. Ask it to transfer data blocks to/from memory directly.
 
-  <center><img src="https://p.ipic.vip/vd53f3.png" alt="image-20230702195541288" style="zoom:50%;" /></center>
+  <img src="https://p.ipic.vip/vd53f3.png" alt="image-20230702195541288" style="zoom:50%;" />
 
 * **I/O Device Notifying the OS**
 
@@ -74,7 +74,7 @@ Processor accesses registers in two ways:
 
 ## I/O Software
 
-<center><img src="https://p.ipic.vip/8ab7w7.png" alt="Screenshot 2023-07-02 at 8.10.09 PM" style="zoom:50%;" /></center>
+<img src="https://p.ipic.vip/8ab7w7.png" alt="Screenshot 2023-07-02 at 8.10.09 PM" style="zoom:50%;" />
 
 ### Kernel I/O Subsystem (Device-Independent Software)
 
@@ -148,7 +148,7 @@ Define $T$ as the time from I/O device to buffer, $M$ as the time from buffer to
 
 **With Single Buffering**: Execution per block is $\max(T, C) + M$.
 
-<center><img src="https://p.ipic.vip/zq429z.png" alt="Screenshot 2023-12-23 at 6.17.45 AM" style="zoom: 33%;" /></center>
+<img src="https://p.ipic.vip/zq429z.png" alt="Screenshot 2023-12-23 at 6.17.45 AM" style="zoom: 33%;" />
 
 ### Double Buffer
 
@@ -171,7 +171,7 @@ An improvement over single buffering is to use two system buffers instead of one
 
 More than two buffers are used
 
-<center><img src="https://p.ipic.vip/psodw8.png" alt="Screenshot 2023-12-23 at 8.39.52 PM" style="zoom: 33%;" /></center>
+<img src="https://p.ipic.vip/psodw8.png" alt="Screenshot 2023-12-23 at 8.39.52 PM" style="zoom: 33%;" />
 
 -----
 
