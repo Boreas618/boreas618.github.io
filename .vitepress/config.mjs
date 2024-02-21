@@ -53,11 +53,11 @@ export default defineConfig({
           { text: 'Monitor, Condition Variables and Three Semantics', link: '/posts/monitor' },
           { text: 'Exception and Interrupt Handling in xv6', link: '/posts/xv6-trap' },
           { text: 'Function Prologues', link: '/posts/function-prologues' },
-          { text: 'TreeSLS', link: '/posts/TreeSLS' },
+          { text: 'TreeSLS: A Whole-system Persistent Microkernel with Tree-structured State Checkpoint on NVM', link: '/posts/TreeSLS' },
           { text: 'Transactional Memory', link: '/posts/transactional-memory' },
           { text: 'Kubernetes Scheduling', link: '/posts/kuber-scheduling' },
-          { text: 'CLoF', link: '/posts/CLoF' },
-          { text: 'Mira', link: '/posts/mira-post' },
+          { text: 'CLoF: A Compositional Lock Framework for Multi-level NUMA Systems', link: '/posts/CLoF' },
+          { text: 'Mira: A Progam-Behavior-Guided Far Memory System', link: '/posts/mira-post' },
         ]
       }, {
         text: 'NLP',

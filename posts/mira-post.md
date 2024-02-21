@@ -1,6 +1,6 @@
 # Mira: A Progam-Behavior-Guided Far Memory System
 
-<img src="https://p.ipic.vip/aj389r.png" alt="Screenshot 2024-02-15 at 3.34.25 PM" style="zoom: 33%;" />
+<center><img src="https://p.ipic.vip/aj389r.png" alt="Screenshot 2024-02-15 at 3.34.25 PM" style="zoom: 33%;" /></center>
 
 ::: tip Summary
 The core of implementing a far memory system in this article is the design of the cache, with the main optimization goals being to increase the hit rate, reduce the miss rate, and use the cache to hide the latency of accessing remote data. Traditional caching schemes lack forward understanding of program semantics, making it difficult to support precise prefetching (imprecise prefetching mainly relies on temporal or spatial locality), low-overhead access, and safe release of resources, among other optimization operations. Mira achieves these highly semantic-related, fine-grained, and precise optimization operations at the IR and runtime levels, and does so transparently to the user, resulting in significant performance improvements.
@@ -21,7 +21,7 @@ The core of implementing a far memory system in this article is the design of th
 
 * Coarse granularity of a 4 KB page, which is often larger (2.3× to 31×) than what is actually read/written by an application. 
 
-::: tip Note
+::: tip Notes
 Is it possible to transparently exchange memory of size $2^k$ by referencing a slab? Furthermore, to prevent fine-grained memory swapping under high concurrency, an attempt can be made to mutiplex requests, where a single network request carries several memories to be swapped (this was an initial thought by myself, but it was later found that Mira also adopted the optimization of reusing requests). Subsequently, cache-line-based far memory systems are mentioned in the Related Works, which represent another approach to fine-grained memory swapping.
 :::
 
@@ -41,7 +41,7 @@ Is it possible to transparently exchange memory of size $2^k$ by referencing a s
 
 The key differenence between far memory and SRAM: **Cache for far memory is DRAM-based and can be controlled by software.**
 
-::: tip Note
+::: tip Notes
 This means that, unlike SRAM which serves as a cache (cache between CPU - DRAM), we can customize the resident set through static analysis and runtime profiling.
 :::
 
@@ -98,7 +98,7 @@ Some functions are offloaded to far memory.
 
 **Iterative (Sample-based input-adaptation approach)**: In one round, the compilation of a program is optimized for several iterations to generate a new compilation -> Use this compilation on the next invocation of the program.
 
-::: tip Note
+::: tip Notes
 Here is an idea similar to gradient descent. Considering that the cost of each iteration is not high (only considering functions that “suffer the most”), the expense of multiple iterations becomes acceptable.
 :::
 
@@ -126,7 +126,7 @@ Here is an idea similar to gradient descent. Considering that the cost of each i
 * A cache line to be no larger than the data access granularity to avoid read/write amplification.
 * Cover as many of the sequential accessed objects as possible.
 
-::: tip Note
+::: tip Notes
 Is the length of the cache line **chosen from a limited number of hard-coded options** or **dynamically calculated based on the characteristics of different objects**? In other words, is there a detailed discussion on the degree of freedom in choosing the length of the cache line?
 :::
 
@@ -150,7 +150,7 @@ For other cache sections, we sample a few section sizes as ratios of total local
 
 Mira turns all pointers that point to selected objects (selected by the profiling process) in non-swap sections to remote pointers (defined in Mira’s IR).
 
-::: tip Note
+::: tip Notes
 Explicit remote operations can more precisely control far-memory accesses and thereby improve application performance.
 :::
 
@@ -166,7 +166,7 @@ Resolving a remote pointer:
 
 However, if we have already accessed **a cache line** and **know that it is still in the local cache**, we would know its local memory address. By keeping the address, we would avoid the redundant looking up the pointer.
 
-::: tip Note
+::: tip Notes
 This means the mapping of the pointer symbol to the address it points to is cached, simplifying pointer dereferencing to a memory load.
 :::
 
@@ -197,9 +197,9 @@ Prefetching hides the **latency for sequential edge accesses**, and early evicti
 
 Use program analysis to determine the parts in a data structure that are accessed in each program scope.
 
-> [!note]
->
-> Similar ideas：![Screenshot 2024-02-21 at 12.56.17 PM](https://p.ipic.vip/k0khyh.png)
+::: tip Notes
+Similar ideas can be found here：![Screenshot 2024-02-21 at 12.56.17 PM](https://p.ipic.vip/k0khyh.png)
+:::
 
 ----
 
