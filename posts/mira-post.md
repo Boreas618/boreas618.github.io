@@ -2,9 +2,9 @@
 
 <img src="https://p.ipic.vip/aj389r.png" alt="Screenshot 2024-02-15 at 3.34.25 PM" style="zoom: 33%;" />
 
-> [!note]
->
-> 总结：本文中实现far memory system的核心是缓存的设计，主要的优化目标是提高hit rate，降低miss rate，利用缓存来隐藏访问远端的latency。传统的缓存方案缺乏对程序语义的前向理解，因而很难支持精确的预取（不太精确的预取主要依赖时间或空间局部性）、低overhead的访问、和安全地释放等优化操作。Mira在IR和runtime层面实现了这些高度语义相关、细粒度、精确的优化操作，并且对用户透明，取得极大的性能提升。
+::: tip Summary
+The core of implementing a far memory system in this article is the design of the cache, with the main optimization goals being to increase the hit rate, reduce the miss rate, and use the cache to hide the latency of accessing remote data. Traditional caching schemes lack forward understanding of program semantics, making it difficult to support precise prefetching (imprecise prefetching mainly relies on temporal or spatial locality), low-overhead access, and safe release of resources, among other optimization operations. Mira achieves these highly semantic-related, fine-grained, and precise optimization operations at the IR and runtime levels, and does so transparently to the user, resulting in significant performance improvements.
+:::
 
 ## Introduction
 
@@ -21,9 +21,9 @@
 
 * Coarse granularity of a 4 KB page, which is often larger (2.3× to 31×) than what is actually read/written by an application. 
 
-  > [!NOTE]
-  >
-  > 是否可以参考slab，透明地交换大小为$2^k$的内存？进一步地，为了防止高并发的细粒度内存交换，可以尝试复用请求，一个网络请求携带数个待交换内存（这是读到这里的想法，后面发现Mira也采用了复用请求的优化）。后续在Related Works里面有提到cache-line-based far memory systems，也是一种细粒度内存交换的思路。
+::: tip Note
+Is it possible to transparently exchange memory of size $2^k$ by referencing a slab? Furthermore, to prevent fine-grained memory swapping under high concurrency, an attempt can be made to mutiplex requests, where a single network request carries several memories to be swapped (this was an initial thought by myself, but it was later found that Mira also adopted the optimization of reusing requests). Subsequently, cache-line-based far memory systems are mentioned in the Related Works, which represent another approach to fine-grained memory swapping.
+:::
 
 * Non-trivial application-programmer or library-writer effort.
 
@@ -41,19 +41,15 @@
 
 The key differenence between far memory and SRAM: **Cache for far memory is DRAM-based and can be controlled by software.**
 
-> [!NOTE]
->
-> 也就是说，与SRAM作为缓存 (CPU - DRAM间的缓存)不同，我们可以通过静态分析、运行时Profiling来**定制驻留集**。
+::: tip Note
+This means that, unlike SRAM which serves as a cache (cache between CPU - DRAM), we can customize the resident set through static analysis and runtime profiling.
+:::
 
 ---
 
 **Challenges**:
 
 * Non-fixed cache. 
-
-  > [!NOTE]
-  >
-  > 为什么说far memory的缓存架构是不固定的？我的理解是挑战在于如何利用DRAM作为缓存的灵活性。
 
   **Solution**: Separate the local cache into spaces dedicated to and configured for different program behaviors. **For sequential accesses**, a small directly mapped cache with a cache line size of multiple consecutive data elements is used. **For accesses with good locality but large working sets**, a relatively large set-associative cache is used.
 
@@ -98,21 +94,13 @@ The key differenence between far memory and SRAM: **Cache for far memory is DRAM
 
 Mira converts memory operations like allocation, read, and write to remotable operations **at the IR level**, which then is lowered to either cache or network accesses.
 
-> [!NOTE]
->
-> The programmers don't bother to handle the local/far memory operations.
-
-Some functions are offloaded  to far memory.
-
-> [!NOTE]
->
-> 前文提到了代码段不会offload到远程去，但这里function应该也属于代码段的范畴吧？
+Some functions are offloaded to far memory.
 
 **Iterative (Sample-based input-adaptation approach)**: In one round, the compilation of a program is optimized for several iterations to generate a new compilation -> Use this compilation on the next invocation of the program.
 
-> [!NOTE]
->
-> 这里是一个类似于梯度下降的思路。考虑到每次迭代的成本不高（只考虑functions that “suffer the most”），多次迭代的开销便可以接受。
+::: tip Note
+Here is an idea similar to gradient descent. Considering that the cost of each iteration is not high (only considering functions that “suffer the most”), the expense of multiple iterations becomes acceptable.
+:::
 
 ### Profiling
 
@@ -138,9 +126,9 @@ Some functions are offloaded  to far memory.
 * A cache line to be no larger than the data access granularity to avoid read/write amplification.
 * Cover as many of the sequential accessed objects as possible.
 
-> [!NOTE]
->
-> Cache line长度是**从有限个hard coded的选项中选择**还是**根据不同object的特征动态计算**？即有没有关于Cache line长度的选择的自由度的详细讨论？
+::: tip Note
+Is the length of the cache line **chosen from a limited number of hard-coded options** or **dynamically calculated based on the characteristics of different objects**? In other words, is there a detailed discussion on the degree of freedom in choosing the length of the cache line?
+:::
 
 **Determining cache section structure**:
 
@@ -162,11 +150,9 @@ For other cache sections, we sample a few section sizes as ratios of total local
 
 Mira turns all pointers that point to selected objects (selected by the profiling process) in non-swap sections to remote pointers (defined in Mira’s IR).
 
-> [!note]
->
-> Explicit remote operations can more precisely control far-memory accesses and thereby improve application performance.
->
-> 也就是说，将non-swap段中的指针操作全部转换为远程指针可以降低访存开销。我的理解是，这确保了指针指向的地址保证是远程的（可交换的），避免了判断这个指针能否本地deref的开销，相当于做了剪枝的操作？
+::: tip Note
+Explicit remote operations can more precisely control far-memory accesses and thereby improve application performance.
+:::
 
 The overhead for accessing the source of truth of the remote pointer can be mitigated by prefetching.
 
@@ -180,9 +166,9 @@ Resolving a remote pointer:
 
 However, if we have already accessed **a cache line** and **know that it is still in the local cache**, we would know its local memory address. By keeping the address, we would avoid the redundant looking up the pointer.
 
-> [!NOTE]
->
-> 也就是 指针symbol - 指向的地址 的映射被缓存了，指针dereference被简化为memory load。
+::: tip Note
+This means the mapping of the pointer symbol to the address it points to is cached, simplifying pointer dereferencing to a memory load.
+:::
 
 **Knowing that it is still in the local cache**: 
 
@@ -196,10 +182,6 @@ However, if we have already accessed **a cache line** and **know that it is stil
 * Instead of predicting future accesses based on run-time history, we use program analysis to determine what will be accessed in the future.
 
 * Insert prefetch operations at the program location that is estimated to be one network round trip earlier than actual access.
-
-  > [!note]
-  >
-  > How? 估计一下round trip大概是多少行IR吗？
 
 ----
 
@@ -217,17 +199,13 @@ Use program analysis to determine the parts in a data structure that are accesse
 
 > [!note]
 >
-> 类似的思路在Rust实现的Hypervisor和内核中也比较常见：![Screenshot 2024-02-21 at 12.56.17 PM](https://p.ipic.vip/k0khyh.png)
+> Similar ideas：![Screenshot 2024-02-21 at 12.56.17 PM](https://p.ipic.vip/k0khyh.png)
 
 ----
 
 **Data Access Batching**:
 
 If our program analysis identifies multiple addresses to be accessed at different locations, we batch them into a single network message by transforming the code.
-
-> [!NOTE]
->
-> 我在前面提到了复用请求，这里就出现了这样的优化方法。
 
 ---
 
@@ -242,16 +220,16 @@ A read-only or write-only access pattern can be leveraged to achieve better perf
 
 Traditional thread synchronization methods such as locks still work as is on Mira since we never make synchronization primitives remotable.
 
-> [!note]
->
-> 把锁放到non-swap section里面应该无可厚非 —— 作为共享object，锁会被放在共享cache section里，不会产生传统锁在SMP环境下的ping pong问题。不过把锁放到swap section里确实没啥意义。
+::: tip note
+Placing the lock in the non-swap section should be fine — as a shared object, the lock would be placed in the shared cache section, avoiding the traditional ping pong problem of locks in an SMP environment. However, putting the lock in the swap section indeed seems to have little significance.
+:::
 
 ### Data Communication Methods
 
 **Two methods for communication**:
 
-* **One-sided communication**: data is directly read/written from/to far memory.
-* **Two-sided communication**: data is sent as messages and far-memory nodes copy the messages to their final locations.
+* **One-sided Communication**: data is directly read/written from/to far memory.
+* **Two-sided Communication**: data is sent as messages and far-memory nodes copy the messages to their final locations.
 
 -----
 
@@ -260,22 +238,22 @@ Traditional thread synchronization methods such as locks still work as is on Mir
 * **A section’s access pattern is reading/writing the entire data structure**: directly read/write.
 * **A section only accesses partial data structure**: use two-sided communication.
 
-> [!note]
->
-> 为什么采取这样的策略？还是read/write amplification的问题。考虑far memory中的这个数据结构：
->
-> ```c
-> struct foo {
->   int a [100];
->   double b;
->   int c [100];
-> }
-> ```
->
-> 现在，我们在本地更新了`foo`，并且想要将更新写回far memoy。
->
-> * 如果是更新整个`foo`，那么我们可以大开大合地将`&foo`起始一大片内存空间直接写回（单向通信）。
-> * 如果仅仅更新了`foo`中的几个字段，如`a[1], a[50], b, c[2]`，而我们非要采用单向通信，那么开销就非常巨大了——事实上，`foo`中绝大部分内容没有发生改变，如果硬要将这数百byte的数据写回，那么绝大多数的远程写操作都是无用功。因此，告诉远程memory node哪些字段需要更新才是更加划算的。
+::: tip Notes
+Why adopt this strategy? It's still the issue of read/write amplification. Consider this data structure in far memory:
+
+```c
+struct foo {
+  int a [100];
+  double b;
+  int c [100];
+}
+```
+
+Now, we have updated `foo` locally and want to write the update back to far memory.
+
+* If the entire `foo` is updated, then we can directly write back a large piece of memory starting from `&foo` (One-sided communication).
+* If only a few fields in `foo` are updated, such as `a[1], a[50], b, c[2]`, and we insist on using one-sided communication, then the overhead becomes enormous — in fact, the vast majority of the content in `foo` has not changed. If we force these hundreds of bytes of data to be written back, then most of the remote write operations are wasted effort. Therefore, it is more cost-effective to tell the remote memory node which fields need to be updated.
+:::
 
 ### Function Offloading
 
@@ -285,12 +263,6 @@ Certain types of far memory nodes have computation power that can execute applic
 
 * **Computation-light**: far-memory nodes have less computation power
 * **High Frequency of Remote Accesses**
-
-> [!note]
->
-> 可不可以认为我们要offload的是IO-bound的function？
->
-> 这里我看起来应该是一个RPC的思路。
 
 ## Implementation
 
@@ -350,9 +322,9 @@ A `rmem` pointer can also be set to point a local object. The dereferencing sche
 
 Everything this part is under my expectations, except that: to ensure that a remotable function sees the up-to-date remotable objects during its execution, we flush all cached remotable objects that the remotable function accesses to far-memory before calling the function.
 
-> [!note]
->
-> 这里隐含着一个条件：被offload的函数不能被频繁调用，否则会产生大量的cache miss和网络I/O。但是，不被频繁调用的函数还有必要offload吗？
+::: tip Notes
+Here, there's an implicit condition: the function being offloaded should not be called frequently, as this would lead to a large number of cache misses and network I/O. But then, is it necessary to offload a function that is not called frequently?
+:::
 
 ---
 
@@ -370,7 +342,6 @@ When a far-memory device is slow, offloaded functions’ computation overhead ca
 
 Mira automatically adjusts what functions to offload based on profiling and system environments. With the slow device setup, Mira only selects two offloading targets, both functions are data-access heavy reduce operators.
 
-> [!note]
->
-> 好吧，前面我怀疑了offload到底会不会有效果，这里看来确实有效果。但是，GPT和MCF是不是没做offload的实验？offload能够保证泛化性吗？
-
+::: tip Notes
+Alright, previously I doubted whether offloading would actually be effective, but it seems here that it indeed has an effect. However, are the offloading experiments conducted on GPT and MCF? Can the performance reward of offloading be general?
+:::

@@ -57,6 +57,7 @@ export default defineConfig({
           { text: 'Transactional Memory', link: '/posts/transactional-memory' },
           { text: 'Kubernetes Scheduling', link: '/posts/kuber-scheduling' },
           { text: 'CLoF', link: '/posts/CLoF' },
+          { text: 'Mira', link: '/posts/mira-post' },
         ]
       }, {
         text: 'NLP',
