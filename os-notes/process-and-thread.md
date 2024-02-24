@@ -12,7 +12,7 @@ The **process control block** stores all the information the operating system ne
 
 A typical x86-64 virtual memory layout is presented below. The `.data` segment is primarily used for storing global and static variables that are initialized. The `.bss` segment is used for uninitialized global and static variables. The `.rodata` stores constant data and string literals. The `.text` is the read-only code.
 
-<img src="https://p.ipic.vip/q52zgk.png" alt="Screenshot 2023-08-15 at 4.20.59 PM" style="zoom: 33%;" />
+<center><img src="https://p.ipic.vip/q52zgk.png" alt="Screenshot 2023-08-15 at 4.20.59 PM" style="zoom: 33%;" /></center>
 
 > In Intel processors, the privilege level of a process is stored in a **field** within the Code Segment (CS) register. This **field** is known as the Current Privilege Level (CPL).
 >
@@ -30,7 +30,7 @@ A process in five states:
 * **Blocked/ Waiting**: The execution of this process is suspended and will not be scheduled. A process stops as a result of receiving a `SIGSTOP`, `SIGTSP`, `SIGTTIN` or `SIGTTOU` signal, and remains stopped until it receives a `SIGCONT` signal, at which point it becomes running again. It can be further categorized as **uninterruptible sleep** and **interruptible sleep**.
 * **Terminated**: A process become terminated for: Receving a signal whose default action is to terminate the process; Returning from the main routine; Calling the `exit` function.
 
-<img src="https://p.ipic.vip/wfs7i8.png" style="zoom: 33%;" />
+<center><img src="https://p.ipic.vip/wfs7i8.png" style="zoom: 33%;" /></center>
 
 > **Suspended Processes**
 >
@@ -76,13 +76,13 @@ The thread control block holds two types of per-thread information:
 
    In some systems, the general-purpose registers for a stopped thread are stored on the top of the stack, and the TCB contains only a pointer to the stack (Many early and simplistic computer architectures and operating systems employed this method). In other systems, the TCB contains space for a copy of all processor registers (*nix).
 
-<img src="https://p.ipic.vip/at02p3.png" alt="" width="375">
+<center><img src="https://p.ipic.vip/at02p3.png" alt="" width="375"></center>
 
 2. **Per-thread Metadata**: thread ID, scheduling priority, status, et al.
 
 ### Thread Life Cycle
 
-<img src="https://p.ipic.vip/ut6ns7.png" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/ut6ns7.png" style="zoom:50%;" /></center>
 
 ### Thread Control
 

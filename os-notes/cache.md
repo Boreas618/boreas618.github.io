@@ -10,7 +10,7 @@
 
 The cells(bits) in a DRAM chip are partitioned into $d$ supercells, each consisting of $w$ DRAM cells. A $d\times w$ DRAM stores a total of $dw$ bits of information. Information flows in and out of the chip via external connectors called pins. Each pin carries **a 1-bit signal**. 
 
-<img src="https://p.ipic.vip/m6c6cz.png" alt="Screenshot 2023-12-21 at 7.09.21 AM" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/m6c6cz.png" alt="Screenshot 2023-12-21 at 7.09.21 AM" style="zoom:50%;" /></center>
 
 1. The memory controller sends the **row** address to the DRAM chip via the address pin. 
 2. The DRAM chip then copies the requested row to its internal row buffer. 
@@ -24,7 +24,7 @@ The row address `i` is called a RAS (row access strobe) request and the column a
 
   There are a total of 8 DRAM chips. For each chip, there are 8M supercells. For each supercell, there are 8 cells. The total size of the memory module is $\frac{8\times8M\times8}{8} =64MB$.
 
-  <img src="https://p.ipic.vip/37856t.png" alt="Screenshot 2023-12-21 at 7.12.05 AM" style="zoom:50%;" />
+  <center><img src="https://p.ipic.vip/37856t.png" alt="Screenshot 2023-12-21 at 7.12.05 AM" style="zoom:50%;" /></center>
 
 * **Nonvolatile Memory**: ROMs are non-volatile memories, meaning they retain their contents even when the power is turned off. They are referred to as read-only memories for historical reasons. 
 
@@ -34,7 +34,7 @@ The row address `i` is called a RAS (row access strobe) request and the column a
 
   A bus is a collection of parallel wires that carry address, data, and control singals. More than 2 devices can share the same bus. The control wires carry signals that synchronize the transaction and identify what kind of transaction is currently being performed.
 
-  <img src="https://p.ipic.vip/1gerwp.png" alt="Screenshot 2023-12-21 at 7.14.11 AM" style="zoom:50%;" />
+  <center><img src="https://p.ipic.vip/1gerwp.png" alt="Screenshot 2023-12-21 at 7.14.11 AM" style="zoom:50%;" /></center>
 
   **The I/O bridge includes the memory controller**. DRAM makes up the main memory. A system bus connects CPU to I/O bridge. The I/O bridge translates the electrical signals of the system bus into the electrical of the memory bus.
 
@@ -78,9 +78,9 @@ When a miss occurs, the cache at level $k$ fetches the block containing the data
 
 ## Cache Memories
 
-<img src="https://p.ipic.vip/18tx80.png" alt="Screenshot 2023-08-31 at 5.08.03 PM" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/18tx80.png" alt="Screenshot 2023-08-31 at 5.08.03 PM" style="zoom:50%;" /></center>
 
-<img src="https://p.ipic.vip/iby9wn.png" alt="Screenshot 2023-08-31 at 5.07.34 PM" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/iby9wn.png" alt="Screenshot 2023-08-31 at 5.07.34 PM" style="zoom:50%;" /></center>
 
 ### Classification Based on E
 

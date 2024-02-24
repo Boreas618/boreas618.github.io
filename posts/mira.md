@@ -4,7 +4,26 @@
 
 > [!note]
 >
-> 总结：本文中实现far memory system的核心是缓存的设计，主要的优化目标是提高hit rate，降低miss rate，利用缓存来隐藏访问远端的latency。传统的缓存方案缺乏对程序语义的前向理解，因而很难支持精确的预取（不太精确的预取主要依赖时间或空间局部性）、低overhead的访问、和安全地释放等优化操作。Mira在IR和runtime层面实现了这些高度语义相关、细粒度、精确的优化操作，并且对用户透明，取得极大的性能提升。
+> **总结**：本文中实现far memory system的核心是缓存的设计。传统的缓存方案缺乏对程序语义的前向理解，因而很难支持精确的预取（不太精确的预取主要依赖时间或空间局部性）、低overhead的访问、和安全地释放等优化操作。Mira在IR和runtime层面实现了这些高度语义相关、细粒度、精确的优化操作，并且对用户透明，取得极大的性能提升。
+>
+> Mira工作可以从两个层面理解：
+>
+> * **框架上**，主要是iterative profiling的静态动态分析，明确了优化点位。
+> * 基于框架找出优化点位，**具体优化手段**上，主要是MLIR在IR层面支持的预取、精确（selective transmission）传输、请求复用、access-pattern based优化等。
+
+> [!important]
+>
+> **对这篇工作的问题**
+>
+> **问题1**: 按照我的理解，将被offload的函数需要满足 
+>
+> * 不能频繁调用，因为RPC会flush缓存，会有通讯时延。
+> * 含有较多的远端内存访问。
+> * 对CPU资源要求不高，因为memory node的算力比较一般。
+>
+> 既然这类函数既不能被频繁调用，同时对CPU资源还要求不高，总之就是存在感比较一般的函数，offload的必要性很大吗？Offload机制确实会有应用场景，特定任务中特定函数offload能带来比较高的收益，但是考虑到文章中似乎只报告了GPT-2的offload的结果，我的问题是：在更多更一般的任务上，offload的收益如何？
+>
+> **问题2**: 如果是运行时进行Profiling，每次iteration被调用的函数集合不尽相同，这会不会影响Profiling结论，还是说每次iteration的时间都足够长，profiling的结果足够stable and robust？
 
 ## Introduction
 
@@ -12,20 +31,20 @@
 
 **Current Approaches**: 
 
-* Transparently swap memory pages between local and far memory
-* Use a new programming model or extend an existing one with new APIs for far-memory accesses
+* Transparently swap memory pages between local and far memory (A1)
+* Use a new programming model or extend an existing one with new APIs for far-memory accesses (A2)
 
 -----
 
 **Drawbacks**:
 
-* Coarse granularity of a 4 KB page, which is often larger (2.3× to 31×) than what is actually read/written by an application. 
+* **(A1)** Coarse granularity of a 4 KB page, which is often larger (2.3× to 31×) than what is actually read/written by an application. 
 
   > [!NOTE]
   >
   > 是否可以参考slab，透明地交换大小为$2^k$的内存？进一步地，为了防止高并发的细粒度内存交换，可以尝试复用请求，一个网络请求携带数个待交换内存（这是读到这里的想法，后面发现Mira也采用了复用请求的优化）。后续在Related Works里面有提到cache-line-based far memory systems，也是一种细粒度内存交换的思路。
 
-* Non-trivial application-programmer or library-writer effort.
+* **(A2)** Non-trivial application-programmer or library-writer effort.
 
 -----
 
@@ -49,33 +68,23 @@ The key differenence between far memory and SRAM: **Cache for far memory is DRAM
 
 **Challenges**:
 
-* Non-fixed cache. 
-
-  > [!NOTE]
-  >
-  > 为什么说far memory的缓存架构是不固定的？我的理解是挑战在于如何利用DRAM作为缓存的灵活性。
+* Non-fixed cache
 
   **Solution**: Separate the local cache into spaces dedicated to and configured for different program behaviors. **For sequential accesses**, a small directly mapped cache with a cache line size of multiple consecutive data elements is used. **For accesses with good locality but large working sets**, a relatively large set-associative cache is used.
+  
+* [*Unique in a far-memory environment*] far-memory pointers and their dereferences
 
-* [*Unique in a far-memory environment*] inefficient implementation of far-memory pointers and their dereferences will largely hurt application performance
+  **Solution**: turn as many dereferences into native memory loads as possible by program behaviors.
 
-  **Solution**: leveraging program behavior to turn as many dereferences into native memory loads as possible.
+* [*Unique in a far-memory environment*] large program scopes and more objects to be potentially analyzed
 
-* [*Unique in a far-memory environment*] larger program scopes and more objects need to be potentially analyzed, as far-memory accesses are slower and local cache is larger than CPU cache.
-
-  **Solution**: performing **coarse-grained, cache-section-specific profiling** to narrow down program scopes and objects to those with the highest potential gain from further optimization.
+  **Solution**: performing **coarse-grained, cache-section-specific profiling** to narrow down program scopes and objects to those with the highest potential gain.
 
 ----
 
 **Mechanisms**: divide into different cache sections.
 
-**Policies**: configure
-
-* Cache section’s size
-* Cache structure (set-/full-associative)
-* Cache line size
-* Prefetching and eviction patterns
-* Communication method （one-/two-sided RDMA）
+**Policies**: configure cache section’s size, cache structure (set-/full-associative), cache line size, prefetching and eviction patterns, communication method （one-/two-sided RDMA）and so on.
 
 ## Mira
 
@@ -90,7 +99,7 @@ The key differenence between far memory and SRAM: **Cache for far memory is DRAM
 
 **Workflow**:
 
-* Initial execution works almost the same as traditional page swap-based systems, except for the **profiling code** inserted. (never use far memory for stack or code, as they are small and frequently accessed)
+* Initially works almost the same as traditional page swap-based systems, except for the **profiling code** inserted. (never use far memory for stack or code, as they are small and frequently accessed)
 * **Profiling**: per-function miss rate, miss latency, hit overhead (i.e., the additional latency to access data in cache over a regular memory load), and function execution time. The object sizes are also collected.
 * Finding the critical functions and placing larger objects in the functions in their own sections. The section parameters are determined by program analyses.
 
@@ -98,17 +107,9 @@ The key differenence between far memory and SRAM: **Cache for far memory is DRAM
 
 Mira converts memory operations like allocation, read, and write to remotable operations **at the IR level**, which then is lowered to either cache or network accesses.
 
-> [!NOTE]
->
-> The programmers don't bother to handle the local/far memory operations.
-
 Some functions are offloaded  to far memory.
 
-> [!NOTE]
->
-> 前文提到了代码段不会offload到远程去，但这里function应该也属于代码段的范畴吧？
-
-**Iterative (Sample-based input-adaptation approach)**: In one round, the compilation of a program is optimized for several iterations to generate a new compilation -> Use this compilation on the next invocation of the program.
+**Iterative (Sample-based input-adaptation approach)**: In **one round**, the compilation of a program is **optimized for several iterations** to generate a new compilation -> Use this compilation on the next invocation of the program.
 
 > [!NOTE]
 >
@@ -166,7 +167,7 @@ Mira turns all pointers that point to selected objects (selected by the profilin
 >
 > Explicit remote operations can more precisely control far-memory accesses and thereby improve application performance.
 >
-> 也就是说，将non-swap段中的指针操作全部转换为远程指针可以降低访存开销。我的理解是，这确保了指针指向的地址保证是远程的（可交换的），避免了判断这个指针能否本地deref的开销，相当于做了剪枝的操作？
+> 也就是说，将non-swap段中的指针操作全部转换为远程指针可以降低访存开销。我的理解是，这确保了指针指向的地址保证是远程的，避免了判断这个指针能否本地deref的开销，相当于做了剪枝的操作？
 
 The overhead for accessing the source of truth of the remote pointer can be mitigated by prefetching.
 
@@ -201,39 +202,19 @@ However, if we have already accessed **a cache line** and **know that it is stil
   >
   > How? 估计一下round trip大概是多少行IR吗？
 
-----
+**Eviction Hints**: Find the last access of a data element in a program scope which will be marked as "evictable". If there is no line marked as evictable, Mira uses a default LRU-like eviction policy.
 
-**Eviction Hints**:
+> Prefetching hides the **latency for sequential edge accesses**, and early eviction **hides the write-back overhead behind the performance critical path.**
 
-We can find the last access of a data element in a program scope which will be marked as "evictable". If there is no line marked as evictable, Mira uses a default LRU-like eviction policy.
+**Selective Transmission** (Sub-structure Level Memory Manipulation): Use program analysis to determine the parts in a data structure that are accessed in each program scope.
 
-Prefetching hides the **latency for sequential edge accesses**, and early eviction **hides the write-back overhead behind the performance critical path.**
-
-----
-
-**Selective Transmission**:
-
-Use program analysis to determine the parts in a data structure that are accessed in each program scope.
-
-> [!note]
->
-> 类似的思路在Rust实现的Hypervisor和内核中也比较常见：![Screenshot 2024-02-21 at 12.56.17 PM](https://p.ipic.vip/k0khyh.png)
-
-----
-
-**Data Access Batching**:
-
-If our program analysis identifies multiple addresses to be accessed at different locations, we batch them into a single network message by transforming the code.
+**Data Access Batching**: If our program analysis identifies multiple addresses to be accessed at different locations, we batch them into a single network message by transforming the code.
 
 > [!NOTE]
 >
 > 我在前面提到了复用请求，这里就出现了这样的优化方法。
 
----
-
-**Read/write Optimization**：
-
-A read-only or write-only access pattern can be leveraged to achieve better performance.
+**Read/write Optimization**： A read-only or write-only access pattern can be leveraged to achieve better performance.
 
 ### Multi-Threading Support
 
@@ -244,7 +225,7 @@ Traditional thread synchronization methods such as locks still work as is on Mir
 
 > [!note]
 >
-> 把锁放到non-swap section里面应该无可厚非 —— 作为共享object，锁会被放在共享cache section里，不会产生传统锁在SMP环境下的ping pong问题。不过把锁放到swap section里确实没啥意义。
+> **如果**把锁放到non-swap section里 —— 作为共享object，锁会被放在shared cache section里，不会产生传统锁在SMP环境下cache ping pong问题。
 
 ### Data Communication Methods
 
@@ -266,15 +247,15 @@ Traditional thread synchronization methods such as locks still work as is on Mir
 >
 > ```c
 > struct foo {
->   int a [100];
->   double b;
->   int c [100];
+>   	int a [100];
+>   	double b;
+>   	int c [100];
 > }
 > ```
 >
 > 现在，我们在本地更新了`foo`，并且想要将更新写回far memoy。
 >
-> * 如果是更新整个`foo`，那么我们可以大开大合地将`&foo`起始一大片内存空间直接写回（单向通信）。
+> * 如果是更新整个`foo`，那么我们可以直接将`&foo`起始一大片内存空间直接写回（单向通信）。
 > * 如果仅仅更新了`foo`中的几个字段，如`a[1], a[50], b, c[2]`，而我们非要采用单向通信，那么开销就非常巨大了——事实上，`foo`中绝大部分内容没有发生改变，如果硬要将这数百byte的数据写回，那么绝大多数的远程写操作都是无用功。因此，告诉远程memory node哪些字段需要更新才是更加划算的。
 
 ### Function Offloading
@@ -288,9 +269,7 @@ Certain types of far memory nodes have computation power that can execute applic
 
 > [!note]
 >
-> 可不可以认为我们要offload的是IO-bound的function？
->
-> 这里我看起来应该是一个RPC的思路。
+> 见本篇笔记开头所述问题。
 
 ## Implementation
 
@@ -298,8 +277,8 @@ Certain types of far memory nodes have computation power that can execute applic
 
 Two new MLIR dialects for far memory: 
 
-* `remotable`: Data objects in non-swap cache sections and for func- tions that can be offloaded.
-* `rmem`: operations to access and manipulate remotable objects and functions. Load, store, and prefetching.
+* `remotable`: data objects in non-swap cache sections and for functions that can be offloaded.
+* `rmem`: operations to access and manipulate remotable objects and functions. **Load**, **store**, and **prefetching**.
 
 ```c
 @_redges, @_rnodes = remotable.alloc(..)
@@ -332,23 +311,23 @@ The analysis results are saved for later iterations.
 
 ----
 
-**Loading an `rmem` pointer from far memory**
+**Loading an `rmem` Pointer From Far Memory**
 
 * Initially, a `rmem` pointer has the value of an allocated **far-memory address** for a remotable memory space.
 * When an `rmem.load` happens, first check if the data the `rmem` points to has been fetched. If not, fetch it.
-* For the next step of this case or for the cache-hit case, we **set the section ID and the offset of the object within the section** as the value of the rmem pointer. ***We have mentioned this procedure at the pointer dereferencing part.***
+* For the next step of this case or for the cache-hit case, we **set the section ID and the offset of the object within the section** as the value of the `rmem` pointer. ***We have mentioned this procedure at the pointer dereferencing part.***
 
 ---
 
-**Pointers to both local and `remotable` objects**
+**Pointers to Both Local and `remotable` Objects**
 
 A `rmem` pointer can also be set to point a local object. The dereferencing scheme for remote objects cannot be applied this scenario. Therefore, a dummy cache section 0 is introduced to indicate local variables.
 
 ----
 
-**Generating offloaded function binaries**
+**Generating Offloaded Function Binaries**
 
-Everything this part is under my expectations, except that: to ensure that a remotable function sees the up-to-date remotable objects during its execution, we flush all cached remotable objects that the remotable function accesses to far-memory before calling the function.
+Everything this part is under my expectations, except that: to ensure that a `remotable` function sees the up-to-date remotable objects during its execution, we flush all cached remotable objects that the remotable function accesses to far-memory before calling the function.
 
 > [!note]
 >
@@ -366,11 +345,11 @@ For the performance-critical sections we identified, Mira performs a detailed an
 
 ## Evaluation
 
-When a far-memory device is slow, offloaded functions’ computation overhead can outweigh the bene- fit of offloading (i.e., reducing data communication). 
+When a far-memory device is slow, offloaded functions’ computation overhead can outweigh the benefit of offloading (i.e., reducing data communication). 
 
 Mira automatically adjusts what functions to offload based on profiling and system environments. With the slow device setup, Mira only selects two offloading targets, both functions are data-access heavy reduce operators.
 
 > [!note]
 >
-> 好吧，前面我怀疑了offload到底会不会有效果，这里看来确实有效果。但是，GPT和MCF是不是没做offload的实验？offload能够保证泛化性吗？
+> 好吧，前面我怀疑了offload到底会不会有效果，这里看来确实有效果。但是，GPT和MCF是不是没做offload的实验？offload的效果在其他任务上也好吗？
 

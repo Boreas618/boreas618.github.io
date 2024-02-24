@@ -9,7 +9,7 @@
 
 L4, like its predecessor microkernel L3, was created by German computer scientist Jochen Liedtke as a response to the poor performance of earlier microkernel-based OSes. Liedtke felt that a system designed from the start for high performance, rather than other goals, could produce a microkernel of practical use.
 
-<img src="https://p.ipic.vip/nwfp5j.png" alt="L4_family_tree" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/nwfp5j.png" alt="L4_family_tree" style="zoom:50%;" /></center>
 
 ### Message Passing
 

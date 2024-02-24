@@ -24,7 +24,7 @@ Fixed partitioning is trivial. We focus on dynamic partitioning and buddy system
 
 When a process arrives and needs memory, the system searches the set for a hole that is large enough for this process. 
 
-<img src="https://p.ipic.vip/31bd1r.png" alt="Screenshot 2023-12-01 at 3.46.07 AM" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/31bd1r.png" alt="Screenshot 2023-12-01 at 3.46.07 AM" style="zoom:50%;" /></center>
 
 * **Best-fit**: Choose the block that is closest in size to the request.
 * **First-fit**: Scan the memory from the beginning and choose the first available block that is large enough.
@@ -38,11 +38,11 @@ When a process arrives and needs memory, the system searches the set for a hole 
 
 ### Buddy System
 
-<img src="https://p.ipic.vip/qywc83.png" alt="Screenshot 2023-12-01 at 4.00.23 AM" style="zoom: 33%;" />
+<center><img src="https://p.ipic.vip/qywc83.png" alt="Screenshot 2023-12-01 at 4.00.23 AM" style="zoom: 33%;" /></center>
 
 ## Segmented Memory
 
-<img src="https://p.ipic.vip/ocs8d1.png" alt="Screenshot 2023-05-25 at 11.20.11 PM" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/ocs8d1.png" alt="Screenshot 2023-05-25 at 11.20.11 PM" style="zoom:50%;" /></center>
 
 There are definitely **external fragmentation**s. If a program branches into or tries to load data from one of these gaps, the hardware will generate an exception, trapping into the operating system kernel. On UNIX systems, this is called a **segmentation fault**.
 
@@ -52,7 +52,7 @@ If there is not enough space in memory, we need to perform an extreme form of co
 
 ## Paged Memory
 
-<img src="https://p.ipic.vip/ocyhdh.png" alt="Screenshot 2023-05-26 at 2.02.31 AM" style="zoom: 33%;" />
+<center><img src="https://p.ipic.vip/ocyhdh.png" alt="Screenshot 2023-05-26 at 2.02.31 AM" style="zoom: 33%;" /></center>
 
 **Features**:
 
@@ -78,7 +78,7 @@ Inverted page table has been used on the Power PC and on IBM’s AS/400. Each en
 
 When a memory reference occurs, the inverted page table is searched to match `<pid, page#>`. If a match is found at entry i, then the physical address `<i, offset>` is generated. If no match is found, then an illegal address access has been attempted.
 
-<img src="https://i.stack.imgur.com/z61lh.png" alt="operating systems - Difference between inverted page table and a standard  one? - Computer Science Stack Exchange" style="zoom:50%;" />
+<center><img src="https://i.stack.imgur.com/z61lh.png" alt="operating systems - Difference between inverted page table and a standard  one? - Computer Science Stack Exchange" style="zoom:50%;" /></center>
 
 > **Practice** (COMP130110@FDU, 2017)
 >
@@ -88,7 +88,7 @@ When a memory reference occurs, the inverted page table is searched to match `<p
 
 ### Paged Segmentation
 
-<img src="https://p.ipic.vip/pbm6oj.png" alt="Screenshot 2023-05-26 at 2.33.02 AM" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/pbm6oj.png" alt="Screenshot 2023-05-26 at 2.33.02 AM" style="zoom:50%;" /></center>
 
 Segment tables are sometimes stored in special hardware registers, the page tables for each segment are quite a bit larger in aggregate, so they are normally stored in physical memory.
 
@@ -98,7 +98,7 @@ For example, with 32-bit virtual addresses and 4 KB pages, we might set aside th
 
 ### Multi-Level Paging
 
-<img src="https://p.ipic.vip/3iq3ep.png" alt="Screenshot 2023-05-26 at 2.42.31 AM" style="zoom: 33%;" />
+<center><img src="https://p.ipic.vip/3iq3ep.png" alt="Screenshot 2023-05-26 at 2.42.31 AM" style="zoom: 33%;" /></center>
 
 Each level of page table is designed to fit in a physical page frame. **Only the top-level page table must be filled in.**
 
@@ -127,7 +127,7 @@ There's also a **Global Descriptor Table** (GDT). The GDT describes system segme
 
 There are 6 segment registers: **SS, CS, DS, ES, FS, GS**. Inside a segment register: 
 
-<img src="https://p.ipic.vip/xh6gcz.png" alt="Screenshot 2023-06-29 at 4.41.46 PM" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/xh6gcz.png" alt="Screenshot 2023-06-29 at 4.41.46 PM" style="zoom:50%;" /></center>
 
 * G/L: selects between GDT and LDT tables.
 * RPL: **R**equestor’s **P**rivilege **L**evel
@@ -145,7 +145,7 @@ There are 6 segment registers: **SS, CS, DS, ES, FS, GS**. Inside a segment regi
 
 This is the format of a 64-bit descriptor:
 
-<img src="https://p.ipic.vip/w14xox.png" alt="image-20230629164336699" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/w14xox.png" alt="image-20230629164336699" style="zoom:50%;" /></center>
 
 | Portion | Meaning                                                      |
 | ------- | ------------------------------------------------------------ |
@@ -177,7 +177,7 @@ A page table entry (PTE) is a pointer to next-level page table or to actual page
 
 The Intel x86 architecture PTE for the last level is like:
 
-<img src="https://p.ipic.vip/dtk9y1.png" alt="image-20230629155143574" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/dtk9y1.png" alt="image-20230629155143574" style="zoom:50%;" /></center>
 
 | Portion | Meaning                                                      | Type           |
 | ------- | ------------------------------------------------------------ | -------------- |
@@ -203,7 +203,7 @@ Both the top-level and second-level page table entries have permissions, so fine
 
 For x86-64:
 
-<img src="https://p.ipic.vip/cjfly8.png" alt="Screenshot 2023-06-29 at 5.11.06 PM" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/cjfly8.png" alt="Screenshot 2023-06-29 at 5.11.06 PM" style="zoom:50%;" /></center>
 
 As an optimization, x86-64 has the option to **eliminate one or two levels of the page table**. Each physical page frame on the x86 is 4 KB. Each page of fourth level page table maps 2 MB of data, and each page of the third level page table maps 1 GB of data. If the operating system places data such that the entire 2 MB covered by the fourth level page table is allocated contiguously in physical memory, then the page table entry one layer up can be marked to point directly to this region instead of to a page table.
 
@@ -227,13 +227,13 @@ When it comes to adding mappings to the page table, there are two different timi
 
 A **translation lookaside buffer (TLB**) is a small hardware table containing the results of recent address translations. Each entry in the TLB maps a virtual page to a physical page:
 
-<img src="https://p.ipic.vip/8h4boh.png" alt="Screenshot 2023-12-01 at 8.58.29 PM" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/8h4boh.png" alt="Screenshot 2023-12-01 at 8.58.29 PM" style="zoom:50%;" /></center>
 
 Instead of finding the relevant entry by a multi-level lookup or by hashing, the TLB hardware (typically) checks all of the entries simultaneously against the virtual page.
 
 When an entry is purged from the TLB, the modified bit is copied back into the page table entry in memory. The other values are already there, except the reference bit.
 
-<img src="https://p.ipic.vip/nbbpvl.png" alt="Screenshot 2023-05-29 at 10.19.51 AM" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/nbbpvl.png" alt="Screenshot 2023-05-29 at 10.19.51 AM" style="zoom:50%;" /></center>
 
 Multiple levels of TLB are used to keep lookups rapid, with smaller first level TLBs close to the processor and larger second level TLBs consulted if necessary.
 
@@ -246,7 +246,7 @@ Some TLBs are **set associative**. In a set associative TLB, each virtual addres
 
 Superpage can drastically reduce the number of TLB entries needed to map large, contiguous regions of memory. Each entry in the TLB has a flag, signifying whether the entry is a page or a superpage.
 
-<img src="https://p.ipic.vip/0p6hnk.png" alt="Screenshot 2023-05-29 at 10.35.59 AM" style="zoom: 33%;" />
+<center><img src="https://p.ipic.vip/0p6hnk.png" alt="Screenshot 2023-05-29 at 10.35.59 AM" style="zoom: 33%;" /></center>
 
 When looking for a match against a superpage, the TLB only considers the most significant bits of the address, ignoring the offset within the superpage. For a 2 MB superpage, the offset is the lowest 21 bits of the virtual address. For a 1 GB superpage it is the lowest 30 bits.
 

@@ -1,6 +1,6 @@
 # Deadlocks
 
-<img src="https://p.ipic.vip/mhh6l6.png" alt="Screenshot 2023-10-29 at 10.43.39 PM" style="zoom: 33%;" />
+<center><img src="https://p.ipic.vip/mhh6l6.png" alt="Screenshot 2023-10-29 at 10.43.39 PM" style="zoom: 33%;" /></center>
 
 ## Requirements for Deadlock
 
@@ -14,7 +14,7 @@ Four requirements for occurrence of Deadlock:
 
 * **Circular wait**: Having a circle doesn't mean that a dead lock exists. 
 
-<img src="https://p.ipic.vip/jalu9q.png" alt="Screenshot 2023-06-23 at 1.20.00 AM" style="zoom:50%;" />
+<center><img src="https://p.ipic.vip/jalu9q.png" alt="Screenshot 2023-06-23 at 1.20.00 AM" style="zoom:50%;" /></center>
 
 ## Deadlock Prevention
 
