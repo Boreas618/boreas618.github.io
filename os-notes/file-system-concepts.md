@@ -1,5 +1,9 @@
 # File Sytem Concepts
 
+> [!important]
+>
+> This chapter, which is perhaps less essential in the practical aspects of operating system programming from my standpoint, primarily discusses various legacy mechanisms. While I may not have meticulously reviewed every detail due to their lesser relevance to current practices, it is highly recommended that you study this chapter thoroughly. This is particularly pertinent for those preparing for the 考研 (postgraduate entrance examination) or final examinations at Fudan University.
+
 Two types of files:
 
 * Low-level, Byte-Stream Files
