@@ -2,14 +2,15 @@
 
 <center><img src="https://harttle.land/assets/img/blog/intel-io.png" alt="Computer Organization and Design 笔记 - Storage and Other I/O Topics |  Harttle Land" style="zoom:75%;" /></center>
 
-* I/O devices you recognize are supported by **I/O controller**s.
+**Host Bridge (also called northbridge, or memory controller hub)**: Typically, the main connection between the CPU and the primary memory (RAM) is managed by the host bridge. In some architectures, it might also handle communications with high-speed devices like graphics cards. The host bridge ensures rapid data exchanges between these components, especially where latency and bandwidth are crucial.
 
-* Processors accesses them by reading and writing IO registers as if they were memory. Write commands and arguments, read status and results.
+**I/O Bridge (also called southbridge, or I/O controller hub)**: This bridge manages the communication between the CPU/main memory and many I/O devices. Devices like keyboards, mice, disks, and even some communication ports fall under its purview. The I/O bridge ensures data is effectively and accurately transferred between the main system and these peripherals, even if these data transfers are not as high-speed as those managed by the host bridge. Processors accesses I/O devices by reading and writing IO registers as if they were memory. Write commands and arguments, read status and results.
 
-Peripheral devices such as graphics cards, mice, keyboards, and disks communicate with the CPU and main memory using various bus systems, often facilitated by bridge components.
-
+As of 2023, most personal computer devices no longer use a set of two chips (south- and north- bridges), and instead have a single chip acting as the 'chipset', for example Intel's Z790 chipset.
 
 ## Buses
+
+Peripheral devices such as graphics cards, mice, keyboards, and disks communicate with the CPU and main memory using various bus systems, often facilitated by bridge components.
 
 Buses let us connect $n$ devices over a single set of wires, connections, and protocols. $O(n^2 )$ relations with 1 set of wires. The downside is that there can be only one transaction at a time. The rest must wait. 
 
@@ -17,10 +18,10 @@ Buses let us connect $n$ devices over a single set of wires, connections, and pr
 
 PCI started life out as a bus. But a parallel bus has many limitations:
 
-* Multiplexing address/data for many requests
+* Multiplexing address/data for many requests.
 
-* Slowest devices must be able to tell what’s happening (e.g., for arbitration) 
-* **Bus speed is set to that of the slowest device**
+* Slowest devices must be able to tell what’s happening (e.g., for arbitration).
+* **Bus speed is set to that of the slowest device**.
 
 PCI Express "Bus" is no longer a parallel bus. It's really a **collection of fast serial channels** or “lanes”. Devices can use as many as they need to achieve a desired bandwidth. Slow devices don’t have to share with fast ones.
 
@@ -28,15 +29,11 @@ PCI Express "Bus" is no longer a parallel bus. It's really a **collection of fas
 
 CPU interacts with a *Controller* which contains a set of *registers* that can be read and written. The controller may contain memory for request queues, etc.
 
-Processor accesses registers in two ways: 
+Processor accesses devices in two ways: 
 
-* **Port-Mapped I/O**: in/out instructions like `out 0x21,AL`
+* **Port-Mapped I/O**: `in`/`out` instructions like `out 0x21,AL`.
 
-* **Memory-mapped I/O**: load/store instructions
-
-  Registers/memory appear in physical address space
-
-  I/O accomplished with load and store instructions
+* **Memory-mapped I/O**: registers/memory appear in physical address space abd I/O operations are accomplished with load and store instructions.
 
 ## Operational Parameters for I/O
 
@@ -64,12 +61,8 @@ Processor accesses registers in two ways:
 
   **Actual devices combine both polling and interrupts**:
 
-  > **High-bandwidth network adapter**:
-  >
-  > * Interrupt for first incoming packet
-  >
-  > * Poll for following packets until hardware queues are empty
-
+  > **High-bandwidth network adapter** generates interrupt for first incoming packet and then poll for following packets until hardware queues are empty.
+  
 * **Cycle Stealing**: used to transfer data on the system bus. The instruction cycle is suspended so data can be transferred. The CPU pauses one bus cycle. No interrupts occur so we do not save the context.
 
 ## I/O Software
@@ -80,14 +73,14 @@ Processor accesses registers in two ways:
 
 The goal of kernel I/O subsystem is to provide uniform interfaces despite wide range of different devices. This is also referred to as device-independent software. 
 
-The basic function of the device- independent software is:
+The basic function of the device-independent software is:
 
 - Perform the I/O functions that are common to all devices (such as **buffering**, **error reporting**, **allocating** and **releasing** dedicated devices, and providing a device-independent block size).
 - Provide a **uniform interface** to the user-level software.
 
 ### Device Drivers
 
-**Device Driver**: Device-specific code in the kernel that interacts directly with the device hardware
+**Device Driver**: Device-specific code in the kernel that interacts directly with the device hardware.
 
 * Supports a standard, internal interface
 * Same kernel I/O system can interact easily with different device drivers
@@ -96,38 +89,24 @@ The basic function of the device- independent software is:
 Device Drivers typically divided into 2 pieces:
 
 * **Top half:** accessed in call path from system calls. It implements a set of standard, cross-device calls like `open()`, `close()`, `read()`, `write()`, `ioctl()`, `strategy()`. This is the kernel’s interface to the device driver. Top half will start I/O to device, may put thread to sleep until finished. This part is called the device-independent softwares.
-* **Bottom half**: also refered to as interrupt handlers. Gets input or transfers next block of output. May wake sleeping threads if I/O now complete
+* **Bottom half**: also refered to as interrupt handlers. Gets input or transfers next block of output. May wake sleeping threads if I/O now complete.
 
 ------
 
 **Block Devices**: *e.g.* disk drives, tape drives, DVD-ROM
 
-* Access blocks of data
-* Commands include `open()`, `read()`, `write()`, `seek()`
-* Raw I/O or file-system (directories, files, permissions) access
-* Memory-mapped file access possible
+* Access blocks of data.
+* Commands include `open()`, `read()`, `write()`, `seek()`.
+* Raw I/O or file-system (directories, files, permissions) access.
+* Memory-mapped file access possible.
 
 ----
 
 **Character Devices**: *e.g.* keyboards, mice, serial ports, some USB devices
 
-* Single characters at a time
-* Commands include `get()`, `put()`
-* Libraries layered on top allow line editing ( we somethings want the user to type in a line of command )
-
-------
-
-**Network Devices**: *e.g.* Ethernet, Wireless, Bluetooth
-
-* Different enough from block/character to have own interface
-
-* Unix and Windows include `socket` interface
-
-  Separates network protocol (TCP, UDP) from network operation (sending and receiving data)
-
-  Includes `select()` functionality
-
-* Usage: pipes, FIFOs, streams, queues, mailboxes
+* Single characters at a time.
+* Commands include `get()`, `put()`.
+* Libraries layered on top allow line editing ( we somethings want the user to type in a line of command).
 
 ## I/O Buffering
 
@@ -172,13 +151,6 @@ An improvement over single buffering is to use two system buffers instead of one
 More than two buffers are used
 
 <center><img src="https://p.ipic.vip/psodw8.png" alt="Screenshot 2023-12-23 at 8.39.52 PM" style="zoom: 33%;" /></center>
-
------
-
-**Difference Between Buffer and Cache**:  They are frequently combined; however, there is a difference in intent.
-
-- The success of cache exists mainly in that the same datum will be read from cache multiple times, or that written data will soon be read.
-- Buffering is to smooth out peaks in I/O demand.
 
 ## Spooling
 

@@ -1,6 +1,8 @@
-# Storage Devices
+# Storage Technologies
 
-## Magnetic disks
+To hide the comlexity of the disk from the operating system, modern disks present a simpler view of their geometry as a sequence of $B$ sector-size logical blocks numbered $[0, 1, … , B - 1]$. A small hardware/firmware device in the disk package, called ***disk controller***, maintains the mapping between logical block numbers and physical disk sectors.
+
+# Magnetic disks
 
 * Storage that rarely becomes corrupted
 * Block level random access
@@ -8,18 +10,6 @@
 * Better performance for sequential access
 
 <center><img src="https://p.ipic.vip/yrl6bj.png" alt="Screenshot 2023-12-23 at 9.26.08 PM" style="zoom:33%;" /></center>
-
-### Physical Characteristics
-
-**Fixed-head disk**: one read/write head per track (figure above). All the heads are mounted on a rigid arm that extends across all tracks.
-
-**Movable-head**: only one head. The arm can be extended or retracted to position the head above any track.
-
-A **nonremovable disk** is permanently mounted in the disk drive
-
-A **removable disk** can be removed and replace with another disk
-
-A **single platter disk** vs. A **multiple platter disk**
 
 ### Addressing
 
