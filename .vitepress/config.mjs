@@ -81,6 +81,7 @@ export default defineConfig({
           { text: 'CLoF: A Compositional Lock Framework for Multi-level NUMA Systems', link: '/posts/CLoF' },
           { text: 'Mira: A Progam-Behavior-Guided Far Memory System', link: '/posts/mira-post' },
           { text: 'Build a Kernel for Raspberry Pi', link: '/posts/build-a-kernel' },
+          { text: 'AArch64 Exception', link: '/posts/exception' },
         ]
       }, {
         text: 'NLP',

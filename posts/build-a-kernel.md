@@ -178,4 +178,4 @@ Now we have everything needed to boot the Raspberry Pi. How does the Raspberry P
 
 The booting process can be summarized in the following figure. Note that it greatly differs from how legacy x86 machines boot. The control flow is sequentially transferred through the following components: `ROM Firmware -> bootcode.bin -> loader.bin -> start.elf -> kernel.img`.
 
-<img src="https://i.stack.imgur.com/xEB4q.png" alt="Boot Sequence" style="zoom:50%;" />
+<center><img src="https://i.stack.imgur.com/xEB4q.png" alt="Boot Sequence" style="zoom:50%;" /></center>
