@@ -80,48 +80,39 @@ For small files, there are 12 pointers direct to data blocks. It is sufficient f
 
 ## Fast File System
 
-Same inode structure as in BSD 4.1
+**Cylinder Group**: a collection of $N$ consecutive cylinders. In contemporary file systems such as Ext2, Ext3, and Ext4, the concept of **block groups** is utilized instead to denote contiguous sections of disk space.
 
-Optimization for Performance and Reliability:
+<center><img src="https://miro.medium.com/v2/resize:fit:1400/1*WjadC-uH-yUxtw5OdZxGjw.png" alt="A Fast File System for UNIX. A summary of the foundational file… | by Rajat  Kateja, After Hours Academic | Medium" style="zoom:50%;" /></center>
 
-* Distribute inodes among different tracks to be closer to data.
+Modern file systems (such as Linux ext2, ext3, and ext4) organize the drive into **block groups**, each of which is just a consecutive portion of the disk’s address space. Therefore, we can use "block group" or "cylinder group" interchangeably.
 
-* Uses bitmap allocation in place of freelist.
+For the perspective of logical blocks, the FFS is like:
 
-* Attempt to allocate files contiguously.
+<center><img src="https://p.ipic.vip/kngrf2.png" alt="Screenshot 2024-02-25 at 12.37.14 PM" style="zoom: 33%;" /></center>
 
-* 10% reserved disk space.
+FFS keeps a copy of the **super block** (S) in each group. By keeping multiple copies, if one copy becomes corrupt, you can still mount and access the file system by using a working replica.
 
-* Skip-sector positioning.
+### Heuristic Policies of FFS
 
-The UNIX BSD 4.2 (FFS) distributed the inodes closer to the data blocks
+FFS has to decide how to place files and directories and associated metadata on disk to improve performance.
 
-* Often, inode for file stored in same “cylinder group” as parent directory of the file 
-* Makes an “ls” of that directory run very fast
+**Directories**: find the cylinder group with a low number of allocated directories (to balance directories across groups) and a high number of free inodes (to subsequently be able to allocate a bunch of files), and put the directory data and inode in that group.
 
-File system volume divided into set of block groups
+**Files**: (1) Allocate the data blocks of a file in the same group as its inode (2) Places all files that are in the same directory in the cylinder group of the directory they are in.
 
-* Close set of tracks
-
-Data blocks, metadata, and free space interleaved within block group
-
-* Avoid huge seeks between user data and system structure
-
-Put directory and its files in common block group
-
-<center><img src="https://p.ipic.vip/drpe3f.png" alt="image-20230706022239753" style="zoom:50%;" /></center>
-
-**First-Free Allocation**: FFS uses a first-free allocation strategy, assigning data to the first available block.**Expanding Files**: If a file needs to grow, FFS first tries to find **successive** free blocks. If none are available, it chooses a new range of blocks on the disk. Finally, it can even go to another block group.
-
-**Block Clustering**: In this approach, FFS leaves a few unallocated spaces at the start of **a group of blocks** (block cluster), placing larger, sequential blocks towards the end.
-
-> When a file is stored on disk, it's broken up into these blocks. If a file doesn't fully use up a block, that remaining space becomes unusable for other files because blocks cannot be shared between files. This is called internal fragmentation, and it can waste a lot of space if not managed well.
+> Example: three directories (the root di- rectory /, /a, and /b) and four files (/a/c, /a/d, /a/e, /b/f)
 >
-> To mitigate this issue, FFS uses block clustering. This involves grouping a number of blocks together into a larger block, often known as a "cluster", and treating that larger block as a single entity.
-
-**Sequential Layout for Large Files**: For large files, FFS stores blocks in sequential order on the disk, reducing the movement of the disk head and boosting read/write performance.
-
-**Reserve Space**: reserve 10% free space in the block group.
+> ```
+> group inodes     data
+>     0 /--------- /---------
+>     1 acde------ accddee---
+>     2 bf-------- bff-------
+>     3 ---------- ----------
+>     4 ---------- ----------
+>     5 ---------- ----------
+>     6 ---------- ----------
+>     7 ---------- ----------
+> ```
 
 ### Attack of the Rotational Delay
 

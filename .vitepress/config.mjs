@@ -80,6 +80,7 @@ export default defineConfig({
           { text: 'Kubernetes Scheduling', link: '/posts/kuber-scheduling' },
           { text: 'CLoF: A Compositional Lock Framework for Multi-level NUMA Systems', link: '/posts/CLoF' },
           { text: 'Mira: A Progam-Behavior-Guided Far Memory System', link: '/posts/mira-post' },
+          { text: 'Build a Kernel for Raspberry Pi', link: '/posts/build-a-kernel' },
         ]
       }, {
         text: 'NLP',

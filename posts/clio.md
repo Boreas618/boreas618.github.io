@@ -2,7 +2,7 @@
 
 **Memory disaggregation**: two separate **network-attached pools**, one with compute nodes (CNs) and one with memory nodes (MNs).
 
-**Two MemDisagg Approaches**: MNs with/o computation power.
+**Two MemDisagg Approaches**: MNs with/without computation power.
 
 * **With Computation power**: cost of host server and performance and scalability limitations caused by the way NICs interact with the host server’s virtual memory system.
 * **Without**: performance, security, and management problems.
@@ -42,6 +42,3 @@
 
 **Approach 2: re-design the memory and networking data plane so that most state can be managed only at the CN side.** MN never initiates requests. Therefore, the transport-layer services at MNs can be simplified. New transport protocol manages request IDs, transport logic, retransmission buffer, congestion, and incast control all at CNs.
 
-> [!Note]
->
-> 读到这里的问题：Clio应该需要在CN端实现多个CN间的通信、同步机制。
