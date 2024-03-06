@@ -11,7 +11,6 @@ void *producer(void *param) {
     item_type item;
     while (TRUE) {
         item = produce();
-        
         sem_wait(&empty);
         sem_wait(&mutex);
         enqueue(&buffer, item);
@@ -29,7 +28,6 @@ void *consumer(void *param) {
         dequeue(&buffer, &item);
         sem_post(&mutex);
         sem_post(&empty);
-        
         consume(item);
     }
     return NULL;
@@ -40,7 +38,7 @@ This is how we address the producer/consumer problem using semaphores. Let's say
 
 ## Monitors
 
-To address the limited fault tolerance of locks and semaphores, Brinch Hansen (1973) and Hoare (1974) introduced a higher-level synchronization primitive known as a **monitor** [1]. A monitor is a feature implemented by programming languages (compilers) that can reduce the likelihood of errors in concurrent programs. To avoid making the concept too abstract, we first present a Java implementation of a monitor that aims to solve the producer/consumer problem.
+To address the limited fault tolerance of locks and semaphores, Brinch Hansen (1973) and Tony Hoare (1974) introduced a higher-level synchronization primitive known as a **monitor** [1]. A monitor is a feature implemented by programming languages (compilers) that can reduce the likelihood of errors in concurrent programs. To avoid making the concept too abstract, we first present a Java implementation of a monitor that aims to solve the producer/consumer problem.
 
 ```java
 class Monitor {
@@ -81,7 +79,7 @@ class Monitor {
 
 This is a monitor managing the buffer between the producer and consumer. Now, let's explain monitors in detail.
 
-A monitor is a collection of local data (`buffer`, `count`, `lo`, `hi`) and procedures (`insert`, `remove`, and `go_to_sleep`) that control access to resources shared by different threads. It provides the programmers with the basic assumption that **only one process can be active in a monitor at any given time.** The specific implementation of this assumption may vary depending on the programming languages and compilers used. In our Java example above, this assumption is achieved using the `synchronized` keyword. The keyword guarantees that only one thread can execute the synchronized method (or block) on a given object at a time.
+A monitor is a collection of local data (`buffer`, `count`, `lo`, `hi`) and procedures (`insert`, `remove`, and `go_to_sleep`) that control access to resources shared by different threads. It provides the programmers with the basic assumption that **only one process can be active in a monitor at any given time.** The specific implementation of this assumption may vary depending on the programming languages and compilers used. In our Java example above, this assumption is achieved using the `synchronized` keyword. 
 
 Readers may wonder how the `synchronized` keyword ensures that only one thread can execute the synchronized method (or block) on a given object at any given time. Unfortunately, the detailed implementation is too complicated to be explained here. However, some common implementations do utilize semaphores and locks within the monitor. It may be questioned why semaphores and locks are used here, considering that we previously discussed their susceptibility to concurrency issues. It should be noted that the semaphores and locks used here are managed by programming languages and compilers, which are more reliable than fallible human programmers. Therefore, it is wise to rely on the programming language and compiler to handle semaphores and locks on our behalf.
 
@@ -91,7 +89,7 @@ We find that safely configured semaphores and locks are satisfactory. However, c
 
 Instead of spinning, threads can simply go to sleep in the context of condition variables. 
 
-Condition variables are equipped with two operations: `wait` and `signal`. They are similar to `P` and `V` in semaphores. The potential difference is that when the condition is not met, `wait` will put the current process to sleep. (I'm not entirely sure whether the semaphore is meant to spin or sleep. I have seen both versions.)
+Condition variables are equipped with two operations: `wait` and `signal`. They are similar to `P` and `V` in semaphores. The potential difference is that when the condition is not met, `wait` will put the current process to sleep.
 
 In this blog, we present a demo code that utilizes condition variables [2]. Similar ideas can be adapted for implementing monitors.
 
@@ -201,7 +199,7 @@ There are three semantics to model this possible exection sequence [3]:
 <img src="https://cseweb.ucsd.edu/classes/sp16/cse120-a/applications/ln/monitor_hoare.jpg" alt="img" style="zoom:50%; display: block; margin: auto;" />
 
 
-Compared to Mesa Semantics, in the context of Brinch Hansen Semantics, thread B signals on the buffer only after it has left the monitor.
+Compared to Mesa Semantics, in the context of Brinch Hansen Semantics, thread B signals on the buffer only **after it has left the monitor**, after which thread A goes all the way to the waiting spot. Meanwhile, in the Mesa Semantics, thread A may have re-enter the monitor after the signal.
 
 In the context of Hoare Semantics, thread A is immediately brought back to the monitor after thread B signals on the buffer. At the same time, B is put into the signal queue to wait for thread A to leave the monitor.
 
@@ -211,22 +209,22 @@ In the context of Hoare Semantics, thread A is immediately brought back to the m
 >
 > ```c
 > void* wait() {
->   condcount = condcount + 1;
->   if (urgentcount > 0)
->     signal(urgent);
->   else
->     signal(mutex);
->   wait(condsem);
->   condcount = condcount - 1;
+>     condcount = condcount + 1;
+>     if (urgentcount > 0)
+>        signal(urgent);
+>     else
+>        signal(mutex);
+>     wait(condsem);
+>     condcount = condcount - 1;
 > }
 > 
 > void* signal() {
->   urgentcount = urgentcount + 1;
->   if(condcount > 0) {
->     signal(condsem);
->     wait(urgent);
->   }
->   urgentcount = urgentcount - 1;
+>     urgentcount = urgentcount + 1;
+>     if(condcount > 0) {
+>        signal(condsem);
+>        wait(urgent);
+>     }
+>     urgentcount = urgentcount - 1;
 > }
 > ```
 
