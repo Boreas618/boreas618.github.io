@@ -72,6 +72,7 @@ export default defineConfig({
         {
         text: 'Operating Systems',
         items: [
+          { text: 'Paper List', link: '/posts/prologue' },
           { text: 'Monitor, Condition Variables and Three Semantics', link: '/posts/monitor' },
           { text: 'Exception and Interrupt Handling in xv6', link: '/posts/xv6-trap' },
           { text: 'Function Prologues', link: '/posts/function-prologues' },
@@ -83,6 +84,7 @@ export default defineConfig({
           { text: 'Build a Kernel for Raspberry Pi', link: '/posts/build-a-kernel' },
           { text: 'AArch64 Exception', link: '/posts/exception' },
           { text: 'Clio: A Hardware-Software Co-Designed Disaggregated Memory System', link: '/posts/clio'}
+          { text: 'Userspace Bypass: Accelerating Syscall-intensive Applications', link: '/posts/ub'}
         ]
       }, {
         text: 'NLP',

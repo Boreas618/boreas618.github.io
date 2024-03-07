@@ -2,7 +2,7 @@
 
 > [!note]
 >
-> ATC '22有一篇idea看起来比较像的工作Privbox: Faster System Calls Through Sandboxed Privileged Execution，摘要里大概提到了syscall密集代码提权、沙箱、硬件辅助加速等机制，需要进一步比较其与UB的异同。
+> ATC '22有一篇idea看起来比较像的工作Privbox: Faster System Calls Through Sandboxed Privileged Execution，摘要里大概提到了syscall密集代码提权、沙箱、硬件辅助加速等机制，TODO：比较其与UB的异同。
 
 **Question**: mitigate syscall overhead from the I/O path.
 
@@ -50,7 +50,7 @@ To defeat transient execution attacks, OS kernel uses two sets of page tables fo
 >
 > Most kernel bypass and syscall batching solutions (e.g., DPDK, RDMA, io_uring) require application code to interact with a queue pair asynchronously. Nonetheless, developers still prefer to write program logic in the synchronous style.
 >
-> 我认为这里主要是一个API迁移的问题？在有良好异步编程支持的编程语言里，异步操作体验还是比较舒服的。
+> 我认为这里主要是一个API迁移的问题？我感觉异步逻辑的心智负担还好。
 
 ## Design Overview
 
@@ -83,7 +83,7 @@ Lightweight userspace instructions in I/O threads.
 >
 > Idea看起来简单，但需要强调几个challenge以体现工作量。这里主要是两点：（1） 沙箱机制 （2）优化点位精确鉴定。
 >
-> UB的workflow和SOSP '23的Mira的overflow大体上有点像：profile -> 指令级优化 （Mira是在IR层面优化，UB是在二进制指令层级优化） -> runtime
+> UB的workflow和SOSP '23的Mira在框架上有点像：profile -> 指令级优化 （Mira是在IR层面优化，UB是在二进制指令层级优化） -> runtime
 
 ## Hot Syscall Identifier
 
@@ -91,7 +91,7 @@ Have to decide suitable path (***short path***) length for translation and instr
 
 **Module Design**: discover hot syscalls that enclose a short userspace path.
 
-The two syscalls are classified as candidates of hot syscalls when the instruction number is less than the short path.
+The two syscalls are classified as candidates of hot syscalls when the instruction number is less than the threashold of short path.
 
 > [!note]
 >
@@ -103,7 +103,7 @@ The two syscalls are classified as candidates of hot syscalls when the instructi
 
 > [!note]
 >
-> 这里感觉有点不好，包括采样标准、采样比例的合理性不是很清晰，提两点愚见：
+> 这里感觉有点不好，采样标准、采样比例的合理性没有很好地验证，两点愚见：
 >
 > （1）补充相关实验，看看syscall sampling下的性能-采样比的曲线。
 >
@@ -135,7 +135,7 @@ The BTC translator follows the procedure of Dynamic Binary Translation (DBT).
 >
 > ----
 >
-> 5.2.1结尾作者解释了确实有实证结果，indirect control-flow transfer不是很频繁。
+> 后续：5.2.1结尾作者解释了确实有实证结果，indirect control-flow transfer不是很频繁。
 
 ## BTC  Translator
 
@@ -145,7 +145,7 @@ Avoid elevating a fast path when the consequences can not be immediately determi
 
 > [!note]
 >
-> 这里解释了前面的迭代增量的方法的安全方面的考量，安全和性能的trade off怎么考量？
+> 这里解释了前面的迭代增量的方法的安全方面的考量，安全和性能的trade off如何评估？
 
 ### Jump Sanitation
 
@@ -158,5 +158,68 @@ Avoid elevating a fast path when the consequences can not be immediately determi
 ### Register Remapping
 
 * The BTC translator disallows the BTC code to access stack registers (i.e., RSP, RBP, and RIP).
-* Some registers are reserved for BTC run- time and cannot be accessed by the BTC code.
+* Some registers are reserved for BTC runtime and cannot be accessed by the BTC code.
+
+The BTC translator uses the $M$ reserved registers in BTC to serve the potential access to $N$ registers ($N = M + 3$, $3$ are for stack registers). The translator chooses one from the $M$​ reserved registers to temporally act as a special register with ***renaming***. 
+
+Reserves R12- R15 for BTC runtime use (least frequently used). Frequently-used registers are fixed.
+
+### Instruction Sanitization
+
+Privileged instructions (e.g., `sysret`) are not allowed to appear in the BTC, to avoid privilege escalation by the malicious code that exploits UB. The fast path with previleged instructions will not be elevated to the kernel. 
+
+Stack operation instructions like PUSH/POP should be rewritten. The stack registers are managed by the reserved registers in the BTC runtime.
+
+### Memory Access Sanitization
+
+The translator sanitizes all memory access instructions by inserting address checking instructions before the instruction. Only userspace addresses are allowed to be accessed. 
+
+> [!Note]
+>
+> The translator shifts left the address by one bit and then shifts it right by one bit, to fulfill the address requirement.
+>
+> 这是啥意思，没懂。
+
+Added checks do not prevent BTC from accessing unmapped memory region and triggering page fault. When invalid page fault (i.e., illegally accessing some memory regions) happens, the execution of BTC code is aborted.
+
+### Thread Safety
+
+* When translating an instruction, the translator prefers to use one instruction that has the same op-code as the original one. Hence, the atomicity of the original instruction is automatically preserved.
+* If more than one instruction is needed for emulation, memory load or store must be completed in a single instruction.
+
+> [!note]
+>
+> 有个问题：如果一条user space指令被多条BTC指令模拟，其内存操作可以保证在一条BTC指令内完成吗？
+
+## Evaluation
+
+An I/O micro-benchmark and two real-world applications (Redis and Nginx) for macro-benchmarks.
+
+* Bare-metal environment (client and server)/virtualized environment (NIC pass-through being enabled)
+* Run each server application in four settings: KPTI on/off × VM/physical machine.
+
+### I/O Micro-benchmark
+
+**In-memory file access**: create a large file in ramfs to avoid possible disk bottleneck.
+
+* Virtualized environment/KPTI on/small I/O size, accelerates syscall-based I/O by 88.3%±0.75%.
+* Larger I/O size, acceleration ratio drops to 30.3%±0.96% for the 4KiB I/O size. (Fewer syscalls are invoked)
+* Without KPTI, the acceleration ratio of UB drops to 14.3%±1.83% – 41.6%±1.73%.
+* The acceleration on physical machine is higher, since the IOPS on physi- cal machine is higher and UB saves more context switching overhead.
+
+**File access on NVMe**: only consider the physical machine setting, because when VM accesses a file in a virtual NVMe disk, the file will be automatically cached into memory a priori, which behaves similarly to in-memory file access.
+
+### Raw Socket vs. eBPF
+
+UB accelerates raw socket by 31.5%±0.25% – 34.3%±0.72%, which are much smaller than eBPF.
+
+The bottleneck of raw socket is **protocol stack processing**, which is bypassed by eBPF whose bottleneck may be the data movement, whose time consumption is related to packet size.
+
+The execution performance of BTC is better than eBPF VM while it cannot achieve similar PPS to eBPF. The analysis by the author is that eBPF runs in softirq, so the packets can be dispatched into different cores while the raw socket protocol stack has in-kernel locks for concurrent access.
+
+> [!note]
+>
+> One potential approach is to build a better UB runtime so more deeper kernel trace points can be exposed via syscall, and we leave this as a future work.
+>
+> 这个idea我没太懂，UB和kernel trace points的关系是指？
 

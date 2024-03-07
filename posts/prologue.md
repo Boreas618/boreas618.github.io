@@ -1,16 +1,6 @@
-# Prologue
+# Paper Lists
 
-In this section, I will share the papers I have read and the explorations I have conducted.
-
-::: tip Thoughts
-These are my thoughts while reading the papers or conducting the explorations.
-:::
-
-::: warning Questions
-These are my questions regarding these topics.
-:::
-
-## Paper List (System)
+## System/Networking
 
 ### Concepts
 * [Monitor, Condition Variables and Three Semantics](./monitor.md)
@@ -23,6 +13,9 @@ These are my questions regarding these topics.
 ### Data Center & Networking
 * [Mira: A Progam-Behavior-Guided Far Memory System](./mira-post.md)
 * [Clio: A Hardware-Software Co-Designed Disaggregated Memory System](./clio.md)
+
+### Binary Translation
+* [Userspace Bypass: Accelerating Syscall-intensive Applications](./ub.md)
 
 ### Misc
 * [TreeSLS: A Whole-system Persistent Microkernel with Tree-structured State Checkpoint on NVM](./TreeSLS.md)
