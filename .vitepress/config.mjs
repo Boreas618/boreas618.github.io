@@ -83,7 +83,7 @@ export default defineConfig({
           { text: 'Mira: A Progam-Behavior-Guided Far Memory System', link: '/posts/mira-post' },
           { text: 'Build a Kernel for Raspberry Pi', link: '/posts/build-a-kernel' },
           { text: 'AArch64 Exception', link: '/posts/exception' },
-          { text: 'Clio: A Hardware-Software Co-Designed Disaggregated Memory System', link: '/posts/clio'}
+          { text: 'Clio: A Hardware-Software Co-Designed Disaggregated Memory System', link: '/posts/clio'},
           { text: 'Userspace Bypass: Accelerating Syscall-intensive Applications', link: '/posts/ub'}
         ]
       }, {
