@@ -20,7 +20,7 @@ export default defineConfig({
     [
       'script',
       {},
-      "const token = '90eda4dcb5ec491cb45659a16bf4f7a5';\nconst title = 'New visitor';\nconst content = 'null';\nconst url = `http://www.pushplus.plus/send?token=${token}&title=${title}&content=${content}`;\nfetch(url).then(response => response.json()).then(data => console.log(data)).catch(error => console.error('Error:', error));",
+      "var _hmt = _hmt || [];\n(function() {\n  var hm = document.createElement(\"script\");\n  hm.src = \"https://hm.baidu.com/hm.js?00c6d7ac1058c6f5c7e6fc877003825d\";\n  var s = document.getElementsByTagName(\"script\")[0]; \n  s.parentNode.insertBefore(hm, s);\n})();",
     ],
   ],
   markdown: {
