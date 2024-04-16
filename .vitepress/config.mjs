@@ -17,6 +17,11 @@ export default defineConfig({
       {},
       "window.dataLayer = window.dataLayer || [];\nfunction gtag(){dataLayer.push(arguments);}\ngtag('js', new Date());\ngtag('config', 'G-6WBRDRWDS9');",
     ],
+    [
+      'script',
+      {},
+      "const token = '90eda4dcb5ec491cb45659a16bf4f7a5';\nconst title = 'New visitor';\nconst content = 'null';\nconst url = `http://www.pushplus.plus/send?token=${token}&title=${title}&content=${content}`;\nfetch(url).then(response => response.json()).then(data => console.log(data)).catch(error => console.error('Error:', error));",
+    ],
   ],
   markdown: {
     math: true
