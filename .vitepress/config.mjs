@@ -4,6 +4,20 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "Yi Sun's Blog",
   description: "This is Yi Sun's blog.",
+  head: [
+    [
+      'script',
+      {
+        async: true,
+        src: 'https://www.googletagmanager.com/gtag/js?id=G-6WBRDRWDS9',
+      },
+    ],
+    [
+      'script',
+      {},
+      "window.dataLayer = window.dataLayer || [];\nfunction gtag(){dataLayer.push(arguments);}\ngtag('js', new Date());\ngtag('config', 'G-6WBRDRWDS9');",
+    ],
+  ],
   markdown: {
     math: true
   },
