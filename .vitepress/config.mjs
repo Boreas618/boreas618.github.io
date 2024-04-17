@@ -34,8 +34,8 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: 'Me', link: '/' },
-      { text: 'Posts', link: '/posts/prologue/${ip_addr}' },
-      { text: 'OS Notes', link: '/os-notes/introduction/${ip_addr}' },
+      { text: 'Posts', link: `/posts/prologue?ip=${ip_addr}` },
+      { text: 'OS Notes', link: `/os-notes/introduction?ip=${ip_addr}` },
     ],
     sidebar: {
       '/': {
