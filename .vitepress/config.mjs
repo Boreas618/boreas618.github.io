@@ -25,7 +25,7 @@ export default defineConfig({
     [
       'script',
       {},
-      "var _hmt = _hmt || [];\n(function() {\n  var hm = document.createElement(\"script\");\n  hm.src = \"https://hm.baidu.com/hm.js?00c6d7ac1058c6f5c7e6fc877003825d\";\n  var s = document.getElementsByTagName(\"script\")[0]; \n  s.parentNode.insertBefore(hm, s);\n})();",
+      "let ip_addr = 'default'; \nfetch('https://api.ipify.org?format=json').then(response => response.json()).then(data => ip_addr = data.ip);",
     ],
   ],
   markdown: {
