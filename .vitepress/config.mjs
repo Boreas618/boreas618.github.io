@@ -1,10 +1,5 @@
 import { defineConfig } from 'vitepress'
 
-let ip_addr;
-fetch('https://api.ipify.org?format=json')
-  .then(response => response.json())
-  .then(data => ip_addr = data.ip);
-
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "Yi Sun's Blog",
@@ -25,7 +20,7 @@ export default defineConfig({
     [
       'script',
       {},
-      "let ip_addr = 'default'; \nfetch('https://api.ipify.org?format=json').then(response => response.json()).then(data => ip_addr = data.ip);",
+      "let ip_addr = 'default'; \nfetch('https://api.ipify.org?format=json').then(response => response.json()).then(data => ip_addr = data.ip);\ndocument.querySelector('#app > div > header > div > div.wrapper > div > div.content > div > nav > a:nth-child(3)')+=`?ip=${ip_addr}`;",
     ],
   ],
   markdown: {
@@ -34,8 +29,8 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: 'Me', link: '/' },
-      { text: 'Posts', link: `/posts/prologue?ip=${ip_addr}` },
-      { text: 'OS Notes', link: `/os-notes/introduction?ip=${ip_addr}` },
+      { text: 'Posts', link: `/posts/prologue` },
+      { text: 'OS Notes', link: `/os-notes/introduction` },
     ],
     sidebar: {
       '/': {
