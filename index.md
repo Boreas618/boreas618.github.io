@@ -40,4 +40,35 @@ I am a fan of NBA games, though I'm not very good at playing basketball myself. 
 
 ## Related Links
 
-[Qianheng Wang (王骞珩)](https://j3rry0610.github.io/)
+<style>
+  .card {
+    width: 33%; /* Adjusts width to 25% of the view */
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px #ccc;
+    border-radius: 10px; /* Adds rounded corners */
+    font-family: Arial, sans-serif;
+    overflow: hidden; /* Ensures the image corners are also rounded */
+  }
+
+  .card img {
+    width: 100%;
+    height: auto;
+    display: block; /* Removes bottom space/gap under the image */
+  }
+
+  .card footer {
+    background-color: white;
+    padding: 10px;
+    text-align: center;
+    color: black;
+    font-size: 14px;
+  }
+</style>
+
+<div class="card">
+  <img src="/j3rry.jpg" alt="Europe Street Beat">
+  <footer>
+    Qianheng Wang (王骞珩)<br>
+    <a href="https://j3rry0610.github.io">https://j3rry0610.github.io</a>
+  </footer>
+</div>
