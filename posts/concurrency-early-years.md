@@ -38,44 +38,9 @@ numpages = {14}
 我们尝试用Dijkstra算法实现这样一个问题：考虑1个全局的counter，5个进程各自给该counter增加计数500，counter的最终值应为$5 \times 500 =2500$。
 
 ```c
-int count = 0; // the global counter
-
-bool b[N], c[N]; // all initialized to true
-int k;
-
-void *process(void* arg) {
-  long i = (long)arg; // i is the PID of the current process
-  int per_process_cnt = 0;
-  
-  while (per_process_cnt < 500) {
-    b[i] = false;
-    L1: if (k != i) {
-      c[i] = true;
-      if (b[k] == true) k = i;
-      goto L1;
-    } else {
-      c[i] = false;
-      for (int j = 0; j < N; j++) {
-        if (j != i && !c[j]) goto L1;
-      }
-    }
-    
-    count += 1;
-    c[i] = true;
-    b[i] = true;
-    per_process_cnt += 1;
-  }
-}
-```
-
-* `b[N]` 表明各进程进入critical section的意图，`false`表示进程准备进入critical section。
-* `c[N] `表明各进程是否处于critical section中。
-* `k` 表明PID为`k`的进程将优先进入critical section。
-
-但是编译运行后发现，这个程序**有并发问题**。因为该程序忽略了Dijktra对该问题作出的一个关键约定：进程间可以通过共享存储的方式进行通行，**访问共享存储的操作保证是原子的**。也就是说，Dijktra算法的正确性要建立在进程对`b[]`, `c[]`, `k`的访问是原子的。因此，我们修改该程序，引入`<stdatomic.h>`支持原子操作。
-
-```c
 #include <stdatomic.h>
+
+int count = 0;
 
 atomic_bool b[N];
 atomic_bool c[N];
@@ -109,11 +74,15 @@ void* process(void* arg) {
 }
 ```
 
-编译运行后，程序正确运行！
+* `b[N]` 表明各进程进入critical section的意图，`false`表示进程准备进入critical section。
+* `c[N] `表明各进程是否处于critical section中。
+* `k` 表明PID为`k`的进程将优先进入critical section。
+
+注意，Dijktra算法存在一个关键约定：进程间可以通过共享存储的方式进行通行，**访问共享存储的操作保证是原子的**。因此，我们引入`<stdatomic.h>`以实现对共享存储的原子操作。可编译运行的C程序请见附件`dijkstra.c`。
 
 ### The First “Real” Solution
 
-Leslie Lamport本人提出了bakery算法。Bakery算法采用tick number来进行进程同步。每个进程等待tick number小于自身的进程离开critical section。
+Leslie Lamport本人提出了Bakery算法。Bakery算法采用tick number来进行进程同步。每个进程等待tick number小于自身的进程离开critical section。
 
 ```c
 void lock(int thread) {
