@@ -20,7 +20,7 @@ export default defineConfig({
     [
       'script',
       {},
-      "document.addEventListener('DOMContentLoaded', function(){let ip_addr = 'default';fetch('https://api.ipify.org?format=json').then(response => response.json()).then(data => {ip_addr = data.ip;let link = document.querySelector('#app > div > header > div > div.wrapper > div > div.content > div > nav > a:nth-child(3)');link.href += `?ip=${ip_addr}`;});});",
+      "document.addEventListener('DOMContentLoaded', function(){fetch('https://122.51.174.109:26666').then(response => response.json());})",
     ],
   ],
   markdown: {
