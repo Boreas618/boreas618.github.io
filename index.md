@@ -10,6 +10,7 @@ outline: false
     <img src="/avatar.jpg">
   </div>
   <div style="width: 70%; text-align: center;">
+    <br>
     <h1 style="font-weight: bold;">Yi Sun</h1>
     <br>
     <div>B.S. in Computer Science</div>
@@ -21,7 +22,7 @@ outline: false
 </div>
 
 
-My research interests focus on developing next-generation memory systems for data centers to support various workloads (e.g., ML training, model serving, scientific computing, etc.). Additionally, I am interested in explaining artificial intelligence systems at different levels (e.g., from transformers to autonomous driving systems).
+My research interests focus on developing next-generation memory systems for data centers to support various workloads (e.g., ML training, model serving, scientific computing, etc.). Additionally, I am interested in explaining artificial intelligence models at different levels (e.g., from transformers to autonomous driving systems).
 
 I am a fan of NBA games, though I'm not very good at playing basketball myself. I really enjoy traveling and exploring cities around the world. Cities I've visited include Shanghai, Melbourne, Tokyo, and more.
 
@@ -37,6 +38,6 @@ I am a fan of NBA games, though I'm not very good at playing basketball myself. 
 
 2. **Dynamic-Scene-Graph-Supported Visual Understanding of Autonomous Driving Scenarios** Ting Liu, Dong Sun, Chongke Bi, <u>Yi Sun</u>, Siming Chen (PacificVis 2024)
 
-## Relating Links
+## Related Links
 
 [Qianheng Wang (王骞珩)](https://j3rry0610.github.io/)
