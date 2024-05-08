@@ -16,7 +16,7 @@ outline: false
     <div>B.S. in Computer Science</div>
     <a href="http://www.fudan.edu.cn">Fudan University</a>
     <br>
-    <div>sun21@m.fudan.edu.cn</div>
+    <div>suny21@m.fudan.edu.cn</div>
     <br>
   </div>
 </div>
