@@ -27,18 +27,22 @@ My research interests focus on developing next-generation memory systems for dat
 I am a fan of NBA games, though I'm not very good at playing basketball myself. I really enjoy traveling and exploring cities around the world. Cities I've visited include Shanghai, Melbourne, Tokyo, and more.
 
 
-## Education
+## 📚 Education
 
 * **2021.9 - Present** Fudan University, Shanghai, China, B.S. in Computer Science
 * **2023.2 - 2023.6** The University of Melbourne, Melbourne, Australia, Exchange Student
 
-## Publications
+## 📝 Publications
 
 1. **Interpreting Autonomous Driving Corner Cases: A Visual Analytics Approach** <u>Yi Sun</u>, Zekai Shao, Xingyu Qiu, Yun Li, Ting Liu, Linbing Xiang, Dong Sun, Siming Chen (PacificVis 2024)
 
 2. **Dynamic-Scene-Graph-Supported Visual Understanding of Autonomous Driving Scenarios** Ting Liu, Dong Sun, Chongke Bi, <u>Yi Sun</u>, Siming Chen (PacificVis 2024)
 
-## Related Links
+## 🏫 Teaching
+
+1. **Operating Systems (Honor Track)**, TA, 24 Fall, Fudan University
+
+## 😎 Related Links
 
 <style>
   .card {
