@@ -1,9 +1,25 @@
 import { defineConfig } from 'vitepress'
 
-// https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "Yi Sun's Blog",
   description: "This is Yi Sun's blog.",
+  transformHead: ({ assets }) => {
+    const myFontFile = assets.find(file => console.log(file))
+    if (myFontFile) {
+      return [
+        [
+          'link',
+          {
+            rel: 'preload',
+            href: myFontFile,
+            as: 'font',
+            type: 'font/ttf',
+            crossorigin: ''
+          }
+        ]
+      ]
+    }
+  },
   head: [
     [
       'script',

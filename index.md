@@ -6,25 +6,22 @@ outline: false
 ---
 
 <div style="display: flex; width: 100%; align-items: center;">
-  <div style="width: 30%; text-align: center;">
-    <img src="/avatar.jpg">
+  <div style="width: 30%; text-align: center; margin: auto;">
+    <img style="height: 200px; display: block; margin-left: auto; margin-right: auto;" src="/avatar.jpg">
   </div>
-  <div style="width: 70%; text-align: center;">
-    <br>
-    <h1 style="font-weight: bold;">Yi Sun</h1>
+  <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; width: 70%; text-align: center; height: 200px;">
+    <h1 style="font-weight: bold; margin-top: 0; margin-bottom: 0;">Yi Sun</h1>
     <br>
     <div>B.S. in Computer Science</div>
     <a href="http://www.fudan.edu.cn">Fudan University</a>
-    <br>
     <div>suny21@m.fudan.edu.cn</div>
-    <br>
   </div>
 </div>
 
 
 My research interests focus on developing next-generation memory systems for data centers to support various workloads (e.g., ML training, model serving, scientific computing, etc.). Additionally, I am interested in explaining artificial intelligence models at different levels (e.g., from transformers to autonomous driving systems).
 
-I am a fan of NBA games, though I'm not very good at playing basketball myself. I really enjoy traveling and exploring cities around the world. Cities I've visited include Shanghai, Melbourne, Tokyo, and more.
+I am a fan of NBA games, though I'm not good at playing basketball myself. I really enjoy traveling and exploring cities around the world. Cities I've visited include Shanghai, Melbourne, Tokyo, and more.
 
 
 ## 📚 Education
@@ -40,13 +37,13 @@ I am a fan of NBA games, though I'm not very good at playing basketball myself. 
 
 ## 🏫 Teaching
 
-1. **Operating Systems (Honor Track)**, TA, 24 Fall, Fudan University
+1. **Operating Systems (Honor Track)**, Teaching Assistant, 24 Fall, Fudan University
 
 ## 😎 Related Links
 
 <style>
   .card {
-    width: 33%; /* Adjusts width to 25% of the view */
+    width: 20%; /* Adjusts width to 25% of the view */
     border: 1px solid #ccc;
     box-shadow: 0 2px 5px #ccc;
     border-radius: 10px; /* Adds rounded corners */
@@ -70,7 +67,7 @@ I am a fan of NBA games, though I'm not very good at playing basketball myself. 
 </style>
 
 <div class="card">
-  <img src="/j3rry.jpg" alt="Europe Street Beat">
+  <img src="/j3rry.jpg" alt="Qianheng Wang">
   <footer>
     Qianheng Wang (王骞珩)<br>
     <a href="https://j3rry0610.github.io">https://j3rry0610.github.io</a>
