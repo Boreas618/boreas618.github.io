@@ -45,7 +45,7 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: 'Me', link: '/' },
-      { text: 'Posts', link: `/posts/prologue` },
+      // { text: 'Posts', link: `/posts/prologue` },
       { text: 'OS Notes', link: `/os-notes/introduction` },
     ],
     sidebar: {
