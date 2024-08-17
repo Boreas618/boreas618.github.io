@@ -19,7 +19,7 @@ outline: false
 </div>
 
 
-My research interests focus on developing next-generation memory systems for data centers to support various workloads (e.g., ML training, model serving, scientific computing, etc.). Additionally, I am interested in explaining artificial intelligence models at different levels (e.g., from transformers to autonomous driving systems).
+My research interests focus on developing next-generation memory systems for data centers to support various workloads (e.g., ML training, LLM serving, scientific computing, etc.). Additionally, I am interested in explaining artificial intelligence models at different levels (e.g., from transformers to autonomous driving systems).
 
 I am a fan of NBA games, though I'm not good at playing basketball myself. I really enjoy traveling and exploring cities around the world. Cities I've visited include Shanghai, Melbourne, Tokyo, and more.
 
@@ -35,11 +35,11 @@ I am a fan of NBA games, though I'm not good at playing basketball myself. I rea
 
 2. **Dynamic-Scene-Graph-Supported Visual Understanding of Autonomous Driving Scenarios** Ting Liu, Dong Sun, Chongke Bi, <u>Yi Sun</u>, Siming Chen (PacificVis 2024)
 
+3. **Fine‑Tuned Large Language Model for Visualization System: A Study on Self‑Regulated Learning in Education** Lin Gao, Jing Lu, Zekai Shao, Ziyue Lin, Shengbin Yue, Chokit Ieong, <u>Yi Sun</u>, Zhongyu Wei, Siming Chen (IEEE VIS 2024)
+
 ## 🏫 Teaching
 
 1. **Operating Systems (Honor Track)**, Teaching Assistant, 24 Fall, Fudan University
-
-## 😎 Related Links
 
 <style>
   .card {
@@ -66,10 +66,3 @@ I am a fan of NBA games, though I'm not good at playing basketball myself. I rea
   }
 </style>
 
-<div class="card">
-  <img src="/j3rry.jpg" alt="Qianheng Wang">
-  <footer>
-    Qianheng Wang (王骞珩)<br>
-    <a href="https://j3rry0610.github.io">https://j3rry0610.github.io</a>
-  </footer>
-</div>
