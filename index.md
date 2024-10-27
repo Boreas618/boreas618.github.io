@@ -7,9 +7,9 @@ outline: false
 
 <div style="display: flex; width: 100%; align-items: center;">
   <div style="width: 30%; text-align: center; margin: auto;">
-    <img style="height: 200px; display: block; margin-left: auto; margin-right: auto;" src="/avatar.jpg">
+    <img style=" display: block; margin-left: auto; margin-right: auto;" src="/avatar.jpg">
   </div>
-  <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; width: 70%; text-align: center; height: 200px;">
+  <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; width: 70%; text-align: center; ">
     <h1 style="font-weight: bold; margin-top: 0; margin-bottom: 0;">Yi Sun</h1>
     <br>
     <div>B.S. in Computer Science</div>
@@ -19,9 +19,9 @@ outline: false
 </div>
 
 
-My research interests focus on developing next-generation memory systems for data centers to support various workloads (e.g., ML training, LLM serving, scientific computing, etc.). Additionally, I am interested in explaining artificial intelligence models at different levels (e.g., from transformers to autonomous driving systems).
+My research interests focus on developing next-generation memory systems for data centers to support various workloads. Additionally, I am interested in exploring the inner workings of artificial intelligence models across different scales (e.g., from transformers to autonomous driving systems).
 
-I am a fan of NBA games, though I'm not good at playing basketball myself. I really enjoy traveling and exploring cities around the world. Cities I've visited include Shanghai, Melbourne, Tokyo, and more.
+I am a fan of NBA games, though I'm not good at playing basketball myself. I really enjoy exploring cities around the world. Cities I've visited include Shanghai, Melbourne, Tokyo, and more.
 
 
 ## 📚 Education
@@ -40,6 +40,7 @@ I am a fan of NBA games, though I'm not good at playing basketball myself. I rea
 ## 🏫 Teaching
 
 1. **Operating Systems (Honor Track)**, Teaching Assistant, 24 Fall, Fudan University
+2. **Operating Systems (Regular Track)**, Teaching Assistant, 24 Fall, Fudan University
 
 <style>
   .card {
