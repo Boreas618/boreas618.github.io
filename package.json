@@ -8,7 +8,6 @@
     "docs:preview": "vitepress preview"
   },
   "dependencies": {
-    "element-plus": "^2.4.0",
     "markdown-it-mathjax3": "^4.3.2"
   }
 }
