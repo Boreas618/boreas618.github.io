@@ -6,15 +6,15 @@ outline: false
 ---
 
 <div style="display: flex; width: 100%; align-items: center;">
-  <div style="width: 30%; text-align: center; margin: auto;">
-    <img style=" display: block; margin-left: auto; margin-right: auto;" src="/avatar.jpg">
+  <div style="width: 50%; text-align: center; margin: auto;">
+    <img style="width: 35%; display: block; margin-left: auto; margin-right: auto;" src="/avatar.jpg">
   </div>
-  <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; width: 70%; text-align: center; ">
+  <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; width: 50%; text-align: center; ">
     <h1 style="font-weight: bold; margin-top: 0; margin-bottom: 0;">Yi Sun</h1>
     <br>
     <div>B.S. in Computer Science</div>
     <a href="http://www.fudan.edu.cn">Fudan University</a>
-    <div>suny21@m.fudan.edu.cn</div>
+    <a href="mailto:suny21@m.fudan.edu.cn">suny21@m.fudan.edu.cn</a>
   </div>
 </div>
 
@@ -26,9 +26,12 @@ I am a fan of NBA games, though I'm not good at playing basketball myself. I rea
 
 ## 📚 Education
 
-* **2021.9 - Present** Fudan University, Shanghai, China, B.S. in Computer Science
-* **2023.2 - 2023.6** The University of Melbourne, Melbourne, Australia, Exchange Student
+* [**September 2021 - June 2026**]  Fudan University, Shanghai, China  
+  **Bachelor of Science in Computer Science**  
+  *Expected graduation extended by one year due to a semester of exchange study at the University of Melbourne.*
 
+* [**February 2023 - June 2023**] The University of Melbourne, Melbourne, Australia  
+  **Exchange Program**
 ## 📝 Publications
 
 1. **Interpreting Autonomous Driving Corner Cases: A Visual Analytics Approach** <u>Yi Sun</u>, Zekai Shao, Xingyu Qiu, Yun Li, Ting Liu, Linbing Xiang, Dong Sun, Siming Chen (PacificVis 2024)
@@ -39,8 +42,8 @@ I am a fan of NBA games, though I'm not good at playing basketball myself. I rea
 
 ## 🏫 Teaching
 
-1. **Operating Systems (Honor Track)**, Teaching Assistant, 24 Fall, Fudan University
-2. **Operating Systems (Regular Track)**, Teaching Assistant, 24 Fall, Fudan University
+1. **Operating Systems (Honor Track)**, Teaching Assistant, 24 Fall, Fudan University.
+2. **Operating Systems (Regular Track)**, Teaching Assistant, 24 Fall, Fudan University.
 
 <style>
   .card {
