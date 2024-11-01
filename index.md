@@ -32,6 +32,13 @@ I am a fan of NBA games, though I'm not good at playing basketball myself. I rea
 
 * [**February 2023 - June 2023**] The University of Melbourne, Melbourne, Australia  
   **Exchange Program**
+
+## 🏆 Awards
+
+1. National Scholarship (2023-2024)
+2. HHC Tea Freshman Scholarship (2021)
+
+
 ## 📝 Publications
 
 1. **Interpreting Autonomous Driving Corner Cases: A Visual Analytics Approach** <u>Yi Sun</u>, Zekai Shao, Xingyu Qiu, Yun Li, Ting Liu, Linbing Xiang, Dong Sun, Siming Chen (PacificVis 2024)
