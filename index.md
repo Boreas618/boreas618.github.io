@@ -18,39 +18,115 @@ outline: false
   </div>
 </div>
 
-
-My research interests focus on developing next-generation memory systems for data centers to support various workloads. Additionally, I am interested in exploring the inner workings of artificial intelligence models across different scales (e.g., from transformers to autonomous driving systems).
+My research interests are primary on advancing next-generation memory systems for data centers to support diverse workloads, especially machine learning tasks such as LLM inference and training. Recently, I have been working on memory tiering in CXL.
 
 I am a fan of NBA games, though I'm not good at playing basketball myself. I really enjoy exploring cities around the world. Cities I've visited include Shanghai, Melbourne, Tokyo, and more.
 
 
 ## 📚 Education
 
-* [**September 2021 - June 2026**]  Fudan University, Shanghai, China  
-  **Bachelor of Science in Computer Science**  
-  *Expected graduation extended by one year due to a semester of exchange study at the University of Melbourne.*
+<div class="education-entry">
+        <div class="institution">Fudan University</div>
+        <div class="program-date">
+            <span>Bachelor of Science in Computer Science</span>
+            <span>Sep 2021 – Jun 2026 (Expected)</span>
+        </div>
+        <div class="details">
+            <ul>
+                <li>Courses: Operating Systems (Honors Track) (A), Computer Architecture (A), Parallel and Distributed Computing (A), and Compilers (A+).</li>
+                <li>Extended program duration by one year to participate in an exchange program at the University of Melbourne.</li>
+            </ul>
+        </div>
+</div>
 
-* [**February 2023 - June 2023**] The University of Melbourne, Melbourne, Australia  
-  **Exchange Program**
+<div class="education-entry">
+  <div class="institution">The University of Melbourne</div>
+  <div class="program-date">
+    <span>Exchange Program</span>
+    <span>Feb 2023 - Jun 2023</span>
+  </div>
+  <div class="details">
+    <ul>
+    </ul>
+  </div>
+</div>
 
 ## 🏆 Awards
 
-1. National Scholarship (2023-2024)
-2. HHC Tea Freshman Scholarship (2021)
+<div class="education-entry">
+        <div class="institution">National Scholarship (2023-2024)</div>
+        <div class="program-date">
+            <span>Ministry of Education, People's Republic of China</span>
+            <span>Dec 2024</span>
+        </div>
+        <div class="details">
+            <ul>
+                <li>The highest-level scholarship granted to students in Chinese tertiary education institutions, with a selection rate of ~ 0.4% nationwide.</li>
+                <li> Honored as the <a href="https://mp.weixin.qq.com/s/l_htmep4UMeYg_tnOcyhDA">Outstanding Scholarship Awardee of Fudan University</a>, awarded to one student per department yearly.</li>
+            </ul>
+        </div>
+</div>
+
+<div class="education-entry">
+        <div class="institution">Merit Student of Fudan University</div>
+        <div class="program-date">
+            <span>Fudan University</span>
+            <span>Oct 2024</span>
+        </div>
+        <div class="details">
+          <ul>
+          </ul>
+        </div>
+</div>
+
+<div class="education-entry">
+        <div class="institution">Merit Award of Tengfei Research and Innovation Project</div>
+        <div class="program-date">
+            <span>Tengfei Academy, Fudan University</span>
+            <span>Apr 2024</span>
+        </div>
+        <div class="details">
+          <ul>
+          </ul>
+        </div>
+</div>
 
 
 ## 📝 Publications
 
-1. **Interpreting Autonomous Driving Corner Cases: A Visual Analytics Approach** <u>Yi Sun</u>, Zekai Shao, Xingyu Qiu, Yun Li, Ting Liu, Linbing Xiang, Dong Sun, Siming Chen (PacificVis 2024)
+1. <u>Yi Sun</u>, Zekai Shao, Xingyu Qiu, Yun Li, Ting Liu, Linbing Xiang, Dong Sun, Siming Chen. **Interpreting Autonomous Driving Corner Cases: A Visual Analytics Approach**. 2024 IEEE 17th Pacific Visualization Conference (PacificVis'24).
 
-2. **Dynamic-Scene-Graph-Supported Visual Understanding of Autonomous Driving Scenarios** Ting Liu, Dong Sun, Chongke Bi, <u>Yi Sun</u>, Siming Chen (PacificVis 2024)
+2. Ting Liu, Dong Sun, Chongke Bi, <u>Yi Sun</u>, Siming Chen. **Dynamic-Scene-Graph-Supported Visual Understanding of Autonomous Driving Scenarios**. 2024 IEEE 17th Pacific Visualization Conference (PacificVis'24).
 
-3. **Fine‑Tuned Large Language Model for Visualization System: A Study on Self‑Regulated Learning in Education** Lin Gao, Jing Lu, Zekai Shao, Ziyue Lin, Shengbin Yue, Chokit Ieong, <u>Yi Sun</u>, Zhongyu Wei, Siming Chen (IEEE VIS 2024)
+3. Lin Gao, Jing Lu, Zekai Shao, Ziyue Lin, Shengbin Yue, Chokit Ieong, <u>Yi Sun</u>, Zhongyu Wei, Siming Chen. **Fine‑Tuned Large Language Model for Visualization System: A Study on Self‑Regulated Learning in Education**. IEEE Transactions on Visualization and Computer Graphics.
 
 ## 🏫 Teaching
 
-1. **Operating Systems (Honor Track)**, Teaching Assistant, 24 Fall, Fudan University.
-2. **Operating Systems (Regular Track)**, Teaching Assistant, 24 Fall, Fudan University.
+<div class="education-entry">
+        <div class="institution"><a href="https://osh.fducslg.com">Operating Systems (Honors Track)</a></div>
+        <div class="program-date">
+            <span>Teaching Assistant</span>
+            <span>Fall 2024</span>
+        </div>
+        <div class="details">
+            <ul>
+                <li> Migrated the lab platform from Raspberry Pi to the <a href="https://www.qemu.org/docs/master/system/riscv/virt.html">virt generic virtual platform</a> by rewriting the hardware abstraction layer to simplify the environment for students. Developed new lab exercises focused on condition variables and asynchronous I/O. </li>
+            </ul>
+        </div>
+</div>
+
+<div class="education-entry">
+        <div class="institution">Operating Systems</div>
+        <div class="program-date">
+            <span>Teaching Assistant</span>
+            <span>Fall 2024</span>
+        </div>
+        <div class="details">
+            <ul>
+                <li> Developed labs focusing on Linux features, including mmap, userfaultfd, io_uring and more. </li>
+            </ul>
+        </div>
+</div>
 
 <style>
   .card {
@@ -74,6 +150,18 @@ I am a fan of NBA games, though I'm not good at playing basketball myself. I rea
     text-align: center;
     color: black;
     font-size: 14px;
+  }
+
+  .institution {
+    font-weight: bold;
+  }
+  .program-date {
+    display: flex;
+    justify-content: space-between;
+  }
+  .details {
+    color: gray;
+    font-size: 0.95em;
   }
 </style>
 
