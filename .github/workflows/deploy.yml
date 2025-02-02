@@ -51,7 +51,7 @@ jobs:
           yarn docs:build
           touch ./.vitepress/dist/.nojekyll
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: awalsh128/cache-apt-pkgs-action@v1.4.3
         with:
           path: ./.vitepress/dist
 
