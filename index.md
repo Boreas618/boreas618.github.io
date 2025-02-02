@@ -18,7 +18,7 @@ outline: false
   </div>
 </div>
 
-My research interests are primary on advancing next-generation memory systems for data centers to support diverse workloads, especially machine learning tasks such as LLM inference and training. Recently, I have been working on memory tiering in CXL.
+My research interests are primary on advancing next-generation memory systems for data centers to support diverse workloads, especially machine learning tasks such as LLM inference and training. Recently, I have been working on memory tiering in Compute Express Link (CXL).
 
 I am a fan of NBA games, though I'm not good at playing basketball myself. I really enjoy exploring cities around the world. Cities I've visited include Shanghai, Melbourne, Tokyo, and more.
 
@@ -33,7 +33,7 @@ I am a fan of NBA games, though I'm not good at playing basketball myself. I rea
         </div>
         <div class="details">
             <ul>
-                <li>Courses: Operating Systems (Honors Track) (A), Computer Architecture (A), Parallel and Distributed Computing (A), and Compilers (A+).</li>
+                <li>Courses: Operating Systems (Honors Track, A), Computer Organization and Architecture (A), Parallel and Distributed Computing (A), and Compilers (Honors Track, A+).</li>
                 <li>Extended program duration by one year to participate in an exchange program at the University of Melbourne.</li>
             </ul>
         </div>
