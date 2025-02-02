@@ -51,7 +51,7 @@ jobs:
           yarn docs:build
           touch ./.vitepress/dist/.nojekyll
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./.vitepress/dist
 
