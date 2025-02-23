@@ -128,6 +128,8 @@ I am a fan of NBA games, though I'm not good at playing basketball myself. I rea
         </div>
 </div>
 
+<a href='https://clustrmaps.com/site/1c4j9'  title='Visit tracker'><img src='//clustrmaps.com/map_v2.png?cl=ffffff&w=300&t=t&d=ZquOC4ZbDB5R5cx5IUEn6PlrBWbXw0BBUxV_j_7Fg5w'/></a>
+
 <style>
   .card {
     width: 20%; /* Adjusts width to 25% of the view */
