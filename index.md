@@ -128,6 +128,8 @@ I am a fan of NBA games, though I'm not good at playing basketball myself. I rea
         </div>
 </div>
 
+## 👥 Friends
+
 <div class="card">
   <img src="/j3rry.jpg" alt="Europe Street Beat">
   <footer>
