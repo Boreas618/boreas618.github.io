@@ -18,9 +18,15 @@ outline: false
   </div>
 </div>
 
-My research interests are primary on advancing next-generation memory systems for data centers to support diverse workloads, especially machine learning tasks such as LLM inference and training. Recently, I have been working on memory tiering in Compute Express Link (CXL).
+My research interests lie primarily in operating systems and machine learning systems, with a particular focus on the management of heterogeneous resources:
 
-I am a fan of NBA games, though I'm not good at playing basketball myself. I really enjoy exploring cities around the world. Cities I've visited include Shanghai, Melbourne, Tokyo, and more.
+* **Heterogeneous Computing**: How can we design effective scheduling algorithms and policies for LLM inference on heterogeneous clusters under SLO constraints?
+
+* **Heterogeneous Memory and Storage**: How can operating systems or runtimes adapt to memory access patterns to optimize performance on tiered memory systems (e.g., DRAM + CXL)?
+
+::: info
+I'm applying to PhD programs starting in Fall 2026, with a focus on operating systems, memory disaggregation and tiering, CXL, LLM inference, RDMA, and broader systems-related topics. If you're interested in discussing this further, feel free to reach out via email.
+:::
 
 
 ## 📚 Education
@@ -51,7 +57,7 @@ I am a fan of NBA games, though I'm not good at playing basketball myself. I rea
   </div>
 </div>
 
-## 🏆 Awards
+## 🏆 Selected Awards
 
 <div class="education-entry">
         <div class="institution">National Scholarship (2023-2024)</div>
@@ -67,32 +73,8 @@ I am a fan of NBA games, though I'm not good at playing basketball myself. I rea
         </div>
 </div>
 
-<div class="education-entry">
-        <div class="institution">Merit Student of Fudan University</div>
-        <div class="program-date">
-            <span>Fudan University</span>
-            <span>Oct 2024</span>
-        </div>
-        <div class="details">
-          <ul>
-          </ul>
-        </div>
-</div>
 
-<div class="education-entry">
-        <div class="institution">Merit Award of Tengfei Research and Innovation Project</div>
-        <div class="program-date">
-            <span>Tengfei Academy, Fudan University</span>
-            <span>Apr 2024</span>
-        </div>
-        <div class="details">
-          <ul>
-          </ul>
-        </div>
-</div>
-
-
-## 📝 Publications
+## 📝 Selected Publications
 
 1. <u>Yi Sun</u>, Zekai Shao, Xingyu Qiu, Yun Li, Ting Liu, Linbing Xiang, Dong Sun, Siming Chen. **Interpreting Autonomous Driving Corner Cases: A Visual Analytics Approach**. 2024 IEEE 17th Pacific Visualization Conference (PacificVis'24).
 
@@ -126,16 +108,6 @@ I am a fan of NBA games, though I'm not good at playing basketball myself. I rea
                 <li> Developed labs focusing on Linux features, including mmap, userfaultfd, io_uring and more. </li>
             </ul>
         </div>
-</div>
-
-## 👥 Friends
-
-<div class="card">
-  <img src="/j3rry.jpg" alt="Europe Street Beat">
-  <footer>
-    Qianheng Wang (王骞珩)<br>
-    <a href="https://nyxwh1sper.github.io/">https://nyxwh1sper.github.io</a>
-  </footer>
 </div>
 
 ---
