@@ -18,14 +18,14 @@ outline: false
   </div>
 </div>
 
-My research interests lie primarily in operating systems and machine learning systems, with a particular focus on the management of heterogeneous resources:
+My research interests are **Operating Systems and Machine Learning Systems**. Recently, I have been focusing on the management of heterogeneous resources:
 
-* **Heterogeneous Computing**: How can we design effective scheduling algorithms and policies for LLM inference on heterogeneous clusters under SLO constraints?
+* **Heterogeneous Computing**: Developing SLO-aware scheduling policies for LLM inference.
 
-* **Heterogeneous Memory and Storage**: How can operating systems or runtimes adapt to memory access patterns to optimize performance on tiered memory systems (e.g., DRAM + CXL)?
+* **Heterogeneous Memory and Storage**: Building tiered memory-aware runtimes for emerging technologies such as RDMA and CXL.
 
 ::: info
-I'm applying to PhD programs starting in Fall 2026, with a focus on operating systems, memory disaggregation and tiering, CXL, LLM inference, RDMA, and broader systems-related topics. If you're interested in discussing this further, feel free to reach out via email.
+I am applying to PhD programs starting in Fall 2026, with interests including (but not limited to) Operating Systems, Memory Disaggregation, LLM Infrastructure. If you'd like to discuss further, feel free to reach out via email.
 :::
 
 
@@ -74,7 +74,7 @@ I'm applying to PhD programs starting in Fall 2026, with a focus on operating sy
 </div>
 
 
-## 📝 Selected Publications
+## 📝 Publications
 
 1. <u>Yi Sun</u>, Zekai Shao, Xingyu Qiu, Yun Li, Ting Liu, Linbing Xiang, Dong Sun, Siming Chen. **Interpreting Autonomous Driving Corner Cases: A Visual Analytics Approach**. 2024 IEEE 17th Pacific Visualization Conference (PacificVis'24).
 
