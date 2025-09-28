@@ -1,12 +1,10 @@
 {
-  "name": "osh2025.fducslg.docs",
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:serve": "vitepress serve docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:serve": "vitepress serve",
+    "docs:preview": "vitepress preview"
   },
   "author": "",
   "dependencies": {
