@@ -18,14 +18,14 @@ outline: false
   </div>
 </div>
 
-My research interests are **Operating Systems and Machine Learning Systems**. Recently, I have been focusing on the management of heterogeneous resources:
+My name is **Yi Sun (孙一)**, and I am a senior undergraduate at Fudan University. My research interests span **Machine Learning Systems and Operating Systems**, with a particular focus on full-stack support for emerging workloads (e.g., LLM inference) and interconnect technologies (e.g., CXL, RDMA).
 
-* **Heterogeneous Computing**: Developing SLO-aware scheduling policies for LLM inference.
+Recently, my work has centered on inference engine support for test-time scaling algorithms and efficient memory tiering solutions for CXL. Beyond systems-level support, I am also interested in efficient model architectures and their impact on performance (e.g., long-context capabilities).
 
-* **Heterogeneous Memory and Storage**: Building tiered memory-aware runtimes for emerging technologies such as RDMA and CXL.
+You can find my CV [here](https://drive.google.com/file/d/1rVNx7i7z4cPMwN5AaN4CXaoJD8YFMG4h/view?usp=sharing).
 
 ::: info
-I am applying to PhD programs starting in Fall 2026, with interests including (but not limited to) Operating Systems, Memory Disaggregation, LLM Infrastructure. If you'd like to discuss further, feel free to reach out via email.
+I am applying for PhD programs (Fall 2026), with interests including (but not limited to) Operating Systems, Memory Disaggregation, LLM Infrastructure. If you'd like to discuss further, feel free to reach out via email.
 :::
 
 
@@ -57,7 +57,7 @@ I am applying to PhD programs starting in Fall 2026, with interests including (b
   </div>
 </div>
 
-## 🏆 Selected Awards
+## 🏆 Awards
 
 <div class="education-entry">
         <div class="institution">National Scholarship (2023-2024)</div>
