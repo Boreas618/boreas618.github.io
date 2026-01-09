@@ -18,9 +18,9 @@ outline: false
   </div>
 </div>
 
-My name is **Yi Sun (孙一)**, and I am a senior undergraduate student at Fudan University. My research interests span **Machine learning systems and Operating systems**, with a particular focus on optimizing data-intensive workloads across the full system stack (e.g., scheduling, runtimes, kernels, compilers, accelerators, and interconnects). I am also interested in emerging learning methods, including test-time scaling, agentic systems, reinforcement learning, diffusion language models, and speculative decoding.
+My name is **Yi Sun (孙一)**, and I am a senior undergraduate student at Fudan University. My research interests span **Machine learning systems and Operating systems**, with a particular focus on optimizing data-intensive workloads (e.g., LLM serving, in-memory database, etc.) across the full system stack (e.g., scheduling, runtimes, kernels, compilers, accelerators, and interconnects). I am also interested in emerging learning methods, including test-time scaling, agentic systems, reinforcement learning, diffusion language models, and speculative decoding.
 
-I am currently an intern at NVIDIA, working on the Scaffolding framework, which aims to provide powerful abstractions over TensorRT-LLM for emerging agentic and test-time scaling methods. I also work closely with Prof. Huaicheng Li on memory tiering in the context of **Compute Express Link (CXL)**.
+I am currently an intern at NVIDIA, working on the Scaffolding framework, which aims to provide powerful abstractions over TensorRT-LLM for emerging agentic and test-time scaling methods. I also work closely with Prof. Huaicheng Li on memory tiering in the context of Compute Express Link (CXL).
 
 ::: info
 I am seeking PhD opportunities for Fall 2026 as well as full-time job opportunities. If you would like to discuss further, please feel free to contact me via email.
