@@ -18,14 +18,12 @@ outline: false
   </div>
 </div>
 
-My name is **Yi Sun (孙一)**, and I am a senior undergraduate at Fudan University. My research interests span **Machine Learning Systems and Operating Systems**, with a particular focus on full-stack support for emerging workloads (e.g., LLM inference) and interconnect technologies (e.g., CXL, RDMA).
+My name is **Yi Sun (孙一)**, and I am a senior undergraduate student at Fudan University. My research interests span **Machine learning systems and Operating systems**, with a particular focus on optimizing data-intensive workloads across the full system stack (e.g., scheduling, runtimes, kernels, compilers, accelerators, and interconnects). I am also interested in emerging learning methods, including test-time scaling, agentic systems, reinforcement learning, diffusion language models, and speculative decoding.
 
-Recently, my work has centered on inference engine support for test-time scaling algorithms and efficient memory tiering solutions for CXL. Beyond systems-level support, I am also interested in efficient model architectures and their impact on performance (e.g., long-context capabilities).
-
-You can find my CV [here](https://drive.google.com/file/d/1rVNx7i7z4cPMwN5AaN4CXaoJD8YFMG4h/view?usp=sharing).
+I am currently an intern at NVIDIA, working on the Scaffolding framework, which aims to provide powerful abstractions over TensorRT-LLM for emerging agentic and test-time scaling methods. I also work closely with Prof. Huaicheng Li on memory tiering in the context of **Compute Express Link (CXL)**.
 
 ::: info
-I am applying for PhD programs (Fall 2026), with interests including (but not limited to) Operating Systems, Memory Disaggregation, LLM Infrastructure. If you'd like to discuss further, feel free to reach out via email.
+I am seeking PhD opportunities for Fall 2026 as well as full-time job opportunities. If you would like to discuss further, please feel free to contact me via email.
 :::
 
 
@@ -45,18 +43,6 @@ I am applying for PhD programs (Fall 2026), with interests including (but not li
         </div>
 </div>
 
-<div class="education-entry">
-  <div class="institution">The University of Melbourne</div>
-  <div class="program-date">
-    <span>Exchange Program</span>
-    <span>Feb 2023 - Jun 2023</span>
-  </div>
-  <div class="details">
-    <ul>
-    </ul>
-  </div>
-</div>
-
 ## 🏆 Awards
 
 <div class="education-entry">
@@ -72,6 +58,8 @@ I am applying for PhD programs (Fall 2026), with interests including (but not li
             </ul>
         </div>
 </div>
+
+Other awards include Outstanding Student Award (Second Class), Outstanding Student of Fudan University, Outstanding Award of Tengfei Research and Innovation Project, HHC Freshman Scholarship, etc.
 
 
 ## 📝 Publications
@@ -106,6 +94,19 @@ I am applying for PhD programs (Fall 2026), with interests including (but not li
         <div class="details">
             <ul>
                 <li> Developed labs focusing on Linux features, including mmap, userfaultfd, io_uring and more. </li>
+            </ul>
+        </div>
+</div>
+
+<div class="education-entry">
+        <div class="institution">Compilers</div>
+        <div class="program-date">
+            <span>Teaching Assistant</span>
+            <span>Spring 2026</span>
+        </div>
+        <div class="details">
+            <ul>
+                <li> Author and PIC of Teac, an LLVM-compatible compiler implemented from scratch in Rust. </li>
             </ul>
         </div>
 </div>
