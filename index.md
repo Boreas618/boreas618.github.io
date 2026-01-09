@@ -59,7 +59,7 @@ I am seeking PhD opportunities for Fall 2026 as well as full-time job opportunit
         </div>
 </div>
 
-Other awards include Outstanding Student Award (Second Class), Outstanding Student of Fudan University, Outstanding Award of Tengfei Research and Innovation Project, HHC Freshman Scholarship, etc.
+Other awards include Outstanding Student Scholarship (Second Class), Outstanding Student of Fudan University, Outstanding Award of Tengfei Research and Innovation Project, HHC Freshman Scholarship, etc.
 
 
 ## 📝 Publications
