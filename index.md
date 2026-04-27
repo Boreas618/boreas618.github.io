@@ -22,11 +22,6 @@ My name is **Yi Sun (孙一)**, and I am a senior undergraduate student at Fudan
 
 I am currently an intern at NVIDIA, working on the Scaffolding framework, which aims to provide powerful abstractions over TensorRT-LLM for emerging agentic and test-time scaling methods. I also work closely with Prof. Huaicheng Li on memory tiering in the context of Compute Express Link (CXL).
 
-::: info
-I am seeking PhD opportunities for Fall 2026 as well as full-time job opportunities. If you would like to discuss further, please feel free to contact me via email.
-:::
-
-
 ## 📚 Education
 
 <div class="education-entry">
@@ -45,21 +40,7 @@ I am seeking PhD opportunities for Fall 2026 as well as full-time job opportunit
 
 ## 🏆 Awards
 
-<div class="education-entry">
-        <div class="institution">National Scholarship (2023-2024)</div>
-        <div class="program-date">
-            <span>Ministry of Education, People's Republic of China</span>
-            <span>Dec 2024</span>
-        </div>
-        <div class="details">
-            <ul>
-                <li>The highest-level scholarship granted to students in Chinese tertiary education institutions, with a selection rate of ~ 0.4% nationwide.</li>
-                <li> Honored as the <a href="https://mp.weixin.qq.com/s/l_htmep4UMeYg_tnOcyhDA">Outstanding Scholarship Awardee of Fudan University</a>, awarded to one student per department yearly.</li>
-            </ul>
-        </div>
-</div>
-
-Other awards include Outstanding Student Scholarship (Second Class), Outstanding Student of Fudan University, Outstanding Award of Tengfei Research and Innovation Project, HHC Freshman Scholarship, etc.
+National Scholarship (2023-2024), <a href="https://mp.weixin.qq.com/s/l_htmep4UMeYg_tnOcyhDA">Outstanding Scholarship Awardee of Fudan University</a>, Shanghai Outstanding Graduate, Outstanding Student Scholarship (Second Class, 2024-2025), Outstanding Student of Fudan University, Outstanding Award of Tengfei Research and Innovation Project, HHC Freshman Scholarship, etc.
 
 
 ## 📝 Publications
@@ -99,7 +80,7 @@ Other awards include Outstanding Student Scholarship (Second Class), Outstanding
 </div>
 
 <div class="education-entry">
-        <div class="institution">Compilers</div>
+        <div class="institution"><a href="https://tea-compiler.github.io">Compilers</a></div>
         <div class="program-date">
             <span>Teaching Assistant</span>
             <span>Spring 2026</span>
